@@ -1,0 +1,33 @@
+{
+  "name": "feathers-mongoose-service",
+  "version": "0.1.0",
+  "description": "Easily create a Mongoose Service for Featherjs.",
+  "main": "lib/index.js",
+  "scripts": {
+    "test": "mocha test/tests.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/Glavin001/feathers-mongoose-service.git"
+  },
+  "keywords": [
+    "feathers",
+    "REST",
+    "Socket.io",
+    "realtime",
+    "mongodb",
+    "mongo",
+    "mongoose",
+    "service"
+  ],
+  "author": "Glavin Wiechert <glavin.wiechert@gmail.com> (https://github.com/Glavin001)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Glavin001/feathers-mongoose-service/issues"
+  },
+  "homepage": "https://github.com/Glavin001/feathers-mongoose-service",
+  "dependencies": {
+    "feathers": "*"
+    , "mongoose": "3.8.4"
+  }
+}

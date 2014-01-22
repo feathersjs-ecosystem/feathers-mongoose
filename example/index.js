@@ -1,27 +1,3 @@
-feathers-mongoose-service
-=========================
-
-> Easily create a Mongoose Service for Featherjs.
-
-
-## Installation
-
-```bash
-npm install feathers-mongoose-service
-```
-
-
-## Example Usage
-
-### Run example:
-
-```
-node example/index.js
-```
-
-### Example code:
-
-```javascript
 // Get Feathers
 var feathers = require('feathers');
 // Get Mongoose
@@ -55,13 +31,3 @@ app.configure(feathers.socketio())
   .listen(port, function() {
         console.log('Express server listening on port ' + port);
     });
-```
-
-
-## License
-
-MIT
-
-## Author
-
-[Glavin Wiechert](https://github.com/Glavin001) 
