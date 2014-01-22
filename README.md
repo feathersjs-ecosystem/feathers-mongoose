@@ -15,7 +15,7 @@ feathers-mongoose-service
 ## Installation
 
 ```bash
-npm install feathers-mongoose-service
+npm install feathers-mongoose-service --save
 ```
 
 
