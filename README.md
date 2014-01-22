@@ -21,6 +21,8 @@ npm install feathers-mongoose-service
 
 ## Usage
 
+> **Important**: Read over the [Feathers documentation](http://feathersjs.com/#documentation), specifically the section on [Services](http://feathersjs.com/#toc12). All of the Feathers REST and Socket API requests are supported.
+
 ### Run example:
 
 Run the following:
