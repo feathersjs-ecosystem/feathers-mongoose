@@ -11,7 +11,7 @@ npm install feathers-mongoose-service
 ```
 
 
-## Example Usage
+## Usage
 
 ### Run example:
 
@@ -28,9 +28,15 @@ I recommend the [Postman extension for Chrome](https://chrome.google.com/webstor
 
 ### How To Create a Mongoose Service
 
-**Skip to step 3 for the important part.**
+```javascript
+var customService = new mongooseService(modelName, mongooseSchema, mongooseConnection);
+```
 
-1) Get your dependencies.
+See [Mongoose Schema Guide](http://mongoosejs.com/docs/guide.html) for more information on defining your schema.
+
+> Skip to [Step 3](#3-create-your-custom-mongoose-service) for the important part.
+
+#### 1) Get your dependencies.
 
 ```javascript
 // Get Feathers
@@ -41,7 +47,7 @@ var mongoose = require('mongoose');
 var mongooseService = require('feathers-mongoose-service'); 
 ```
 
-2) Create your Mongoose connection to Mongodb.
+#### 2) Create your Mongoose connection to Mongodb.
 
 ```javascript
 // Get Mongoose
@@ -50,7 +56,7 @@ var mongoose = require('mongoose');
 var connection = mongoose.connect('mongodb://localhost/test');
 ```
 
-3) **Create your custom Mongoose Service**
+#### 3) **Create your custom Mongoose Service**
 
 ```javascript
 // Create your Mongoose-Service, for a `User`
@@ -64,7 +70,7 @@ var userService = mongooseService('user', {
     }, connection);
 ```
 
-4) Use your service with Feathers.
+#### 4) Use your service with Feathers.
 
 ```javascript
 // Setup Feathers
