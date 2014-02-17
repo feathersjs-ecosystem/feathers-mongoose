@@ -2,8 +2,8 @@ feathers-mongoose-service
 =========================
 
 [![NPM version](https://badge.fury.io/js/feathers-mongoose-service.png)](http://badge.fury.io/js/feathers-mongoose-service)
-[![Build Status](https://travis-ci.org/Glavin001/feathers-mongoose-service.png?branch=master)](https://travis-ci.org/Glavin001/feathers-mongoose-service)
-[![authors](https://sourcegraph.com/api/repos/github.com/Glavin001/feathers-mongoose-service/badges/authors.png)](https://sourcegraph.com/github.com/Glavin001/feathers-mongoose-service)
+[![Build Status](https://travis-ci.org/feathersjs/feathers-mongoose-service.png?branch=master)](https://travis-ci.org/Glavin001/feathers-mongoose-service)
+[![authors](https://sourcegraph.com/api/repos/github.com/feathersjs/feathers-mongoose-service/badges/authors.png)](https://sourcegraph.com/github.com/Glavin001/feathers-mongoose-service)
 [![Total views](https://sourcegraph.com/api/repos/github.com/Glavin001/feathers-mongoose-service/counters/views.png)](https://sourcegraph.com/github.com/Glavin001/feathers-mongoose-service)
 [![Views in the last 24 hours](https://sourcegraph.com/api/repos/github.com/Glavin001/feathers-mongoose-service/counters/views-24h.png)](https://sourcegraph.com/github.com/Glavin001/feathers-mongoose-service)
 
