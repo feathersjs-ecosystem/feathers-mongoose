@@ -18,13 +18,15 @@ feathers-mongoose-service
 npm install feathers-mongoose-service --save
 ```
 
+See [Getting Started, in the docs/ directory](docs/Getting-Started.md).
+
 ## Documentation
 
 See the [docs/ directory](docs/).
 
 ## License
 
-MIT
+[MIT](LICENSE)
 
 ## Author
 
