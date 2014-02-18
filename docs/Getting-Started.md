@@ -20,7 +20,7 @@ I recommend the [Postman extension for Chrome](https://chrome.google.com/webstor
 ### How To Create a Mongoose Service
 
 ```javascript
-var customService = new mongooseService(modelName, mongooseSchema, mongooseConnection);
+var customService = new mongooseService(modelName, schema, mongoose);
 ```
 
 See [Mongoose Schema Guide](http://mongoosejs.com/docs/guide.html) for more information on defining your schema.
