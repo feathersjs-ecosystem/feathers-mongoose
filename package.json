@@ -1,6 +1,6 @@
 {
   "name": "feathers-mongoose-service",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Easily create a Mongoose Service for Featherjs.",
   "main": "lib/index.js",
   "scripts": {
@@ -30,17 +30,17 @@
     "mocha": "*",
     "grunt-cli": "~0.1.7",
     "grunt": "~0.4.1",
-    "grunt-release": "~0.5.1",
+    "grunt-release": "~0.7.0",
     "grunt-contrib-jshint": "~0.x",
     "grunt-simple-mocha": "~0.4.0",
     "grunt-contrib-watch": "~0.5.3",
     "grunt-express-server": "~0.4.11",
-    "feathers": "*",
-    "mongoose": "3.8.4"
+    "feathers": ">= 0.3.0 < 1",
+    "mongoose": ">= 3.8.4 < 4"
   },
   "dependencies": {},
   "peerDependencies": {
-    "feathers": "~0.3.0"
-    , "mongoose": "3.8.4"
+    "feathers": ">= 0.3.0 < 1"
+    , "mongoose": ">= 3.8.4 < 4"
   }
 }
