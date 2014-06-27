@@ -37,7 +37,9 @@
     "grunt-contrib-watch": "~0.6.1",
     "grunt-express-server": "~0.4.17",
     "feathers": "~1.x",
-    "mongoose": ">= 3.8.4 < 4"
+    "mongoose": ">= 3.8.4 < 4",
+    "morgan": "~1.1.0",
+    "body-parser": "^1.4.3"
   },
   "dependencies": {},
   "peerDependencies": {
