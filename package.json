@@ -1,11 +1,8 @@
 {
   "name": "feathers-mongoose",
+  "description": "Feathers Mongoose ORM service",
   "version": "1.2.0",
-  "description": "Easily create a Mongoose Service for Featherjs.",
-  "main": "lib/index.js",
-  "scripts": {
-    "test": "grunt test"
-  },
+  "homepage": "https://github.com/feathersjs/feathers-mongoose-service",
   "repository": {
     "type": "git",
     "url": "git://github.com/feathersjs/feathers-mongoose-service.git"
@@ -21,27 +18,41 @@
     "mongoose",
     "service"
   ],
-  "author": "Glavin Wiechert <glavin.wiechert@gmail.com> (https://github.com/Glavin001)",
+  "author": "Feathers <hello@feathersjs.com> (http://feathersjs.com)",
+  "contributors": [
+    "Glavin Wiechert <glavin.wiechert@gmail.com> (https://github.com/Glavin001)",
+    "Eric Kryski <e.kryski@gmail.com> (http://erickryski.com)"
+  ],
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/feathersjs/feathers-mongoose-service/issues"
   },
-  "homepage": "https://github.com/feathersjs/feathers-mongoose-service",
+  "main": "lib/mongoose.js",
+  "scripts": {
+    "test": "grunt test"
+  },
+  "engines": {
+    "node": "~0.10.0",
+    "npm": "~1.4.0"
+  },
   "devDependencies": {
-    "mocha": "*",
-    "grunt-cli": "~0.1.7",
+    "body-parser": "^1.4.3",
+    "feathers": ">= 1.0.0-pre.1",
     "grunt": "~0.4.1",
-    "grunt-release": "~0.7.0",
+    "grunt-cli": "~0.1.7",
     "grunt-contrib-jshint": "~0.x",
-    "grunt-simple-mocha": "~0.4.0",
     "grunt-contrib-watch": "~0.5.3",
     "grunt-express-server": "~0.4.11",
-    "feathers": ">= 0.3.0 < 1",
-    "mongoose": ">= 3.8.4 < 4"
+    "grunt-release": "~0.7.0",
+    "grunt-simple-mocha": "~0.4.0",
+    "mocha": "*"
   },
-  "dependencies": {},
+  "dependencies": {
+    "lodash": "^2.4.1",
+    "mongoose": "^3.8.13",
+    "uberproto": "^1.1.2"
+  },
   "peerDependencies": {
-    "feathers": ">= 0.3.0 < 1"
-    , "mongoose": ">= 3.8.4 < 4"
+    "feathers": ">= 1.0.0-pre.1"
   }
 }
