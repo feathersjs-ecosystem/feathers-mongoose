@@ -37,7 +37,7 @@
   },
   "devDependencies": {
     "body-parser": "^1.4.3",
-    "feathers": ">= 1.0.0-pre.1",
+    "feathers": ">= 1.0.x",
     "grunt": "~0.4.1",
     "grunt-cli": "~0.1.7",
     "grunt-contrib-jshint": "~0.x",
@@ -53,6 +53,6 @@
     "uberproto": "^1.1.2"
   },
   "peerDependencies": {
-    "feathers": ">= 1.0.0-pre.1"
+    "feathers": ">= 1.0.x"
   }
 }
