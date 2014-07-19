@@ -1,7 +1,7 @@
 {
   "name": "feathers-mongoose",
   "description": "Feathers Mongoose ORM service",
-  "version": "1.2.0",
+  "version": "2.0.0-pre.1",
   "homepage": "https://github.com/feathersjs/feathers-mongoose-service",
   "repository": {
     "type": "git",
