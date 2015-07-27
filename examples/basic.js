@@ -1,21 +1,26 @@
-var feathers = require('feathers');
-var mongooseService = require('../lib/mongoose');
-var bodyParser = require('body-parser');
+var feathers = require('feathers'),
+  bodyParser = require('body-parser'),
+  mongooseService = require('../lib/feathers-mongoose'),
+  Todo = require('./models/todo');
 
-// Create your Mongoose-Service, for a `User`
-var userService = mongooseService('user', {
-    email: {type : String, required : true, index: {unique: true, dropDups: true}},
-    firstName: {type : String, required : true},
-    lastName: {type : String, required : true}
-  });
+// Create a feathers instance.
+var app = feathers()
+  // Setup the public folder.
+  .use(feathers.static(__dirname + '/public'))
+  // Enable Socket.io
+  .configure(feathers.socketio())
+  // Enable REST services
+  .configure(feathers.rest())
+  // Turn on JSON parser for REST services
+  .use(bodyParser.json())
+  // Turn on URL-encoded parser for REST services
+  .use(bodyParser.urlencoded({extended: true}))
 
-// Setup Feathers
-var app = feathers();
+// Connect to the db, create and register a Feathers service.
+app.use('todos', new mongooseService('todo', Todo));
 
-app.configure(feathers.rest())
-   .use(bodyParser.json())
-   .use('/users', userService)
-   .configure(feathers.errors())
-   .listen(8080);
-
-console.log('App listening on 127.0.0.1:8080');
+// Start the server.
+var port = 8080;
+app.listen(port, function() {
+    console.log('Feathers server listening on port ' + port);
+});

@@ -1,5 +1,5 @@
 var assert = require('assert');
-var mongooseService = require('../lib/mongoose');
+var mongooseService = require('../lib/feathers-mongoose');
 var mongoose = require('mongoose');
 
 var connection = mongoose.connect('mongodb://localhost/test');
