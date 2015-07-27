@@ -26,7 +26,7 @@ var mongooseService = require('feathers-mongoose');
 app.use('todos', mongooseService('todo', todoSchema, options));
 ```
 
-See [Mongoose Schema Guide](http://mongoosejs.com/docs/guide.html) for more information on defining your schema.
+See the [Mongoose Schema Guide](http://mongoosejs.com/docs/guide.html) for more information on defining your schema.
 
 
 ### Complete Example
@@ -43,12 +43,16 @@ var Todo = {
         complete: {type: Boolean, 'default': false}
     },
     methods: {
+        isComplete: function(){
+            return this.complete;
+        }
     },
     statics: {
     },
     virtuals: {
     },
     indexes: [
+        {'complete': true, background: true}
     ]
 };
 
@@ -106,6 +110,8 @@ TodoSchema.methods.isComplete = function() {
     return this.complete;
 }
 
+TodoSchema.index({'complete': true, background: true});
+
 module.exports = TodoSchema;
 ```
 
@@ -137,6 +143,8 @@ TodoSchema.methods.isComplete = function() {
     return this.complete;
 }
 
+TodoSchema.index({'complete': true, background: true});
+
 module.exports = mongoose.model('Todo', TodoSchema);
 ```
 
@@ -147,6 +155,10 @@ Then you can simply pass that to a mongoose service like so:
 app.use('todos', mongooseService('todo', TodoModel));
 ```
 
+
+### Custom Validation
+
+TODO (EK): Add example with custom validations using `node-validator` or something.
 
 ### Special Query Params
 The `find` API allows the use of `$limit`, `$skip`, `$sort`, and `$select` in the query.  These special parameters can be passed directly inside the query object:
