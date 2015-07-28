@@ -86,6 +86,23 @@ You can run this example by using `node examples/basic` and going to [localhost:
 
 ## Options
 
+The following options can be passed when creating a new Mongoose service:
+
+**General options:**
+
+- `connectionString` - A MongoDB connection string
+- `username` - MongoDB username
+- `password` - MongoDB password
+- `autoreconnect` - Whether MongoDB you reconnect automatically (default: `true`)
+
+**Connection options**: (when `connectionString` is not set)
+
+- `db` - The name of the database (default: `"feathers"`) 
+- `host` - The MongoDB host (default: `"localhost"`) 
+- `port` - The MongoDB port (default: `27017`)
+
+Additionally you can pass an existing mongoose connection via the `connection` property.
+
 ## Mongoose Schemas
 
 The recommended way of defining and passing a model to a `feathers-mongoose` service is shown above. Using object literal syntax makes things easily testable without having to mock out existing mongoose functionality.
