@@ -4,11 +4,10 @@ feathers-mongoose
 [![NPM](https://nodei.co/npm/feathers-mongoose.png?downloads=true&stars=true)](https://nodei.co/npm/feathers-mongoose/)
 
 [![Build Status](https://travis-ci.org/feathersjs/feathers-mongoose.svg?branch=master)](https://travis-ci.org/feathersjs/feathers-mongoose)
-
 [![Code Climate](https://codeclimate.com/github/feathersjs/feathers-mongoose.png)](https://codeclimate.com/github/feathersjs/feathers-mongoose)
 
 
-> Create a [Mongoose](http://mongoosejs.com/) ORM wrapped service for [Featherjs](https://github.com/feathersjs).
+> Create a [Mongoose](http://mongoosejs.com/) ORM wrapped service for [FeathersJS](https://github.com/feathersjs).
 
 
 ## Installation
@@ -27,7 +26,6 @@ app.use('todos', mongooseService('todo', todoSchema, options));
 ```
 
 See the [Mongoose Schema Guide](http://mongoosejs.com/docs/guide.html) for more information on defining your schema.
-
 
 ### Complete Example
 
@@ -86,13 +84,15 @@ app.listen(port, function() {
 
 You can run this example by using `node examples/basic` and going to [localhost:8080/todos](http://localhost:8080/todos). You should see an empty array. That's because you don't have any Todos yet but you now have full CRUD for your new todos service, including mongoose validations!
 
-### Mongoose Schemas
+## Options
+
+## Mongoose Schemas
 
 The recommended way of defining and passing a model to a `feathers-mongoose` service is shown above. Using object literal syntax makes things easily testable without having to mock out existing mongoose functionality.
 
 With that said, you have two other options:
 
-#### Typical Mongoose Schema
+### Passing a Mongoose Schema
 
 ```js
 // models/todo.js
@@ -122,7 +122,7 @@ Then you can simply pass that to a mongoose service like so:
 app.use('todos', mongooseService('todo', TodoSchema));
 ```
 
-#### A Mongoose Model
+### Passing a Mongoose Model
 Usually before you are able to actually use a mongoose schema you need to turn it into a model. `feathers-mongoose` does that for you but you can also pass a mongoose model explicitly.
 
 This style is not a whole lot different than above. Note the `mongoose.model()` call.
@@ -156,12 +156,12 @@ app.use('todos', mongooseService('todo', TodoModel));
 ```
 
 
-### Custom Validation
+## Custom Validation
 
 TODO (EK): Add example with custom validations using `node-validator` or something.
 
-### Special Query Params
-The `find` API allows the use of `$limit`, `$skip`, `$sort`, and `$select` in the query.  These special parameters can be passed directly inside the query object:
+## Special Query Params
+The `find` API allows the use of `$limit`, `$skip`, `$sort`, `$select`, `$populate` in the query.  These special parameters can be passed directly inside the query object:
 
 ```js
 // Find all recipes that include salt, limit to 10, only include name field.
@@ -169,7 +169,7 @@ The `find` API allows the use of `$limit`, `$skip`, `$sort`, and `$select` in th
 GET /?ingredients=salt&%24limit=10&%24select=name%3A1 // HTTP
 ```
 
-As a result of allowing these to be put directly into the query string, you won't want to use `$limit`, `$skip`, `$sort`, or `$select` as the name of fields in your document schema.
+As a result of allowing these to be put directly into the query string, you won't want to use `$limit`, `$skip`, `$sort`, `$select`, or `$populate` as the name of fields in your document schema.
 
 ### `$limit`
 
@@ -217,7 +217,7 @@ query: {
 
 
 ### `$select`
-`$select` support in a query allows you to pick which fields to include or exclude in the results.  Note: you can use the include syntax or the exclude syntax, not both together.  See the section on [`Select`](http://mongoosejs.com/docs/api.html#query_Query-select) in the Mongoose docs.
+`$select` support in a query allows you to pick which fields to include or exclude in the results.  **Note:** you can use the include syntax or the exclude syntax, not both together.  See the section on [`Select`](http://mongoosejs.com/docs/api.html#query_Query-select) in the Mongoose docs.
 ```
 // Only retrieve name.
 query: {
@@ -232,22 +232,38 @@ query: {
 }
 ```
 
+### `$populate`
+`$populate` support in a query allows you to populate an embedded document and return it in the results. See the section on [`Population`](http://mongoosejs.com/docs/populate.html) in the Mongoose docs.
+```
+// Return people named "Alice" and her children.
+query: {
+  name: 'Alice',
+  $populate: ['children']
+}
+```
+
 
 ## API
 
-`feathers-nedb` services comply with the standard [FeathersJS API](http://feathersjs.com/api/#).
+`feathers-mongoose` services comply with the standard [FeathersJS API](http://feathersjs.com/docs).
 
 ## Changelog
 ### 2.0.0
-* Consistency with other service adapters
-* Compatibility with Feathers 1.0+
-* Adequate tests
+- Consistency with other service adapters
+- Compatibility with Feathers 1.0+
+- Adequate tests
+- Add special query params:
+    - $sort
+    - $skip
+    - $limit
+    - $select
+    - $populate
 
 ### 0.1.1
-* Fist working release
+- First working release
 
 ### 0.1.0
-* Initial release.
+- Initial release.
 
 ## License
 
@@ -255,5 +271,5 @@ query: {
 
 ## Authors
 
-[Eric Kryski](http://erickryski.com)
-[Glavin Wiechert](https://github.com/Glavin001)
+- [Eric Kryski](http://erickryski.com)
+- [Glavin Wiechert](https://github.com/Glavin001)
