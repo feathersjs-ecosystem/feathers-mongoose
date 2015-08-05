@@ -43,8 +43,9 @@
   },
   "dependencies": {
     "feathers-errors": "^0.2.5",
+    "feathers-query-filters": "^1.1.1",
     "lodash": "^2.4.1",
-    "mongoose": "^3.8.13",
+    "mongoose": "^4.1.0",
     "uberproto": "^1.1.2"
   },
   "devDependencies": {
