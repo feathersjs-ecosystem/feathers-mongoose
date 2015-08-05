@@ -1,15 +1,16 @@
 {
   "name": "feathers-mongoose",
-  "version": "1.2.0",
-  "description": "Easily create a Mongoose Service for Featherjs.",
-  "main": "lib/index.js",
-  "scripts": {
-    "test": "grunt test"
-  },
+  "description": "Feathers Mongoose ORM service",
+  "version": "2.0.0",
+  "homepage": "https://github.com/feathersjs/feathers-mongoose",
   "repository": {
     "type": "git",
-    "url": "git://github.com/feathersjs/feathers-mongoose-service.git"
+    "url": "git://github.com/feathersjs/feathers-mongoose.git"
   },
+  "bugs": {
+    "url": "https://github.com/feathersjs/feathers-mongoose/issues"
+  },
+  "license": "MIT",
   "keywords": [
     "feathers",
     "feathers-plugin",
@@ -21,27 +22,37 @@
     "mongoose",
     "service"
   ],
-  "author": "Glavin Wiechert <glavin.wiechert@gmail.com> (https://github.com/Glavin001)",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/feathersjs/feathers-mongoose-service/issues"
+  "author": "Feathers <hello@feathersjs.com> (http://feathersjs.com)",
+  "contributors": [
+    "Eric Kryski <e.kryski@gmail.com> (http://erickryski.com)",
+    "Glavin Wiechert <glavin.wiechert@gmail.com> (https://github.com/Glavin001)"
+  ],
+  "main": "lib/feathers-mongoose.js",
+  "scripts": {
+    "publish": "git push origin --tags",
+    "release:patch": "npm version patch && npm publish",
+    "release:minor": "npm version minor && npm publish",
+    "release:major": "npm version major && npm publish",
+    "jshint": "jshint lib/. test/. --config",
+    "mocha": "mocha test/ --recursive --timeout 5000",
+    "test": "npm run jshint && npm run mocha"
   },
-  "homepage": "https://github.com/feathersjs/feathers-mongoose-service",
+  "engines": {
+    "node": "~0.10.0",
+    "npm": "~1.4.0"
+  },
+  "dependencies": {
+    "feathers-errors": "^0.2.5",
+    "feathers-query-filters": "^1.1.1",
+    "lodash": "^2.4.1",
+    "mongoose": "^4.1.0",
+    "uberproto": "^1.1.2"
+  },
   "devDependencies": {
-    "mocha": "*",
-    "grunt-cli": "~0.1.7",
-    "grunt": "~0.4.1",
-    "grunt-release": "~0.7.0",
-    "grunt-contrib-jshint": "~0.x",
-    "grunt-simple-mocha": "~0.4.0",
-    "grunt-contrib-watch": "~0.5.3",
-    "grunt-express-server": "~0.4.11",
-    "feathers": ">= 0.3.0 < 1",
-    "mongoose": ">= 3.8.4 < 4"
-  },
-  "dependencies": {},
-  "peerDependencies": {
-    "feathers": ">= 0.3.0 < 1"
-    , "mongoose": ">= 3.8.4 < 4"
+    "body-parser": "^1.13.2",
+    "chai": "^3.0.0",
+    "feathers": "^1.1.0",
+    "jshint": "^2.8.0",
+    "mocha": "^2.2.5"
   }
 }
