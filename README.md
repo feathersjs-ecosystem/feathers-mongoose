@@ -38,7 +38,7 @@ var Todo = {
         title: {type: String, required: true},
         description: {type: String},
         dueDate: {type: Date, 'default': Date.now},
-        complete: {type: Boolean, 'default': false}
+        complete: {type: Boolean, 'default': false, index: true}
     },
     methods: {
         isComplete: function(){
@@ -50,7 +50,7 @@ var Todo = {
     virtuals: {
     },
     indexes: [
-        {'complete': true, background: true}
+        {'dueDate': -1, background: true}
     ]
 };
 
@@ -91,17 +91,17 @@ The following options can be passed when creating a new Mongoose service:
 **General options:**
 
 - `connectionString` - A MongoDB connection string
-- `username` - MongoDB username
-- `password` - MongoDB password
-- `autoreconnect` - Whether MongoDB you reconnect automatically (default: `true`)
 
 **Connection options**: (when `connectionString` is not set)
 
+- `username` - MongoDB username
+- `password` - MongoDB password
 - `db` - The name of the database (default: `"feathers"`) 
 - `host` - The MongoDB host (default: `"localhost"`) 
 - `port` - The MongoDB port (default: `27017`)
+- `reconnect` - Whether the connection should automatically reconnect (default: `true`)
 
-Additionally you can pass an existing mongoose connection via the `connection` property.
+**Note:** By default, each service creates its own database connection. If you don't want this you can pass an existing mongoose connection via the `connection` property.
 
 ## Mongoose Schemas
 
@@ -120,14 +120,14 @@ var TodoSchema = Schema({
     title: {type: String, required: true},
     description: {type: String},
     dueDate: {type: Date, 'default': Date.now},
-    complete: {type: Boolean, 'default': false}
+    complete: {type: Boolean, 'default': false, index: true}
 });
 
 TodoSchema.methods.isComplete = function() {
     return this.complete;
 }
 
-TodoSchema.index({'complete': true, background: true});
+TodoSchema.index({'dueDate': -1, background: true});
 
 module.exports = TodoSchema;
 ```
@@ -153,14 +153,14 @@ var TodoSchema = Schema({
     title: {type: String, required: true},
     description: {type: String},
     dueDate: {type: Date, 'default': Date.now},
-    complete: {type: Boolean, 'default': false}
+    complete: {type: Boolean, 'default': false, index: true}
 });
 
 TodoSchema.methods.isComplete = function() {
     return this.complete;
 }
 
-TodoSchema.index({'complete': true, background: true});
+TodoSchema.index({'dueDate': -1, background: true});
 
 module.exports = mongoose.model('Todo', TodoSchema);
 ```
@@ -269,6 +269,7 @@ query: {
 - Consistency with other service adapters
 - Compatibility with Feathers 1.0+
 - Adequate tests
+- Autoreconnect by default when not passing a connection string
 - Add special query params:
     - $sort
     - $skip
