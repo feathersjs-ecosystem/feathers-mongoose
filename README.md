@@ -180,6 +180,14 @@ TodoSchema.methods.isComplete = function() {
     return this.complete;
 }
 
+// Create a virtual field for id.
+TodoSchema.virtual('id').get(function(){
+    return this._id.toHexString();
+});
+// Ensure virtual fields are serialised.
+TodoSchema.set('toJSON', {virtuals: true});
+TodoSchema.set('toObject', {virtuals: true});
+
 TodoSchema.index({'dueDate': -1, background: true});
 
 module.exports = TodoSchema;
