@@ -33,7 +33,25 @@ var Post = {
     },
     indexes: [
       {'published': 1, background: true}
-    ]
+    ],
+    before:{
+      all: [],
+      find: [],
+      get: [],
+      create: [],
+      update: [],
+      patch: [],
+      remove: []
+    },
+    after:{
+      all: [],
+      find: [],
+      get: [],
+      create: [],
+      update: [],
+      patch: [],
+      remove: []
+    }
 };
 
 describe('Feathers Mongoose Service', function() {

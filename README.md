@@ -103,6 +103,59 @@ The following options can be passed when creating a new Mongoose service:
 
 **Note:** By default, each service creates its own database connection. If you don't want this you can pass an existing mongoose connection via the `connection` property.
 
+
+## Using with `feathers-hooks`
+If you're using the [feathers-hooks](https://github.com/feathersjs/feathers-hooks) plugin, you can pass the hooks directly on the service configuration object.  The below is just an example.  You are responsible to secure your own data.
+
+```
+var authHooks = require('feathers-authentication').hooks;
+var hooks = require('../hooks');
+
+var Property = {
+  schema: {
+    title: {type: String, required: true},
+    description: {type: String},
+    sold: {type: Boolean, 'default': false}
+  },
+  methods: {
+    isComplete: function(){
+      return this.complete;
+    }
+  },
+  statics: {
+  },
+  virtuals: {
+    'id': function(){
+      return this._id.toHexString();
+    }
+  },
+  indexes: [
+  ],
+  // Hooks
+  before:{
+    all: [authHooks.requireAuth],
+    find: [authHooks.queryWithUserId],
+    get: [authHooks.queryWithUserId],
+    // These will be executed in the order listed
+    create: [authHooks.setUserId, hooks.log],
+    update: [authHooks.setUserId],
+    patch: [authHooks.setUserId],
+    remove: [authHooks.setUserId]
+  },
+  after:{
+    all: [],
+    find: [hooks.log],
+    get: [],
+    create: [],
+    update: [],
+    patch: [],
+    remove: []
+  }
+};
+
+module.exports = Property;
+```
+
 ## Mongoose Schemas
 
 The recommended way of defining and passing a model to a `feathers-mongoose` service is shown above. Using object literal syntax makes things easily testable without having to mock out existing mongoose functionality.
