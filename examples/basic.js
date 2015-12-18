@@ -19,8 +19,6 @@ var app = feathers()
 // Connect to the db, create and register a Feathers service.
 app.use('todos', mongooseService('todo', Todo));
 
-app.configure(feathers.errors());
-
 // Start the server.
 var port = 8080;
 app.listen(port, function() {
