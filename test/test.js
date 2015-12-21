@@ -1,15 +1,41 @@
 var chai = require('chai');
 var expect = chai.expect;
+var feathers = require('feathers');
+var feathersHooks = require('feathers-hooks');
 var Fixtures = require('./fixtures');
 var errors = require('feathers-errors').types;
 var mongooseService = require('../lib/feathers-mongoose');
+var mongooseHooks = require('../lib/hooks');
 var mongoose = require('mongoose');
+
+var app = feathers();
+app.configure(feathersHooks());
+
 var Schema = mongoose.Schema;
 var _ids = {};
+
 var Comment = {
     schema: {
         content: {type: String, required: true},
         commenter: {type: String, required: true}
+    },
+    before:{
+      all: [],
+      find: [],
+      get: [],
+      create: [],
+      update: [],
+      patch: [],
+      remove: []
+    },
+    after:{
+      all: [],
+      find: [mongooseHooks.toObject()],
+      get: [],
+      create: [mongooseHooks.toObject()],
+      update: [],
+      patch: [],
+      remove: []
     }
 };
 
@@ -33,26 +59,14 @@ var Post = {
     },
     indexes: [
       {'published': 1, background: true}
-    ],
-    before:{
-      all: [],
-      find: [],
-      get: [],
-      create: [],
-      update: [],
-      patch: [],
-      remove: []
-    },
-    after:{
-      all: [],
-      find: [],
-      get: [],
-      create: [],
-      update: [],
-      patch: [],
-      remove: []
-    }
+    ]
 };
+
+app.use('comments', mongooseService('Comment', Comment));
+app.use('posts', mongooseService('Post', Post));
+
+var commentService = app.service('comments');
+// var postService = app.service('posts');
 
 describe('Feathers Mongoose Service', function() {
 
@@ -531,4 +545,49 @@ describe('Feathers Mongoose Service', function() {
       });
     });
   });
+
+  describe('Feathers Hooks', function(){
+
+    it('The toObject hook converts arrays of mongoose model instances to plain objects.', function(done) {
+      commentService.find({}, function(error, data) {
+        expect(error).to.be.null;
+        expect(data).to.be.instanceof(Array);
+        expect(data[0].toObject).to.be.undefined;
+        done();
+      });
+    });
+
+    it('The toObject hook converts a mongoose model instance to a plain object.', function(done) {
+      commentService.create(Fixtures.comments[0], function(error, data) {
+        expect(error).to.be.null;
+        expect(data.toObject).to.be.undefined;
+        done();
+      });
+    });
+
+    it.skip('The toObject hook throws an error when not being used as a function.', function(done) {
+        try{
+          var BadComment = {
+              schema: {
+                  content: {type: String, required: true},
+                  commenter: {type: String, required: true}
+              },
+              after:{
+                create: [mongooseHooks.toObject],
+              }
+          };
+          app.use('badcomments', mongooseService('badcomments', BadComment));
+          var badService = app.service('badcomments');
+          badService.create(Fixtures.comments[0], function(error) {
+            console.log(error);
+          });  
+        }
+        catch(err) {
+          console.log('This is a test');
+          console.log(err);
+          done();
+        }
+    });
+  });
+
 });
