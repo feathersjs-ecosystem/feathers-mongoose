@@ -35,10 +35,10 @@ Here's a complete example of a Feathers server with a `todos` mongoose-service.
 // models/todo.js
 var Todo = {
     schema: {
-        title: {type: String, required: true},
-        description: {type: String},
-        dueDate: {type: Date, 'default': Date.now},
-        complete: {type: Boolean, 'default': false, index: true}
+        text: {type: String, required: true},
+        complete: {type: Boolean, 'default': false, index: true},
+        createdAt: {type: Date, 'default': Date.now},
+        updatedAt: {type: Date, 'default': Date.now}
     },
     methods: {
         isComplete: function(){
@@ -50,7 +50,7 @@ var Todo = {
     virtuals: {
     },
     indexes: [
-        {'dueDate': -1, background: true}
+        {'updatedAt': -1, background: true}
     ]
 };
 
@@ -76,13 +76,13 @@ var app = feathers()
 app.use('todos', new mongooseService('todo', Todo));
 
 // Start the server.
-var port = 8080;
+var port = 3030;
 app.listen(port, function() {
     console.log('Feathers server listening on port ' + port);
 });
 ```
 
-You can run this example by using `node examples/basic` and going to [localhost:8080/todos](http://localhost:8080/todos). You should see an empty array. That's because you don't have any Todos yet but you now have full CRUD for your new todos service, including mongoose validations!
+You can run this example by using `node examples/app` and going to [localhost:3030/todos](http://localhost:3030/todos). You should see an empty array. That's because you don't have any Todos yet but you now have full CRUD for your new todos service, including mongoose validations!
 
 ## Options
 
@@ -111,11 +111,12 @@ If you're using the [feathers-hooks](https://github.com/feathersjs/feathers-hook
 var authHooks = require('feathers-authentication').hooks;
 var hooks = require('../hooks');
 
-var Property = {
+var Todo = {
   schema: {
-    title: {type: String, required: true},
-    description: {type: String},
-    sold: {type: Boolean, 'default': false}
+    text: {type: String, required: true},
+    complete: {type: Boolean, 'default': false, index: true},
+    createdAt: {type: Date, 'default': Date.now},
+    updatedAt: {type: Date, 'default': Date.now}
   },
   methods: {
     isComplete: function(){
@@ -153,12 +154,12 @@ var Property = {
   }
 };
 
-module.exports = Property;
+module.exports = Todo;
 ```
 
 ## Mongoose Schemas
 
-The recommended way of defining and passing a model to a `feathers-mongoose` service is shown above. Using object literal syntax makes things easily testable without having to mock out existing mongoose functionality.
+> The recommended way of defining and passing a model to a `feathers-mongoose` service is shown above. Using object literal syntax makes it easy to test your code without having to mock out existing mongoose functionality.
 
 With that said, you have two other options:
 
@@ -170,10 +171,10 @@ var mongoose = require('mongoose'),
     Schema = mongoose.Schema;
 
 var TodoSchema = Schema({
-    title: {type: String, required: true},
-    description: {type: String},
-    dueDate: {type: Date, 'default': Date.now},
-    complete: {type: Boolean, 'default': false, index: true}
+    text: {type: String, required: true},
+    complete: {type: Boolean, 'default': false, index: true},
+    createdAt: {type: Date, 'default': Date.now},
+    updatedAt: {type: Date, 'default': Date.now}
 });
 
 TodoSchema.methods.isComplete = function() {
@@ -188,7 +189,7 @@ TodoSchema.virtual('id').get(function(){
 TodoSchema.set('toJSON', {virtuals: true});
 TodoSchema.set('toObject', {virtuals: true});
 
-TodoSchema.index({'dueDate': -1, background: true});
+TodoSchema.index({'updatedAt': -1, background: true});
 
 module.exports = TodoSchema;
 ```
@@ -211,17 +212,17 @@ var mongoose = require('mongoose'),
     Schema = mongoose.Schema;
 
 var TodoSchema = Schema({
-    title: {type: String, required: true},
-    description: {type: String},
-    dueDate: {type: Date, 'default': Date.now},
-    complete: {type: Boolean, 'default': false, index: true}
+    text: {type: String, required: true},
+    complete: {type: Boolean, 'default': false, index: true},
+    createdAt: {type: Date, 'default': Date.now},
+    updatedAt: {type: Date, 'default': Date.now}
 });
 
 TodoSchema.methods.isComplete = function() {
     return this.complete;
 }
 
-TodoSchema.index({'dueDate': -1, background: true});
+TodoSchema.index({'updatedAt': -1, background: true});
 
 module.exports = mongoose.model('Todo', TodoSchema);
 ```
