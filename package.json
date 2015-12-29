@@ -15,12 +15,7 @@
     "mongoose",
     "service"
   ],
-  "licenses": [
-    {
-      "type": "MIT",
-      "url": "https://github.com/feathersjs/feathers-mongoose/blob/master/LICENSE"
-    }
-  ],
+  "licenses": "MIT",
   "repository": {
     "type": "git",
     "url": "git://github.com/feathersjs/feathers-mongoose.git"
@@ -61,7 +56,6 @@
     "feathers-errors": "^1.1.5",
     "feathers-query-filters": "^1.1.1",
     "uberproto": "^1.1.2",
-    "lodash": "^2.4.1",
     "mongoose": "^4.1.0"
   },
   "devDependencies": {

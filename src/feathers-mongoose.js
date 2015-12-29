@@ -1,5 +1,3 @@
-'use strict';
-
 var _ = require('lodash');
 var Proto = require('uberproto');
 var mongoose = require('mongoose');
@@ -10,7 +8,7 @@ var ObjectId = mongoose.Types.ObjectId;
 
 var MongooseService = Proto.extend({
 
-  init: function init(modelName, entity, options) {
+  init: function(modelName, entity, options) {
     options = options || {};
 
     if (!_.isString(modelName)) {
@@ -19,7 +17,7 @@ var MongooseService = Proto.extend({
 
     this.options = _.extend({}, options);
     this.type = 'mongoose';
-
+    
     // Add feathers-hooks definitions.
     this.before = entity.before || undefined;
     this.after = entity.after || undefined;
@@ -30,46 +28,47 @@ var MongooseService = Proto.extend({
     }
     // It's not a model so we need to create one
     else {
-        this.name = modelName;
+      this.name = modelName;
 
-        if (entity instanceof Schema) {
-          this.schema = entity;
-        } else {
-          this.schema = this._createSchema(entity);
-        }
-
-        mongoose.model(this.name, this.schema);
+      if (entity instanceof Schema) {
+        this.schema = entity;
       }
+      else {
+        this.schema = this._createSchema(entity);
+      }
+      
+      mongoose.model(this.name, this.schema);
+    }
 
     this._connect(this.options);
     this.model = this.store.model(this.name);
   },
 
-  _createSchema: function _createSchema(entity) {
+  _createSchema: function(entity){
     var schema = new Schema(entity.schema, this.options);
 
     if (entity.methods) {
-      _.each(entity.methods, function (val, key) {
+      _.each(entity.methods, function(val, key){
         schema.methods[key] = val;
       });
     }
 
     if (entity.statics) {
-      _.each(entity.statics, function (val, key) {
+      _.each(entity.statics, function(val, key){
         schema.statics[key] = val;
       });
     }
 
     if (entity.virtuals) {
-      _.each(entity.virtuals, function (val, key) {
-        _.each(val, function (fn, method) {
+      _.each(entity.virtuals, function(val, key){
+        _.each(val, function(fn, method){
           schema.virtual(key)[method](fn);
         });
       });
     }
 
     if (entity.indexes) {
-      _.each(entity.indexes, function (val) {
+      _.each(entity.indexes, function(val){
         schema.index(val);
       });
     }
@@ -84,7 +83,7 @@ var MongooseService = Proto.extend({
   // totally different databases.
 
   // TODO (EK): We need to handle replica sets.
-  _connect: function _connect(options) {
+  _connect: function(options) {
     var connectionString = options.connectionString;
 
     if (options.connection) {
@@ -118,7 +117,7 @@ var MongooseService = Proto.extend({
     this.store = mongoose.createConnection(connectionString);
   },
 
-  find: function find(params, cb) {
+  find: function(params, cb) {
     if (_.isFunction(params)) {
       cb = params;
       params = {};
@@ -131,31 +130,31 @@ var MongooseService = Proto.extend({
 
     if (filters.$select && filters.$select.length) {
       var fields = {};
-
-      _.each(filters.$select, function (key) {
+      
+      _.each(filters.$select, function(key){
         fields[key] = 1;
       });
 
       query.select(fields);
     }
 
-    if (filters.$sort) {
+    if (filters.$sort){
       query.sort(filters.$sort);
     }
 
-    if (filters.$limit) {
+    if (filters.$limit){
       query.limit(filters.$limit);
     }
 
-    if (filters.$skip) {
+    if (filters.$skip){
       query.skip(filters.$skip);
     }
 
-    if (filters.$populate) {
+    if (filters.$populate){
       query.populate(filters.$populate);
     }
 
-    query.exec(function (error, data) {
+    query.exec(function(error, data) {
       if (error) {
         return cb(new errors.BadRequest(error));
       }
@@ -164,13 +163,13 @@ var MongooseService = Proto.extend({
     });
   },
 
-  get: function get(id, params, cb) {
-    if (_.isFunction(id)) {
+  get: function(id, params, cb) {
+    if(_.isFunction(id)) {
       cb = id;
       return cb(new errors.BadRequest('A string or number id must be provided'));
     }
 
-    if (_.isFunction(params)) {
+    if(_.isFunction(params)) {
       cb = params;
       params = {};
     }
@@ -178,22 +177,25 @@ var MongooseService = Proto.extend({
     var populate = params.query && params.query.populate ? params.query.populate : '';
 
     // TODO (EK): handle params.fields & params.options
-    this.model.findById(new ObjectId(id.toString())).populate(populate).exec(function (error, data) {
-      if (error) {
-        return cb(new errors.BadRequest(error));
-      }
+    this.model
+        .findById(new ObjectId(id.toString()))
+        .populate(populate)
+        .exec(function (error, data) {
+          if (error) {
+            return cb(new errors.BadRequest(error));
+          }
 
-      if (!data) {
-        return cb(new errors.NotFound('No record found for id ' + id));
-      }
+          if (!data) {
+            return cb(new errors.NotFound('No record found for id ' + id));
+          }
 
-      cb(null, data);
-    });
+          cb(null, data);
+        });
   },
 
   // TODO (EK): Batch support for create, update, delete.
-  create: function create(data, params, cb) {
-    if (_.isFunction(params)) {
+  create: function(data, params, cb) {
+    if(_.isFunction(params)) {
       cb = params;
       params = {};
     }
@@ -211,11 +213,11 @@ var MongooseService = Proto.extend({
     });
   },
 
-  patch: function patch(id, data, params, cb) {
+  patch: function(id, data, params, cb) {
     this.update.call(this, id, data, params, cb);
   },
 
-  update: function update(id, data, params, cb) {
+  update: function(id, data, params, cb) {
     if (_.isFunction(data)) {
       cb = data;
       return cb(new errors.BadRequest('You need to provide data to be updated'));
@@ -227,7 +229,7 @@ var MongooseService = Proto.extend({
     }
 
     // TODO (EK): Support updating multiple docs. Maybe we just use feathers-batch
-    this.model.findByIdAndUpdate(new ObjectId(id), data, { new: true }, function (error, data) {
+    this.model.findByIdAndUpdate(new ObjectId(id), data, {new: true}, function(error, data) {
       if (error) {
         return cb(new errors.BadRequest(error));
       }
@@ -240,13 +242,13 @@ var MongooseService = Proto.extend({
     });
   },
 
-  remove: function remove(id, params, cb) {
-    if (_.isFunction(params)) {
+  remove: function(id, params, cb) {
+    if(_.isFunction(params)) {
       cb = params;
       params = {};
     }
 
-    this.model.findByIdAndRemove(new ObjectId(id), function (error, data) {
+    this.model.findByIdAndRemove(new ObjectId(id), function(error, data) {
       if (error) {
         return cb(error);
       }
@@ -260,7 +262,7 @@ var MongooseService = Proto.extend({
   }
 });
 
-module.exports = function (modelName, schema, options) {
+module.exports = function(modelName, schema, options) {
   return Proto.create.call(MongooseService, modelName, schema, options);
 };
 

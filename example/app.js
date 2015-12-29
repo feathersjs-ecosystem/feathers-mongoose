@@ -1,6 +1,6 @@
 var feathers = require('feathers');
 var bodyParser = require('body-parser');
-var mongoose = require('../lib');
+var mongooseService = require('../lib').service;
 var Todo = require('./models/todo');
 
 // Create a feathers instance.
@@ -15,7 +15,14 @@ var app = feathers()
   .use(bodyParser.urlencoded({extended: true}))
 
 // Connect to the db, create and register a Feathers service.
-app.use('todos', mongoose('todo', Todo));
+app.use('todos', mongooseService({
+  name: 'todo',
+  Model: Todo,
+  paginate: {
+    default: 2,
+    max: 4
+  }
+}));
 
 // A basic error handler, just like Express
 app.use(function(error, req, res, next){

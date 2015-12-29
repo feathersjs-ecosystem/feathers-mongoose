@@ -1,9 +1,3 @@
-'use strict';
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.toObject = toObject;
 /**
  * The `toObject` hook converts the response to a plain js object instead of a 
  * Mongoose model instance. It can only be used as an `after` hook.
@@ -31,19 +25,18 @@ exports.toObject = toObject;
  * @return {Object}  The hook object with the result as a plain js object.
  */
 
-function toObject(options, hookFunction) {
+export function toObject(options, hookFunction) {
   if (typeof hookFunction === 'function') {
     throw new Error('Please use the hook as a function.');
   }
 
   options = options || {};
 
-  return function (hook, next) {
+  return function(hook, next) {
     if (Array.isArray(hook.result)) {
-      hook.result = hook.result.map(function (obj) {
-        return obj.toObject(options);
-      });
-    } else {
+      hook.result = hook.result.map((obj) => obj.toObject(options));
+    }
+    else {
       hook.result = hook.result.toObject(options);
     }
     return next();
