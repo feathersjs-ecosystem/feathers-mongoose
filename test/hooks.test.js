@@ -7,7 +7,7 @@ describe('Feathers Mongoose Hooks', () => {
     it('throws an error if hook is not a function', () => {
       let options = { foo: 'bar' };
       let fn = function(){};
-      expect(hooks.toObject.bind(null, options, fn)).to.throw(new Error('Please use the hook as a function.'));
+      expect(hooks.toObject.bind(null, options, fn)).to.throw('Please use the hook as a function.');
     });
   });
 });

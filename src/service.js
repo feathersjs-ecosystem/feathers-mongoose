@@ -4,13 +4,13 @@ import Proto from 'uberproto';
 import mongoose from 'mongoose';
 import filter from 'feathers-query-filters';
 import errors from 'feathers-errors';
-import * as utils from './utils';
+import errorHandler from './error-handler';
 
 // Use native promises
 mongoose.Promise = global.Promise;
 
 const Schema = mongoose.Schema;
-const ObjectId = mongoose.Types.ObjectId;
+// const ObjectId = mongoose.Types.ObjectId;
 
 // Create the service.
 class Service {
@@ -158,9 +158,9 @@ class Service {
     if (filters.$select && filters.$select.length) {
       let fields = {};
       
-      Object.keys(filters.$select).forEach(key => {
+      for (let key of filters.$select) {
         fields[key] = 1;
-      });
+      }
 
       query.select(fields);
     }
@@ -198,16 +198,16 @@ class Service {
             skip: filters.$skip || 0,
             data
           };
-        }).catch(utils.errorHandler);
-      }).catch(utils.errorHandler);
+        }).catch(errorHandler);
+      }).catch(errorHandler);
     }
 
-    return promise.catch(utils.errorHandler);
+    return promise;
   }
 
   get(id, params) {
     params.query = params.query || {};
-    params.query[this.id] = new ObjectId(id);
+    params.query[this.id] = id;
 
     return this.find(params).then(data => {
       if (data && data.length !== 1) {
@@ -215,7 +215,7 @@ class Service {
       }
 
       return data[0];
-    }).catch(utils.errorHandler);
+    }).catch(errorHandler);
   }
 
   create(data, params) {
@@ -223,7 +223,7 @@ class Service {
       return Promise.all(data.map(current => this.create(current, params)));
     }
 
-    return this.Model.create(data).catch(utils.errorHandler);
+    return this.Model.create(data).catch(errorHandler);
   }
 
   patch(id, data, params) {
@@ -232,7 +232,7 @@ class Service {
     let batch = false;
 
     if (id !== null) {
-      params.query[this.id] = new ObjectId(id);
+      params.query[this.id] = id;
     }
     // we are updating multiple records
     else {
@@ -243,7 +243,7 @@ class Service {
 
     let query = this.Model.update(params.query, {$set: data}, { multi: batch });
 
-    return query.then((data) => {
+    return query.then(() => {
       return this.find(params).then(items => {
         if (items.length ===  0) {
           throw new errors.NotFound(`No record found for id '${id}'`);
@@ -254,8 +254,8 @@ class Service {
         }
 
         return items;
-      }).catch(utils.errorHandler);
-    }).catch(utils.errorHandler);
+      }).catch(errorHandler);
+    }).catch(errorHandler);
   }
 
   update(id, data, params) {
@@ -265,9 +265,9 @@ class Service {
     return this.get(id, params).then(oldData => {
       let newObject = {};
       let conditions = {};
-      conditions[this.id] = new ObjectId(id);
+      conditions[this.id] = id;
 
-      for (var key of Object.keys(oldData)) {
+      for ( let key of Object.keys(oldData.toObject()) ) {
         if (data[key] === undefined) {
           newObject[key] = null;
         } else {
@@ -278,12 +278,12 @@ class Service {
       // NOTE (EK): Delete id field so we don't update it
       delete newObject[this.id];
 
-      return this.Model.update(conditions, newObject).then(() => {
+      return this.Model.update(conditions, newObject, {new: true}).then(() => {
         // NOTE (EK): Restore the id field so we can return it to the client
         newObject[this.id] = id;
         return newObject;
-      }).catch(utils.errorHandler);
-    }).catch(utils.errorHandler);
+      }).catch(errorHandler);
+    }).catch(errorHandler);
   }
 
   remove(id, params) {
@@ -292,7 +292,7 @@ class Service {
     // NOTE (EK): First fetch the record(s) so that we can return
     // it/them when we delete it/them.
     if (id !== null) {
-      params.query[this.id] = new ObjectId(id);
+      params.query[this.id] = id;
     }
 
     return this.find(params).then(items => {
@@ -304,8 +304,8 @@ class Service {
         }
 
         return items;
-      }).catch(utils.errorHandler);
-    }).catch(utils.errorHandler);
+      }).catch(errorHandler);
+    }).catch(errorHandler);
   }
 }
 

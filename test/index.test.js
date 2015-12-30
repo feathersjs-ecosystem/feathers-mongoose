@@ -4,7 +4,7 @@ import { expect } from 'chai';
 import { base, orm, example } from 'feathers-service-tests';
 import errors from 'feathers-errors';
 import feathers from 'feathers';
-import {hooks, service, mongoose} from '../src';
+import {hooks, service} from '../src';
 import server from '../example/app';
 
 const Model = {
@@ -12,7 +12,7 @@ const Model = {
     name: {type: String, required: true},
     age: {type: Number},
     created: {type: Boolean, 'default': false},
-    time: {type: Date, 'default': Date.now}
+    time: {type: Number}
   },
   before:{
     all: [],
@@ -35,7 +35,7 @@ const Model = {
 };
 
 const _ids = {};
-const app = feathers().use('/people', service({ name: 'user', Model }));
+const app = feathers().use('/people', service({ name: 'User', Model }));
 const people = app.service('people');
 
 describe('Feathers Mongoose Service', () => {
@@ -58,23 +58,28 @@ describe('Feathers Mongoose Service', () => {
   });
 
   describe('Initialization', () => {
+    // beforeEach(() => {
+    //   mongoose.models = {};
+    //   mongoose.modelSchemas = {};
+    //   mongoose.connection.models = {};
+    //   mongoose.connection.collections = {};
+    // });
+
     describe('when missing options', () => {
       it('throws an error', () => {
-        let e = new Error('Mongoose options have to be provided');
-        expect(service.bind(null)).to.throw(e);
+        expect(service.bind(null)).to.throw('Mongoose options have to be provided');
       });
     });
 
     describe('when missing a model name', () => {
       it('throws an error', () => {
-        let e = new Error('A valid model name must be provided');
-        expect(service.bind(null)).to.throw(e);
+        expect(service.bind(null, {})).to.throw('A valid model name must be provided');
       });
     });
 
     describe('when missing a Model', () => {
       it('throws an error', () => {
-        expect(service.bind(null)).to.throw(/You must provide a Model/);
+        expect(service.bind(null, { name: 'Test' })).to.throw(/You must provide a Model/);
       });
     });
 
@@ -86,20 +91,28 @@ describe('Feathers Mongoose Service', () => {
 
     describe('when missing the paginate option', () => {
       it('sets the default to be {}', () => {
-        expect(people.paginate).to.equal({});
+        expect(people.paginate).to.deep.equal({});
       });
     });
   });
 
-  describe.only('Common functionality', () => {
-    beforeEach(() => {
-      mongoose.models = {};
-      mongoose.modelSchemas = {};
-      mongoose.connection.models = {};
-      mongoose.connection.collections = {};
+  describe('Common functionality', () => {
+    beforeEach((done) => {
+      // FIXME (EK): This is shit. We should be loading fixtures
+      // using the raw driver not our system under test
+      people.create({ name: 'Doug', age: 32 }).then(user => {
+        _ids.Doug = user._id;
+        done();
+      });
     });
 
-    base(people, _ids, errors);
+    afterEach(done => {
+      people.remove(null, { query: {} }).then(() => {
+        return done();
+      });
+    });
+
+    base(people, _ids, errors, '_id');
   });
 
   describe('Mongoose service ORM errors', () => {
