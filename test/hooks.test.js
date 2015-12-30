@@ -19,6 +19,12 @@ describe('Feathers Mongoose Hooks', () => {
       });
     });
 
+    after(done => {
+      people.remove(null, {}).then(() => {
+        done();
+      });
+    });
+
     it('throws an error if hook is not a function', () => {
       let options = { foo: 'bar' };
       let fn = function(){};
