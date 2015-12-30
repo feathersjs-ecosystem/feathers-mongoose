@@ -33,13 +33,6 @@ describe('Feathers Mongoose Service', () => {
   });
 
   describe('Initialization', () => {
-    // beforeEach(() => {
-    //   mongoose.models = {};
-    //   mongoose.modelSchemas = {};
-    //   mongoose.connection.models = {};
-    //   mongoose.connection.collections = {};
-    // });
-
     describe('when missing options', () => {
       it('throws an error', () => {
         expect(service.bind(null)).to.throw('Mongoose options have to be provided');

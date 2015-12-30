@@ -10,7 +10,6 @@ import errorHandler from './error-handler';
 mongoose.Promise = global.Promise;
 
 const Schema = mongoose.Schema;
-// const ObjectId = mongoose.Types.ObjectId;
 
 // Create the service.
 class Service {
