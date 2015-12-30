@@ -4,39 +4,14 @@ import { expect } from 'chai';
 import { base, orm, example } from 'feathers-service-tests';
 import errors from 'feathers-errors';
 import feathers from 'feathers';
-import {hooks, service} from '../src';
+import service from '../src';
 import server from '../example/app';
-
-const Model = {
-  schema: {
-    name: {type: String, required: true},
-    age: {type: Number},
-    created: {type: Boolean, 'default': false},
-    time: {type: Number}
-  },
-  before:{
-    all: [],
-    find: [],
-    get: [],
-    create: [],
-    update: [],
-    patch: [],
-    remove: []
-  },
-  after:{
-    all: [],
-    find: [hooks.toObject()],
-    get: [],
-    create: [hooks.toObject()],
-    update: [],
-    patch: [],
-    remove: []
-  }
-};
+import Model from './models/user';
 
 const _ids = {};
 const app = feathers().use('/people', service({ name: 'User', Model }));
 const people = app.service('people');
+let testApp;
 
 describe('Feathers Mongoose Service', () => {
   describe('Requiring', () => {
@@ -120,8 +95,15 @@ describe('Feathers Mongoose Service', () => {
   });
 
   describe('Mongoose service example test', () => {
-    after(done => server.close(() => done()));
+    before(done => {
+      server.service('todos').remove(null, {}).then(() => {
+        testApp = server.listen(3030);
+        return done();
+      });
+    });
 
-    example();
+    after(done => testApp.close(() => done()));
+
+    example('_id');
   });
 });

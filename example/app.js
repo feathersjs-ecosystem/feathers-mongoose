@@ -29,7 +29,10 @@ app.use(function(error, req, res, next){
   res.json(error);
 });
 
-// Start the server
-module.exports = app.listen(3030);
+// Start the server if we're not being required in a test
+if (!module.parent) {
+  app.listen(3030);
+  console.log('Feathers Todo mongoose service running on 127.0.0.1:3030');
+}
 
-console.log('Feathers Todo mongoose service running on 127.0.0.1:3030');
+module.exports = app;
