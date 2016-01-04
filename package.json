@@ -55,8 +55,7 @@
     "babel-polyfill": "^6.3.14",
     "feathers-errors": "^1.1.5",
     "feathers-query-filters": "^1.1.1",
-    "uberproto": "^1.1.2",
-    "mongoose": "^4.1.0"
+    "uberproto": "^1.1.2"
   },
   "devDependencies": {
     "babel-cli": "^6.1.2",
@@ -70,6 +69,7 @@
     "feathers-hooks": "^0.5.1",
     "feathers-service-tests": "^0.5.3",
     "jshint": "^2.8.0",
-    "mocha": "^2.3.3"
+    "mocha": "^2.3.3",
+    "mongoose": "^4.1.0"
   }
 }
