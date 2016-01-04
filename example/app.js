@@ -1,7 +1,18 @@
 var feathers = require('feathers');
 var bodyParser = require('body-parser');
+var mongoose = require('mongoose');
 var mongooseService = require('../lib').service;
+
+// Require your models
 var Todo = require('./models/todo');
+
+// Tell mongoose to use native promises
+// See http://mongoosejs.com/docs/promises.html
+mongoose.Promise = global.Promise;
+
+// Connect to your MongoDB instance(s)
+mongoose.connect('mongodb://localhost:27017/feathers');
+
 
 // Create a feathers instance.
 var app = feathers()

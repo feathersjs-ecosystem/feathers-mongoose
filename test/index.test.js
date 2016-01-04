@@ -26,10 +26,6 @@ describe('Feathers Mongoose Service', () => {
     it('exposes hooks', () => {
       expect(typeof require('../lib').hooks).to.equal('object');
     });
-
-    it('exposes mongoose', () => {
-      expect(typeof require('../lib').mongoose).to.equal('object');
-    });
   });
 
   describe('Initialization', () => {
@@ -39,15 +35,9 @@ describe('Feathers Mongoose Service', () => {
       });
     });
 
-    describe('when missing a model name', () => {
-      it('throws an error', () => {
-        expect(service.bind(null, {})).to.throw('A valid model name must be provided');
-      });
-    });
-
     describe('when missing a Model', () => {
       it('throws an error', () => {
-        expect(service.bind(null, { name: 'Test' })).to.throw(/You must provide a Model/);
+        expect(service.bind(null, { name: 'Test' })).to.throw(/You must provide a Mongoose Model/);
       });
     });
 

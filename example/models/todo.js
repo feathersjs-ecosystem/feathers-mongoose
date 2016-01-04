@@ -1,21 +1,15 @@
-var mongoose = require('../../lib').mongoose;
+var mongoose = require('mongoose');
+var Schema = mongoose.Schema;
 
-var Todo = {
-  schema: {
-    text: {type: String, required: true},
-    complete: {type: Boolean, 'default': false, index: true},
-    createdAt: {type: Date, 'default': Date.now},
-    updatedAt: {type: Date, 'default': Date.now}
-  },
-  methods: {
-  },
-  statics: {
-  },
-  virtuals: {
-  },
-  indexes: [
-  {'updatedAt': -1, background: true}
-  ]
-};
+var TodoSchema = new Schema({
+  text: {type: String, required: true},
+  complete: {type: Boolean, 'default': false, index: true},
+  createdAt: {type: Date, 'default': Date.now},
+  updatedAt: {type: Date, 'default': Date.now}
+});
 
-module.exports = Todo;
+TodoSchema.index({'updatedAt': -1, background: true});
+
+var TodoModel = mongoose.model('Todo', TodoSchema);
+
+module.exports = TodoModel;
