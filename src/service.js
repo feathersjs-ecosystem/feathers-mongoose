@@ -1,15 +1,9 @@
 if(!global._babelPolyfill) { require('babel-polyfill'); }
 
 import Proto from 'uberproto';
-import mongoose from 'mongoose';
 import filter from 'feathers-query-filters';
 import errors from 'feathers-errors';
 import errorHandler from './error-handler';
-
-// Use native promises
-mongoose.Promise = global.Promise;
-
-const Schema = mongoose.Schema;
 
 // Create the service.
 class Service {
@@ -18,129 +12,18 @@ class Service {
       throw new Error('Mongoose options have to be provided');
     }
 
-    if (typeof options.name !== 'string') {
-      throw new Error('A valid model name must be provided');
+    if (!options.Model || !options.Model.modelName) {
+      throw new Error('You must provide a Mongoose Model');
     }
 
-    if (!options.Model) {
-      throw new Error(`You must provide a Model.\n
-        This could be an object literal, a mongoose Schema, or a mongoose Model.`
-      );
-    }
-
-    this.name = options.name;
+    // this.name = options.name;
     this.Model = options.Model;
     this.id = options.id || '_id';
     this.paginate = options.paginate || {};
-    
-    // Add feathers-hooks definitions.
-    this.before = this.Model.before || undefined;
-    this.after = this.Model.after || undefined;
-
-    // It is a mongoose model already
-    if (options.Model.modelName) {
-      this.name = options.Model.modelName;
-    }
-    // It's not a model so we need to create one
-    else {
-      if (options.Model instanceof Schema) {
-        this.schema = options.Model;
-      }
-      else {
-        this.schema = this._createSchema(options);
-      }
-      
-      mongoose.model(this.name, this.schema);
-    }
-
-    this._connect(options);
-    this.Model = this.store.model(this.name);
   }
 
   extend(obj) {
     return Proto.extend(obj, this);
-  }
-
-  _createSchema(options){
-    let entity = options.Model;
-    let schema = new Schema(entity.schema, options);
-
-    // Map any instance methods to the mongoose schema
-    if (entity.methods) {
-      Object.keys(entity.methods).forEach(key => {
-        schema.methods[key] = entity.methods[key];
-      });
-    }
-
-    // Map any static methods to the mongoose schema
-    if (entity.statics) {
-      Object.keys(entity.statics).forEach(key => {
-        schema.statics[key] = entity.statics[key];
-      });
-    }
-
-    // Map any virtual attributes to the mongoose schema
-    if (entity.virtuals) {
-      Object.keys(entity.virtuals).forEach(key => {
-        let value = entity.virtuals[key];
-
-        Object.keys(value).forEach(method => {
-          let fn = value[method];
-          schema.virtual(key)[method](fn);
-        });
-      });
-    }
-
-    // Map and set any indexes on the mongoose schema
-    if (entity.indexes) {
-      Object.keys(entity.indexes).forEach(key => {
-        let value = entity.indexes[key];
-        schema.index(value);
-      });
-    }
-
-    return schema;
-  }
-
-  // NOTE (EK): We create a new database connection for every MongooseService.
-  // This may not be good but... in the mean time the rationale for this
-  // design is because each user of a MongooseService instance could be a separate
-  // app residing on a totally different server, or each service could talk to
-  // totally different databases.
-
-  // TODO (EK): We need to handle replica sets.
-  _connect(options) {
-    var connectionString = options.connectionString;
-
-    if (options.connection) {
-      this.store = options.connection;
-      return;
-    }
-
-    if (!connectionString) {
-      var config = Object.assign({
-        host: 'localhost',
-        port: 27017,
-        db: 'feathers',
-        reconnect: true
-      }, options);
-
-      connectionString = 'mongodb://';
-
-      if (config.username && config.password) {
-        connectionString += config.username + ':' + config.password + '@';
-      }
-
-      connectionString += config.host + ':' + config.port + '/' + config.db;
-
-      if (config.reconnect) {
-        connectionString += '?auto_reconnect=true';
-      }
-    }
-
-    // TODO (EK): Support mongoose connection options
-    // http://mongoosejs.com/docs/connections.html
-    this.store = mongoose.createConnection(connectionString);
   }
 
   find(params) {
