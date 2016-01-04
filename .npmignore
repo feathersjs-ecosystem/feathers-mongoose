@@ -1,0 +1,5 @@
+.babelrc
+.idea/
+src/
+test/
+!lib/
