@@ -439,7 +439,20 @@ query: {
 }
 ```
 
-> **Note:** Typically you can only populate one level deeep.
+> **Note:** Typically you can only populate one level deep.
+
+
+## Modifying retrieved data
+The records returned from a query are Mongoose documents, so they can't be modified directly (You won't be able to delete properties from them).  To get around this, you can use the included `toObject` hook to convert the Mongoose documents into plain objects.  Let's modify the before-hooks setup in the feathers-hooks example, above, to this:
+
+```js
+app.service('todos').before({
+  all: [feathersMongoose.hooks.toObject({})]
+});
+```
+
+The `toObject` hook must be called as a function and accepts a configuration object with any of the options supported by [Mongoose's toObject method](http://mongoosejs.com/docs/api.html#document_Document-toObject).
+
 
 ## Changelog
 ### 3.0.0
