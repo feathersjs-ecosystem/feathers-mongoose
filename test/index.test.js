@@ -7,11 +7,15 @@ import feathers from 'feathers';
 import service from '../src';
 import { hooks, Service } from '../src';
 import server from '../example/app';
-import Model from './models/user';
+import User from './models/user';
+import Pet from './models/pet';
 
 const _ids = {};
-const app = feathers().use('/people', service({ name: 'User', Model }));
+const _petIds = {};
+const app = feathers().use('/people', service({ name: 'User', Model: User }))
+                      .use('/pets', service({ name: 'User', Model: Pet }));
 const people = app.service('people');
+const pets = app.service('pets');
 let testApp;
 
 describe('Feathers Mongoose Service', () => {
@@ -82,19 +86,42 @@ describe('Feathers Mongoose Service', () => {
     beforeEach((done) => {
       // FIXME (EK): This is shit. We should be loading fixtures
       // using the raw driver not our system under test
-      people.create({ name: 'Doug', age: 32 }).then(user => {
-        _ids.Doug = user._id;
-        done();
+      pets.create({type: 'dog', name: 'Rufus'}).then(pet => {
+        _petIds.Rufus = pet._id;
+
+        return people.create({ name: 'Doug', age: 32, pets: [pet._id] }).then(user => {
+          _ids.Doug = user._id;
+          done();
+        });
       });
     });
 
     afterEach(done => {
-      people.remove(null, { query: {} }).then(() => {
-        return done();
+      pets.remove(null, { query: {} }).then(() => {
+        return people.remove(null, { query: {} }).then(() => {
+          return done();
+        });
       });
     });
 
     base(people, _ids, errors, '_id');
+
+    it('can $populate', function (done) {
+      var params = {
+        query: {
+          name: 'Doug',
+          $populate: ['pets']
+        }
+      };
+
+      people.find(params).then(data => {
+        expect(data[0].pets[0].name).to.equal('Rufus');
+        done();
+      }).catch(e => {
+        console.log(e);
+        done();
+      });
+    });
   });
 
   describe('Mongoose service ORM errors', () => {
