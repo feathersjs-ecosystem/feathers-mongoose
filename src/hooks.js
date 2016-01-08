@@ -27,7 +27,7 @@
 
 export function toObject(options, hookFunction) {
   if (typeof hookFunction === 'function') {
-    throw new Error('Please use the hook as a function.');
+    throw new Error('Please use the toObject hook as a function.');
   }
 
   options = options || {};
