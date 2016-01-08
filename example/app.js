@@ -1,7 +1,7 @@
 var feathers = require('feathers');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
-var mongooseService = require('../lib').service;
+var mongooseService = require('../lib');
 
 // Require your models
 var Todo = require('./models/todo');
