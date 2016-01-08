@@ -219,6 +219,31 @@ app.use('/todos', myService);
 **Note:** _this is more for backwards compatibility. We recommend the usage of hooks as they are easier to test, easier to maintain and are more flexible._
 
 
+## Migrating
+
+Version 3 of this adapter no longer brings its own Mongoose dependency, only accepts mongoose models and doesn't set up a database connection for you anymore. This means that you now need to make your own mongoose database connection and you need to pass in mongoose models changing something like
+
+```js
+var MySchema = require('./models/mymodel')
+var mongooseService = require('feathers-mongoose');
+app.use('todos', mongooseService('todo', MySchema, options));
+```
+
+To
+
+```js
+var mongoose = require('mongoose');
+var MongooseModel = require('./models/mymodel')
+var mongooseService = require('feathers-mongoose');
+
+mongoose.Promise = global.Promise;
+mongoose.connect('mongodb://localhost:27017/feathers');
+
+app.use('/todos', mongooseService({
+  Model: MongooseModel
+}));
+```
+
 ## Validation
 
 Mongoose by default gives you the ability to add [validations at the model level](http://mongoosejs.com/docs/validation.html). Using an error handler like the [middleware that comes with Feathers](https://github.com/feathersjs/generator-feathers/blob/master/app/templates/src/middleware/error-handler.js) your validation errors will be formatted nicely right out of the box!
