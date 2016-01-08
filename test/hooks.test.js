@@ -1,13 +1,13 @@
 import { expect } from 'chai';
 import feathers from 'feathers';
 import feathersHooks from 'feathers-hooks';
-import { hooks, service } from '../src';
+import { hooks, Service } from '../src';
 import Model from './models/user';
 
 const _ids = {};
 const app = feathers()
             .configure(feathersHooks())
-            .use('/people', service({ name: 'Person', Model }));
+            .use('/people', new Service({ name: 'Person', Model }));
 const people = app.service('people');
 
 describe('Feathers Mongoose Hooks', () => {

@@ -21,8 +21,8 @@ describe('Feathers Mongoose Service', () => {
       expect(typeof lib).to.equal('function');
     });
 
-    it('exposes the service', () => {
-      expect(typeof lib.service).to.equal('function');
+    it('exposes the Service', () => {
+      expect(typeof lib.Service).to.equal('function');
     });
 
     it('exposes hooks', () => {

@@ -1,7 +1,7 @@
 var feathers = require('feathers');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
-var mongooseService = require('../lib').service;
+var mongooseService = require('../lib').Service;
 
 // Require your models
 var Todo = require('./models/todo');
@@ -26,7 +26,7 @@ var app = feathers()
   .use(bodyParser.urlencoded({extended: true}))
 
 // Connect to the db, create and register a Feathers service.
-app.use('todos', mongooseService({
+app.use('todos', new mongooseService({
   name: 'todo',
   Model: Todo,
   paginate: {
