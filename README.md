@@ -138,13 +138,18 @@ user that made the request could be added like this:
 ```js
 var feathers = require('feathers');
 var hooks = require('feathers-hooks');
-var sequelize = require('feathers-sequelize');
-// Assuming todo.js exports the Sequelize model definition
+var mongoose = require('mongoose');
+var service = require('feathers-mongoose');
+
+mongoose.Promise = global.Promise;
+mongoose.connect('mongodb://localhost:27017/feathers');
+
+// Assuming todo.js exports the Mongoose model definition
 var Todo = require('./models/todo.js');
 
 var app = feathers()
   .configure(hooks())
-  .use('/todos', sequelize({
+  .use('/todos', service({
     Model: Todo,
     paginate: {
       default: 2,
@@ -169,7 +174,7 @@ The module also exports a Babel transpiled ES6 class as `Service` that can be di
 
 ```js
 import Todo from './models/todo';
-import { Service } from 'feathers-sequelize';
+import { Service } from 'feathers-mongoose';
 
 class MyService extends Service {
   create(data, params) {
@@ -193,7 +198,8 @@ app.use('/todos', new MyService({
 You can also use `.extend` on a service instance (extension is provided by [Uberproto](https://github.com/daffl/uberproto)):
 
 ```js
-var myService = memory({
+var service = require('feathers-mongoose');
+var myService = service({
   Model: Todo,
   paginate: {
     default: 2,
