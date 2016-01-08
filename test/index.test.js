@@ -117,9 +117,6 @@ describe('Feathers Mongoose Service', () => {
       people.find(params).then(data => {
         expect(data[0].pets[0].name).to.equal('Rufus');
         done();
-      }).catch(e => {
-        console.log(e);
-        done();
       });
     });
   });
