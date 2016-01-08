@@ -15,16 +15,18 @@ let testApp;
 
 describe('Feathers Mongoose Service', () => {
   describe('Requiring', () => {
+    const lib = require('../lib');
+
     it('exposes the service as a default module', () => {
-      expect(typeof require('../lib').default).to.equal('function');
+      expect(typeof lib).to.equal('function');
     });
 
     it('exposes the service', () => {
-      expect(typeof require('../lib').service).to.equal('function');
+      expect(typeof lib.service).to.equal('function');
     });
 
     it('exposes hooks', () => {
-      expect(typeof require('../lib').hooks).to.equal('object');
+      expect(typeof lib.hooks).to.equal('object');
     });
   });
 
