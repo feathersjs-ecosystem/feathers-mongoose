@@ -5,6 +5,7 @@ import { base, orm, example } from 'feathers-service-tests';
 import errors from 'feathers-errors';
 import feathers from 'feathers';
 import service from '../src';
+import { hooks, Service } from '../src';
 import server from '../example/app';
 import Model from './models/user';
 
@@ -21,12 +22,33 @@ describe('Feathers Mongoose Service', () => {
       expect(typeof lib).to.equal('function');
     });
 
-    it('exposes the service', () => {
-      expect(typeof lib.service).to.equal('function');
+    it('exposes the Service Constructor', () => {
+      expect(typeof lib.Service).to.equal('function');
     });
 
     it('exposes hooks', () => {
       expect(typeof lib.hooks).to.equal('object');
+    });
+  });
+
+  describe('Importing', () => {
+    it('exposes the service as a default module', () => {
+      expect(typeof service).to.equal('function');
+    });
+
+    it('exposes the Service constructor', () => {
+      // Check by calling the Service constructor without
+      // any params. It should return an error.
+      try {
+        new Service();
+      }
+      catch(e) {
+        expect(e).to.not.be.undefined; 
+      }
+    });
+
+    it('exposes hooks', () => {
+      expect(typeof hooks).to.equal('object');
     });
   });
 
