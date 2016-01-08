@@ -1,6 +1,6 @@
 import * as hooks from './hooks';
 import service from './service';
 
-export { hooks };
-export { service };
+Object.assign(service, { hooks, service });
+
 export default service;
