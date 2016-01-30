@@ -24,10 +24,10 @@ class Service {
     return Proto.extend(obj, this);
   }
 
-  _find(params, getFilter = filter) {
-    params.query = params.query || {};
-    let filters = getFilter(params.query);
-    let query = this.Model.find(params.query);
+  _find(params, count, getFilter = filter) {
+    const queryParams = params.query || {};
+    const filters = getFilter(queryParams);
+    const query = this.Model.find(queryParams);
 
     // $select uses a specific find syntax, so it has to come first.
     if (filters.$select && filters.$select.length) {
@@ -59,27 +59,30 @@ class Service {
     if (filters.$populate){
       query.populate(filters.$populate);
     }
-
-    let promise = query.exec();
-
-    let countQuery = this.Model.where(params.query).count().exec();
-
-    return countQuery.then(function(total) {
-      return promise.then(data => {
+    
+    const executeQuery = total => {
+      return query.exec().then(data => {
         return {
           total: total,
           limit: filters.$limit,
           skip: filters.$skip || 0,
           data
         };
-      }).catch(errorHandler);
-    }).catch(errorHandler);
+      });
+    };
+    
+    if(count) {
+      return this.Model.where(queryParams).count().exec().then(executeQuery);
+    }
+    
+    return executeQuery();
   }
   
   find(params) {
-    const result = this._find(params, query => filter(query, this.paginate));
+    const paginate = !!this.paginate.default;
+    const result = this._find(params, paginate, query => filter(query, this.paginate));
     
-    if(!this.paginate.default) {
+    if(!paginate) {
       return result.then(page => page.data);
     }
     
