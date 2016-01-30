@@ -1,5 +1,3 @@
-if(!global._babelPolyfill) { require('babel-polyfill'); }
-
 import Proto from 'uberproto';
 import filter from 'feathers-query-filters';
 import errors from 'feathers-errors';
@@ -26,15 +24,10 @@ class Service {
     return Proto.extend(obj, this);
   }
 
-  find(params) {
+  _find(params, getFilter = filter) {
     params.query = params.query || {};
-    let filters = filter(params.query);
+    let filters = getFilter(params.query);
     let query = this.Model.find(params.query);
-
-    if (this.paginate.default) {
-      filters.$limit = Math.min(filters.$limit || this.paginate.default,
-        this.paginate.max || Number.MAX_VALUE);
-    }
 
     // $select uses a specific find syntax, so it has to come first.
     if (filters.$select && filters.$select.length) {
@@ -69,81 +62,66 @@ class Service {
 
     let promise = query.exec();
 
-    if (this.paginate.default && !params.query[this.id]) {
-      let countQuery = this.Model.where(params.query).count().exec();
+    let countQuery = this.Model.where(params.query).count().exec();
 
-      return countQuery.then(function(total) {
-        return promise.then(data => {
-          return {
-            total: total,
-            limit: filters.$limit,
-            skip: filters.$skip || 0,
-            data
-          };
-        }).catch(errorHandler);
+    return countQuery.then(function(total) {
+      return promise.then(data => {
+        return {
+          total: total,
+          limit: filters.$limit,
+          skip: filters.$skip || 0,
+          data
+        };
       }).catch(errorHandler);
+    }).catch(errorHandler);
+  }
+  
+  find(params) {
+    const result = this._find(params, query => filter(query, this.paginate));
+    
+    if(!this.paginate.default) {
+      return result.then(page => page.data);
     }
-
-    return promise;
+    
+    return result;
   }
 
-  get(id, params) {
-    params.query = params.query || {};
-    params.query[this.id] = id;
-
-    return this.find(params).then(data => {
-      if (data && data.length !== 1) {
+  _get(id) {
+    return this.Model.findById(id).exec().then(data => {
+      if(!data) {
         throw new errors.NotFound(`No record found for id '${id}'`);
       }
 
-      return data[0];
+      return data;
     }).catch(errorHandler);
+  }
+  
+  get(id) {
+    return this._get(id);
+  }
+  
+  _getOrFind(id, params) {
+    if(id === null) {
+      return this._find(params).then(page => page.data);
+    }
+    
+    return this._get(id);
   }
 
   create(data) {
     return this.Model.create(data).catch(errorHandler);
   }
-
-  patch(id, data, params) {
-    params.query = params.query || {};
-    data = Object.assign({}, data);
-    let batch = false;
-
-    if (id !== null) {
-      params.query[this.id] = id;
+  
+  update(id, data) {
+    if(id === null) {
+      return Promise.reject('Not replacing multiple records. Did you mean `patch`?');
     }
-    // we are updating multiple records
-    else {
-      batch = true;
-    }
-
-    delete data[this.id];
-
-    let query = this.Model.update(params.query, {$set: data}, { multi: batch });
-
-    return query.then(() => {
-      return this.find(params).then(items => {
-        if (items.length ===  0) {
-          throw new errors.NotFound(`No record found for id '${id}'`);
-        }
-
-        if (items.length === 1) {
-          return items[0];
-        }
-
-        return items;
-      }).catch(errorHandler);
-    }).catch(errorHandler);
-  }
-
-  update(id, data, params) {
+    
     // NOTE (EK): First fetch the old record so
     // that we can fill any existing keys that the
     // client isn't updating with null;
-    return this.get(id, params).then(oldData => {
+    return this._get(id).then(oldData => {
       let newObject = {};
-      let conditions = {};
-      conditions[this.id] = id;
 
       for ( let key of Object.keys(oldData.toObject()) ) {
         if (data[key] === undefined) {
@@ -156,7 +134,7 @@ class Service {
       // NOTE (EK): Delete id field so we don't update it
       delete newObject[this.id];
 
-      return this.Model.update(conditions, newObject, {new: true}).then(() => {
+      return this.Model.update({ [this.id]: id }, newObject, {new: true}).then(() => {
         // NOTE (EK): Restore the id field so we can return it to the client
         newObject[this.id] = id;
         return newObject;
@@ -164,26 +142,36 @@ class Service {
     }).catch(errorHandler);
   }
 
-  remove(id, params) {
+  patch(id, data, params) {
     params.query = params.query || {};
+    data = Object.assign({}, data);
+    
+    // If we are updating multiple records
+    let multi = id === null;
 
-    // NOTE (EK): First fetch the record(s) so that we can return
-    // it/them when we delete it/them.
     if (id !== null) {
       params.query[this.id] = id;
     }
 
-    return this.find(params).then(items => {
-      let query = this.Model.remove(params.query);
+    delete data[this.id];
 
-      return query.then(() => {
-        if (items.length === 1) {
-          return items[0];
-        }
+    return this.Model.update(params.query, { $set: data }, { multi })
+      .then(() => this._getOrFind(id, params))
+      .catch(errorHandler);
+  }
+  
+  remove(id, params) {
+    const query = Object.assign({}, params.query);
+    
+    if (id !== null) {
+      query[this.id] = id;
+    }
 
-        return items;
-      }).catch(errorHandler);
-    }).catch(errorHandler);
+    // NOTE (EK): First fetch the record(s) so that we can return
+    // it/them when we delete it/them.
+    return this._getOrFind(id, params)
+      .then(data => this.Model.remove(query).then(() => data))
+      .catch(errorHandler);
   }
 }
 

@@ -107,7 +107,13 @@ app.listen(port, function() {
 You can run this example by using `node examples/app` and going to [localhost:3030/todos](http://localhost:3030/todos). You should see an empty array. That's because you don't have any Todos yet but you now have full CRUD for your new todos service, including mongoose validations!
 
 ## Changelog
+
+### 3.1.0
+
+- Use internal methods instead of service methods directly
+
 ### 3.0.0
+
 - Compatibility with Feathers 2.x
 - Changing how a service is initialized
 - Removing mongoose as a bundled dependency
@@ -117,6 +123,7 @@ You can run this example by using `node examples/app` and going to [localhost:30
 - Updating documentation and example.
 
 ### 2.0.0
+
 - Consistency with other service adapters
 - Compatibility with Feathers 1.0+
 - Adequate tests
@@ -129,9 +136,11 @@ You can run this example by using `node examples/app` and going to [localhost:30
     - $populate
 
 ### 0.1.1
+
 - First working release
 
 ### 0.1.0
+
 - Initial release.
 
 ## License
