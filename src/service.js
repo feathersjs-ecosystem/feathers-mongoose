@@ -39,7 +39,7 @@ class Service {
     // $select uses a specific find syntax, so it has to come first.
     if (filters.$select && filters.$select.length) {
       let fields = {};
-      
+
       for (let key of filters.$select) {
         fields[key] = 1;
       }
@@ -100,11 +100,7 @@ class Service {
     }).catch(errorHandler);
   }
 
-  create(data, params) {
-    if(Array.isArray(data)) {
-      return Promise.all(data.map(current => this.create(current, params)));
-    }
-
+  create(data) {
     return this.Model.create(data).catch(errorHandler);
   }
 
