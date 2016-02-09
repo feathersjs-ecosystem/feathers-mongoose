@@ -1,53 +1,109 @@
-import { expect } from 'chai';
-import feathers from 'feathers';
-import feathersHooks from 'feathers-hooks';
-import { hooks, service } from '../src';
-import Model from './models/user';
+import chai from 'chai';
+import sinon from 'sinon';
+import sinonChai from 'sinon-chai';
+import { hooks } from '../src';
 
-const _ids = {};
-const app = feathers()
-            .configure(feathersHooks())
-            .use('/people', service({ name: 'Person', Model }));
-const people = app.service('people');
+const expect = chai.expect;
+chai.use(sinonChai);
 
 describe('Feathers Mongoose Hooks', () => {
   describe('toObject', () => {
-    before(done => {
-      people.create({ name: 'Doug', age: 32 }).then(user => {
-        _ids.Doug = user._id;
-        done();
+    describe('options', () => {
+      let toObject, hook;
+
+      beforeEach(() => {
+        toObject = sinon.spy();
+        hook = {
+          result: { toObject }
+        };
+      });
+
+      it('sets default options', () => {
+        hooks.toObject()(hook);
+        expect(toObject).to.be.calledWith({});
+      });
+
+      it('supports custom options', () => {
+        let options = { feathers: 'awesome' };
+        hooks.toObject(options)(hook);
+        expect(toObject).to.be.calledWith(options);
       });
     });
 
-    after(done => {
-      people.remove(null, {}).then(() => {
-        done();
+    describe('when results are mongoose model(s)', () => {
+      let user1, user2, users;
+
+      beforeEach(() => {
+        user1 = {
+          name: 'Jerry',
+          age: 23,
+          toObject: sinon.stub().returns({ name: 'Jerry', age: 23})
+        };
+
+        user2 = {
+          name: 'Mary',
+          age: 32,
+          toObject: sinon.stub().returns({ name: 'Mary', age: 32})
+        };
+
+        users = [user1, user2];
+      });
+
+      it('converts arrays of mongoose models', () => {
+        let hook = {
+          result: users
+        };
+
+        hooks.toObject()(hook);
+        expect(users[0].toObject).to.be.calledOnce;
+        expect(users[1].toObject).to.be.calledOnce;
+        expect(hook.result[0]).to.deep.equal({ name: 'Jerry', age: 23});
+        expect(hook.result[1]).to.deep.equal({ name: 'Mary', age: 32});
+      });
+
+      it('converts a single mongoose model', () => {
+        let hook = {
+          result: users[0]
+        };
+
+        hooks.toObject()(hook);
+        expect(users[0].toObject).to.be.calledOnce;
+        expect(hook.result).to.deep.equal({ name: 'Jerry', age: 23});
       });
     });
 
-    it('throws an error if hook is not a function', () => {
-      let options = { foo: 'bar' };
-      let fn = function(){};
-      expect(hooks.toObject.bind(null, options, fn)).to.throw('Please use the toObject hook as a function.');
-    });
+    describe('when results are plain object(s)', () => {
+      let user1, user2;
 
-    it.skip('The toObject hook converts arrays of mongoose model instances to plain objects.', done => {
-      people.find({}).then(data => {
-        expect(data).to.be.instanceof(Array);
-        expect(data[0].toObject).to.be.undefined;
-        return done();
+      beforeEach(() => {
+        user1 = {
+          name: 'Jerry',
+          age: 23
+        };
+
+        user2 = {
+          name: 'Mary',
+          age: 32
+        };
       });
-    });
 
-    it.skip('The toObject hook converts a mongoose model instance to a plain object.', done => {
-      let user = {
-        name: 'Jerry',
-        age: 23
-      };
+      it('does not convert arrays of objects', () => {
+        let hook = {
+          result: [user1, user2]
+        };
 
-      people.create(user).then(data => {
-        expect(data.toObject).to.be.undefined;
-        return done();
+        hooks.toObject()(hook);
+        expect(hook.result[0]).to.deep.equal(user1);
+        expect(hook.result[1]).to.deep.equal(user2);
+      });
+
+      it('does not convert a single object', () => {
+        let hook = {
+          result: user1
+        };
+
+        hooks.toObject()(hook);
+        expect(hook.result).to.deep.equal(user1);
       });
     });
   });

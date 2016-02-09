@@ -25,20 +25,24 @@
  * @return {Object}  The hook object with the result as a plain js object.
  */
 
-export function toObject(options, hookFunction) {
-  if (typeof hookFunction === 'function') {
-    throw new Error('Please use the toObject hook as a function.');
-  }
+export let toObject = function(options = {}) {
+  return function(hook) {
+    // Only perform this if it's used as an after hook.
+    if (hook.result) {
+      // Handle multiple mongoose models
+      if (Array.isArray(hook.result)) {
+        hook.result = hook.result.map((obj) => {
+          if (typeof obj.toObject === 'function') {
+            return obj.toObject(options);
+          }
 
-  options = options || {};
-
-  return function(hook, next) {
-    if (Array.isArray(hook.result)) {
-      hook.result = hook.result.map((obj) => obj.toObject(options));
+          return obj;
+        });
+      }
+      // Handle single mongoose models
+      else if (typeof hook.result.toObject === 'function') {
+        hook.result = hook.result.toObject(options);
+      }
     }
-    else {
-      hook.result = hook.result.toObject(options);
-    }
-    return next();
   };
-}
+};

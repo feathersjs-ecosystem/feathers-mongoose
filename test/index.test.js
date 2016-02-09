@@ -13,9 +13,13 @@ import Pet from './models/pet';
 const _ids = {};
 const _petIds = {};
 const app = feathers().use('/people', service({ name: 'User', Model: User }))
-                      .use('/pets', service({ name: 'User', Model: Pet }));
+                      .use('/pets', service({ name: 'Pet', Model: Pet }))
+                      .use('/people2', service({ name: 'User', Model: User, lean: true }))
+                      .use('/pets2', service({ name: 'Pet', Model: Pet, lean: true }));
 const people = app.service('people');
 const pets = app.service('pets');
+const leanPeople = app.service('people2');
+const leanPets = app.service('pets2');
 let testApp;
 
 describe('Feathers Mongoose Service', () => {
@@ -80,6 +84,18 @@ describe('Feathers Mongoose Service', () => {
         expect(people.paginate).to.deep.equal({});
       });
     });
+
+    describe('when missing the overwrite option', () => {
+      it('sets the default to be true', () => {
+        expect(people.overwrite).to.be.true;
+      });
+    });
+
+    describe('when missing the lean option', () => {
+      it('sets the default to be false', () => {
+        expect(people.lean).to.be.false;
+      });
+    });
   });
 
   describe('Common functionality', () => {
@@ -115,6 +131,45 @@ describe('Feathers Mongoose Service', () => {
       };
 
       people.find(params).then(data => {
+        expect(data[0].pets[0].name).to.equal('Rufus');
+        done();
+      });
+    });
+  });
+
+  describe('Lean Services', () => {
+    beforeEach((done) => {
+      // FIXME (EK): This is shit. We should be loading fixtures
+      // using the raw driver not our system under test
+      leanPets.create({type: 'dog', name: 'Rufus'}).then(pet => {
+        _petIds.Rufus = pet._id;
+
+        return leanPeople.create({ name: 'Doug', age: 32, pets: [pet._id] }).then(user => {
+          _ids.Doug = user._id;
+          done();
+        });
+      });
+    });
+
+    afterEach(done => {
+      leanPets.remove(null, { query: {} }).then(() => {
+        return leanPeople.remove(null, { query: {} }).then(() => {
+          return done();
+        });
+      });
+    });
+
+    base(leanPeople, _ids, errors, '_id');
+
+    it('can $populate', function (done) {
+      var params = {
+        query: {
+          name: 'Doug',
+          $populate: ['pets']
+        }
+      };
+
+      leanPeople.find(params).then(data => {
         expect(data[0].pets[0].name).to.equal('Rufus');
         done();
       });

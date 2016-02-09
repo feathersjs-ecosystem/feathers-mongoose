@@ -18,6 +18,8 @@ class Service {
     this.Model = options.Model;
     this.id = options.id || '_id';
     this.paginate = options.paginate || {};
+    this.lean = options.lean || false;
+    this.overwrite = options.overwrite || true;
   }
 
   extend(obj) {
@@ -27,7 +29,7 @@ class Service {
   _find(params, count, getFilter = filter) {
     const queryParams = params.query || {};
     const filters = getFilter(queryParams);
-    const query = this.Model.find(queryParams);
+    const query = this.Model.find(queryParams).lean(this.lean);
 
     // $select uses a specific find syntax, so it has to come first.
     if (filters.$select && filters.$select.length) {
@@ -90,13 +92,19 @@ class Service {
   }
 
   _get(id) {
-    return this.Model.findById(id).exec().then(data => {
-      if(!data) {
-        throw new errors.NotFound(`No record found for id '${id}'`);
-      }
+    return this
+      .Model
+      .findById(id)
+      .lean(this.lean)
+      .exec()
+      .then(data => {
+        if(!data) {
+          throw new errors.NotFound(`No record found for id '${id}'`);
+        }
 
-      return data;
-    }).catch(errorHandler);
+        return data;
+      })
+      .catch(errorHandler);
   }
   
   get(id) {
@@ -119,30 +127,23 @@ class Service {
     if(id === null) {
       return Promise.reject('Not replacing multiple records. Did you mean `patch`?');
     }
-    
-    // NOTE (EK): First fetch the old record so
-    // that we can fill any existing keys that the
-    // client isn't updating with null;
-    return this._get(id).then(oldData => {
-      let newObject = {};
 
-      for ( let key of Object.keys(oldData.toObject()) ) {
-        if (data[key] === undefined) {
-          newObject[key] = null;
-        } else {
-          newObject[key] = data[key];
-        }
-      }
+    const options = {new: true, overwrite: this.overwrite};
 
-      // NOTE (EK): Delete id field so we don't update it
-      delete newObject[this.id];
+    // NOTE (EK): Delete id field so we don't accidentally update it
+    delete data[this.id];
 
-      return this.Model.update({ [this.id]: id }, newObject, {new: true}).then(() => {
-        // NOTE (EK): Restore the id field so we can return it to the client
-        newObject[this.id] = id;
-        return newObject;
-      }).catch(errorHandler);
-    }).catch(errorHandler);
+    // NOTE (EK): We don't use the findByIdAndUpdate method because these are functionally
+    // equivalent and this allows a developer to set their id field as something other than _id.
+    return this
+      .Model
+      .findOneAndUpdate({ [this.id]: id }, data, options)
+      .lean(this.lean)
+      .exec()
+      .then((result) => {
+        return result;
+      })
+      .catch(errorHandler);
   }
 
   patch(id, data, params) {
@@ -158,7 +159,11 @@ class Service {
 
     delete data[this.id];
 
-    return this.Model.update(params.query, { $set: data }, { multi })
+    return this
+      .Model
+      .update(params.query, { $set: data }, { multi })
+      .lean(this.lean)
+      .exec()
       .then(() => this._getOrFind(id, params))
       .catch(errorHandler);
   }
@@ -172,8 +177,16 @@ class Service {
 
     // NOTE (EK): First fetch the record(s) so that we can return
     // it/them when we delete it/them.
-    return this._getOrFind(id, params)
-      .then(data => this.Model.remove(query).then(() => data))
+    return this
+      ._getOrFind(id, params)
+      .then(data => {
+        return this.Model
+                  .remove(query)
+                  .lean(this.lean)
+                  .exec()
+                  .then(() => data)
+                  .catch(errorHandler);
+      })
       .catch(errorHandler);
   }
 }
