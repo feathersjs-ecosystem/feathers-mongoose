@@ -18,6 +18,7 @@ class Service {
     this.Model = options.Model;
     this.id = options.id || '_id';
     this.paginate = options.paginate || {};
+    this.overwrite = options.overwrite || true;
   }
 
   extend(obj) {
@@ -119,29 +120,14 @@ class Service {
     if(id === null) {
       return Promise.reject('Not replacing multiple records. Did you mean `patch`?');
     }
-    
-    // NOTE (EK): First fetch the old record so
-    // that we can fill any existing keys that the
-    // client isn't updating with null;
-    return this._get(id).then(oldData => {
-      let newObject = {};
 
-      for ( let key of Object.keys(oldData.toObject()) ) {
-        if (data[key] === undefined) {
-          newObject[key] = null;
-        } else {
-          newObject[key] = data[key];
-        }
-      }
+    // NOTE (EK): Delete id field so we don't accidentally update it
+    delete data[this.id];
 
-      // NOTE (EK): Delete id field so we don't update it
-      delete newObject[this.id];
-
-      return this.Model.update({ [this.id]: id }, newObject, {new: true}).then(() => {
-        // NOTE (EK): Restore the id field so we can return it to the client
-        newObject[this.id] = id;
-        return newObject;
-      }).catch(errorHandler);
+    // NOTE (EK): We don't use the findByIdAndUpdate method because these are functionally
+    // equivalent and this allows a developer to set their id field as something other than _id.
+    return this.Model.findOneAndUpdate({ [this.id]: id }, data, {new: true, overwrite: this.overwrite}).then((result) => {
+      return result;
     }).catch(errorHandler);
   }
 

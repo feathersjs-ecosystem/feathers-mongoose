@@ -80,6 +80,12 @@ describe('Feathers Mongoose Service', () => {
         expect(people.paginate).to.deep.equal({});
       });
     });
+
+    describe('when missing the overwrite option', () => {
+      it('sets the default to be true', () => {
+        expect(people.overwrite).to.be.true;
+      });
+    });
   });
 
   describe('Common functionality', () => {
