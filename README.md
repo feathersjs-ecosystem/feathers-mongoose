@@ -108,6 +108,14 @@ You can run this example by using `node examples/app` and going to [localhost:30
 
 ## Changelog
 
+### 3.2.0
+
+- Fixes `toObject` hook so it doesn't call `toObject` if it's not a mongoose model. (#44)
+- Ensures that new fields get added when doing an update (#48)
+- Adds 2 config params:
+   - `overwrite` (default: **true**) - updates overwrite existing data
+   - `lean` (default: **false**) - makes it so that queries call `.lean()` so that they run faster and return plain objects. (#51)
+
 ### 3.1.0
 
 - Use internal methods instead of service methods directly
