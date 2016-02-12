@@ -51,7 +51,7 @@ describe('Feathers Mongoose Service', () => {
         new Service();
       }
       catch(e) {
-        expect(e).to.not.be.undefined; 
+        expect(e).to.not.be.undefined;
       }
     });
 
@@ -122,7 +122,7 @@ describe('Feathers Mongoose Service', () => {
 
     base(people, _ids, errors, '_id');
 
-    it('can $populate', function (done) {
+    it('can $populate with find', function (done) {
       var params = {
         query: {
           name: 'Doug',
@@ -134,6 +134,19 @@ describe('Feathers Mongoose Service', () => {
         expect(data[0].pets[0].name).to.equal('Rufus');
         done();
       });
+    });
+
+    it('can $populate with get', function (done) {
+      var params = {
+        query: {
+          $populate: ['pets']
+        }
+      };
+
+      people.get(_ids.Doug, params).then(data => {
+        expect(data.pets[0].name).to.equal('Rufus');
+        done();
+      }).catch(done);
     });
   });
 
@@ -161,7 +174,7 @@ describe('Feathers Mongoose Service', () => {
 
     base(leanPeople, _ids, errors, '_id');
 
-    it('can $populate', function (done) {
+    it('can $populate with find', function (done) {
       var params = {
         query: {
           name: 'Doug',
@@ -173,6 +186,19 @@ describe('Feathers Mongoose Service', () => {
         expect(data[0].pets[0].name).to.equal('Rufus');
         done();
       });
+    });
+
+    it('can $populate with get', function (done) {
+      var params = {
+        query: {
+          $populate: ['pets']
+        }
+      };
+
+      leanPeople.get(_ids.Doug, params).then(data => {
+        expect(data.pets[0].name).to.equal('Rufus');
+        done();
+      }).catch(done);
     });
   });
 

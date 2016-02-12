@@ -61,7 +61,7 @@ class Service {
     if (filters.$populate){
       query.populate(filters.$populate);
     }
-    
+
     const executeQuery = total => {
       return query.exec().then(data => {
         return {
@@ -72,29 +72,35 @@ class Service {
         };
       });
     };
-    
+
     if(count) {
       return this.Model.where(queryParams).count().exec().then(executeQuery);
     }
-    
+
     return executeQuery();
   }
-  
+
   find(params) {
     const paginate = !!this.paginate.default;
     const result = this._find(params, paginate, query => filter(query, this.paginate));
-    
+
     if(!paginate) {
       return result.then(page => page.data);
     }
-    
+
     return result;
   }
 
-  _get(id) {
-    return this
+  _get(id, params) {
+    let modelQuery = this
       .Model
-      .findById(id)
+      .findById(id);
+
+    if (params && params.query && params.query.$populate) {
+      modelQuery = modelQuery.populate(params.query.$populate);
+    }
+
+    return modelQuery
       .lean(this.lean)
       .exec()
       .then(data => {
@@ -106,23 +112,23 @@ class Service {
       })
       .catch(errorHandler);
   }
-  
-  get(id) {
-    return this._get(id);
+
+  get(id, params) {
+    return this._get(id, params);
   }
-  
+
   _getOrFind(id, params) {
     if(id === null) {
       return this._find(params).then(page => page.data);
     }
-    
+
     return this._get(id);
   }
 
   create(data) {
     return this.Model.create(data).catch(errorHandler);
   }
-  
+
   update(id, data) {
     if(id === null) {
       return Promise.reject('Not replacing multiple records. Did you mean `patch`?');
@@ -149,7 +155,7 @@ class Service {
   patch(id, data, params) {
     params.query = params.query || {};
     data = Object.assign({}, data);
-    
+
     // If we are updating multiple records
     let multi = id === null;
 
@@ -167,10 +173,10 @@ class Service {
       .then(() => this._getOrFind(id, params))
       .catch(errorHandler);
   }
-  
+
   remove(id, params) {
     const query = Object.assign({}, params.query);
-    
+
     if (id !== null) {
       query[this.id] = id;
     }
