@@ -94,7 +94,7 @@ class Service {
   _get(id, params) {
     let modelQuery = this
       .Model
-      .findById(id);
+      .findOne({ [this.id]: id });
 
     if (params && params.query && params.query.$populate) {
       modelQuery = modelQuery.populate(params.query.$populate);
