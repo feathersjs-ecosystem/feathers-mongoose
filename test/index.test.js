@@ -6,7 +6,7 @@ import errors from 'feathers-errors';
 import feathers from 'feathers';
 import service from '../src';
 import { hooks, Service } from '../src';
-import server from '../example/app';
+import server from './test-app';
 import User from './models/user';
 import Pet from './models/pet';
 
