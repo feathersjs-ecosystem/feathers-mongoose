@@ -7,7 +7,7 @@ const mongoose = require('mongoose');
 const mongooseService = require('../lib');
 
 // Require your models
-const Message = require('./models/message');
+const Todo = require('./models/todo');
 
 // Tell mongoose to use native promises
 // See http://mongoosejs.com/docs/promises.html
@@ -29,9 +29,9 @@ const app = feathers()
   .use(bodyParser.urlencoded({extended: true}));
 
 // Connect to the db, create and register a Feathers service.
-app.use('messages', mongooseService({
-  name: 'message',
-  Model: Message,
+app.use('todos', mongooseService({
+  name: 'todo',
+  Model: Todo,
   paginate: {
     default: 2,
     max: 4
@@ -44,7 +44,7 @@ app.use(errors.handler());
 // Start the server if we're not being required in a test
 if (!module.parent) {
   app.listen(3030);
-  console.log('Feathers Message mongoose service running on 127.0.0.1:3030');
+  console.log('Feathers Todo mongoose service running on 127.0.0.1:3030');
 }
 
 module.exports = app;

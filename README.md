@@ -46,33 +46,19 @@ See the [Mongoose Guide](http://mongoosejs.com/docs/guide.html) for more informa
 
 ### Complete Example
 
-Here's a complete example of a Feathers server with a `todos` mongoose-service.
+Here's a complete example of a Feathers server with a `message` mongoose-service.
 
 ```js
-// models/todo.js
-var mongoose = require('mongoose');
-var Schema = mongoose.Schema;
-
-var TodoSchema = new Schema({
-  text: {type: String, required: true},
-  complete: {type: Boolean, 'default': false},
-  createdAt: {type: Date, 'default': Date.now},
-  updatedAt: {type: Date, 'default': Date.now}
-});
-
-var TodoModel = mongoose.model('Todo', TodoSchema);
-
-module.exports = TodoModel;
-
-
-// server.js
-var feathers = require('feathers');
-var bodyParser = require('body-parser');
-var mongoose = require('mongoose');
-var mongooseService = require('feathers-mongoose');
+const feathers = require('feathers');
+const rest = require('feathers-rest');
+const socketio = require('feathers-socketio');
+const errors = require('feathers-errors');
+const bodyParser = require('body-parser');
+const mongoose = require('mongoose');
+const service = require('feathers-mongoose');
 
 // Require your models
-var Todo = require('./models/todo');
+const Message = require('./models/message');
 
 // Tell mongoose to use native promises
 // See http://mongoosejs.com/docs/promises.html
@@ -81,30 +67,36 @@ mongoose.Promise = global.Promise;
 // Connect to your MongoDB instance(s)
 mongoose.connect('mongodb://localhost:27017/feathers');
 
+
 // Create a feathers instance.
-var app = feathers()
-  // Setup the public folder.
-  .use(feathers.static(__dirname + '/public'))
+const app = feathers()
   // Enable Socket.io
-  .configure(feathers.socketio())
+  .configure(socketio())
   // Enable REST services
-  .configure(feathers.rest())
+  .configure(rest())
   // Turn on JSON parser for REST services
   .use(bodyParser.json())
   // Turn on URL-encoded parser for REST services
-  .use(bodyParser.urlencoded({extended: true}))
+  .use(bodyParser.urlencoded({extended: true}));
 
 // Connect to the db, create and register a Feathers service.
-app.use('/todos', mongooseService({ Model: Todo }));
+app.use('messages', service({
+  name: 'message',
+  Model: Message,
+  paginate: {
+    default: 2,
+    max: 4
+  }
+}));
 
-// Start the server.
-var port = 3030;
-app.listen(port, function() {
-    console.log('Feathers server listening on port ' + port);
-});
+// A basic error handler, just like Express
+app.use(errors.handler());
+
+app.listen(3030);
+console.log('Feathers Message mongoose service running on 127.0.0.1:3030');
 ```
 
-You can run this example by using `node examples/app` and going to [localhost:3030/todos](http://localhost:3030/todos). You should see an empty array. That's because you don't have any Todos yet but you now have full CRUD for your new todos service, including mongoose validations!
+You can run this example by using `npm start` and going to [localhost:3030/messages](http://localhost:3030/messages). You should see an empty array. That's because you don't have any messages yet but you now have full CRUD for your new message service, including mongoose validations!
 
 ## Changelog
 
