@@ -56,7 +56,7 @@
     "babel-polyfill": "^6.3.14",
     "feathers-errors": "^1.2.3",
     "feathers-query-filters": "^1.5.1",
-    "uberproto": "^1.1.2"
+    "uberproto": "^1.2.0"
   },
   "devDependencies": {
     "babel-cli": "^6.1.2",
