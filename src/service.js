@@ -136,8 +136,14 @@ class Service {
 
     const options = {new: true, overwrite: this.overwrite};
 
-    // NOTE (EK): Delete id field so we don't accidentally update it
-    delete data[this.id];
+    if (this.id === '_id') {
+      // We can not update default mongo ids
+      delete data[this.id];
+    } else if (data[this.id] === undefined) {
+      // If not using the default Mongo _id field and you haven't passed a new id field
+      // then set the id to its previous value. This prevents orphaned documents.
+      data[this.id] = id;
+    }
 
     // NOTE (EK): We don't use the findByIdAndUpdate method because these are functionally
     // equivalent and this allows a developer to set their id field as something other than _id.
@@ -163,7 +169,14 @@ class Service {
       params.query[this.id] = id;
     }
 
-    delete data[this.id];
+    if (this.id === '_id') {
+      // We can not update default mongo ids
+      delete data[this.id];
+    } else if (data[this.id] === undefined) {
+      // If not using the default Mongo _id field and you haven't passed a new id field
+      // then set the id to its previous value. This prevents orphaned documents.
+      data[this.id] = id;
+    }
 
     return this
       .Model
