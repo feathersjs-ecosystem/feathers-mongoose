@@ -139,9 +139,9 @@ class Service {
     if (this.id === '_id') {
       // We can not update default mongo ids
       delete data[this.id];
-    } else if (data[this.id] === undefined) {
-      // If not using the default Mongo _id field and you haven't passed a new id field
-      // then set the id to its previous value. This prevents orphaned documents.
+    } else {
+      // If not using the default Mongo _id field set the id to its
+      // previous value. This prevents orphaned documents.
       data[this.id] = id;
     }
 
@@ -172,9 +172,9 @@ class Service {
     if (this.id === '_id') {
       // We can not update default mongo ids
       delete data[this.id];
-    } else if (data[this.id] === undefined) {
-      // If not using the default Mongo _id field and you haven't passed a new id field
-      // then set the id to its previous value. This prevents orphaned documents.
+    } else {
+      // If not using the default Mongo _id field set the id to its
+      // previous value. This prevents orphaned documents.
       data[this.id] = id;
     }
 
