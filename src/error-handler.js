@@ -21,5 +21,5 @@ export default function errorHandler(error) {
     }
   }
 
-  throw feathersError;
+  return Promise.reject(feathersError);
 }

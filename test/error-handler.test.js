@@ -4,29 +4,33 @@ import errors from 'feathers-errors';
 import errorHandler from '../src/error-handler';
 
 describe('Feathers Mongoose Error Handler', () => {
-  it('throws a feathers error', () => {
+  it('throws a feathers error', done => {
     let e = new errors.GeneralError();
-    expect(errorHandler.bind(null, e)).to.throw(errors.GeneralError);
+    errorHandler(e).catch(error => {
+      expect(error).to.be.an.instanceof(errors.GeneralError);
+      done();
+    }).catch(done);
   });
 
-  it('wraps a ValidationError as a BadRequest', () => {
+  it('wraps a ValidationError as a BadRequest', done => {
     let e = new mongoose.Error.ValidationError();
-    expect(errorHandler.bind(null, e)).to.throw(errors.BadRequest);
+    errorHandler(e).catch(error => {
+      expect(error).to.be.an.instanceof(errors.BadRequest);
+      done();
+    }).catch(done);
   });
 
-  it('preserves a validation error message', () => {
+  it('preserves a validation error message', done => {
     let e = new mongoose.Error.ValidationError();
     e.message = 'Invalid Email';
 
-    try {
-      errorHandler(e);
-    }
-    catch(error) {
+    errorHandler(e).catch(error => {
       expect(error.message).to.equal('Invalid Email');
-    }
+      done();
+    }).catch(done);
   });
 
-  it('preserves a validation errors', () => {
+  it('preserves a validation errors', done => {
     let emailError = {
       email: {
         message: 'email cannot be null',
@@ -39,42 +43,59 @@ describe('Feathers Mongoose Error Handler', () => {
     let e = new mongoose.Error.ValidationError();
     e.errors = emailError;
 
-    try {
-      errorHandler(e);
-    }
-    catch(error) {
+    errorHandler(e).catch(error => {
       expect(error.errors).to.deep.equal(emailError);
-    }
+      done();
+    }).catch(done);
   });
 
-  it('wraps a ValidatorError as a BadRequest', () => {
+  it('wraps a ValidatorError as a BadRequest', done => {
     let e = new mongoose.Error.ValidatorError({message: 'error'});
-    expect(errorHandler.bind(null, e)).to.throw(errors.BadRequest);
+    
+    errorHandler(e).catch(error => {
+      expect(error).to.be.an.instanceof(errors.BadRequest);
+      done();
+    }).catch(done);
   });
 
-  it('wraps a CastError as a BadRequest', () => {
+  it('wraps a CastError as a BadRequest', done => {
     let e = new mongoose.Error.CastError();
-    expect(errorHandler.bind(null, e)).to.throw(errors.BadRequest);
+    errorHandler(e).catch(error => {
+      expect(error).to.be.an.instanceof(errors.BadRequest);
+      done();
+    }).catch(done);
   });
 
-  it('wraps a VersionError as a BadRequest', () => {
+  it('wraps a VersionError as a BadRequest', done => {
     let e = new mongoose.Error.VersionError();
-    expect(errorHandler.bind(null, e)).to.throw(errors.BadRequest);
+    errorHandler(e).catch(error => {
+      expect(error).to.be.an.instanceof(errors.BadRequest);
+      done();
+    }).catch(done);
   });
 
-  it('wraps a OverwriteModelError as a Conflict', () => {
+  it('wraps a OverwriteModelError as a Conflict', done => {
     let e = new mongoose.Error.OverwriteModelError();
-    expect(errorHandler.bind(null, e)).to.throw(errors.Conflict);
+    errorHandler(e).catch(error => {
+      expect(error).to.be.an.instanceof(errors.Conflict);
+      done();
+    }).catch(done);
   });
 
-  it('wraps a MissingSchemaError as a GeneralError', () => {
+  it('wraps a MissingSchemaError as a GeneralError', done => {
     let e = new mongoose.Error.MissingSchemaError();
-    expect(errorHandler.bind(null, e)).to.throw(errors.GeneralError);
+    errorHandler(e).catch(error => {
+      expect(error).to.be.an.instanceof(errors.GeneralError);
+      done();
+    }).catch(done);
   });
 
-  it('wraps a DivergentArrayError as a GeneralError', () => {
+  it('wraps a DivergentArrayError as a GeneralError', done => {
     let fn = function(){};
     let e = new mongoose.Error.DivergentArrayError({join: fn});
-    expect(errorHandler.bind(null, e)).to.throw(errors.GeneralError);
+    errorHandler(e).catch(error => {
+      expect(error).to.be.an.instanceof(errors.GeneralError);
+      done();
+    }).catch(done);
   });
 });
