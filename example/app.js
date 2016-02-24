@@ -1,7 +1,7 @@
 const feathers = require('feathers');
 const rest = require('feathers-rest');
 const socketio = require('feathers-socketio');
-const errors = require('feathers-errors');
+const handler = require('feathers-errors/handler');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const mongooseService = require('../lib');
@@ -39,7 +39,7 @@ app.use('messages', mongooseService({
 }));
 
 // A basic error handler, just like Express
-app.use(errors.handler());
+app.use(handler());
 
 // Start the server if we're not being required in a test
 if (!module.parent) {
