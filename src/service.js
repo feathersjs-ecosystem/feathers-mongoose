@@ -19,7 +19,7 @@ class Service {
     this.id = options.id || '_id';
     this.paginate = options.paginate || {};
     this.lean = options.lean || false;
-    this.overwrite = (options.overwrite === false) ? false || true;
+    this.overwrite = (options.overwrite === false) ? false : true;
   }
 
   extend(obj) {
