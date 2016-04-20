@@ -49,16 +49,16 @@ describe('Feathers Mongoose Hooks', () => {
         users = [user1, user2];
       });
 
-      it('converts arrays of mongoose models', () => {
+      it('converts paginated arrays of mongoose models', () => {
         let hook = {
-          result: users
+          result: { data: users }
         };
 
         hooks.toObject()(hook);
         expect(users[0].toObject).to.be.calledOnce;
         expect(users[1].toObject).to.be.calledOnce;
-        expect(hook.result[0]).to.deep.equal({ name: 'Jerry', age: 23});
-        expect(hook.result[1]).to.deep.equal({ name: 'Mary', age: 32});
+        expect(hook.result.data[0]).to.deep.equal({ name: 'Jerry', age: 23});
+        expect(hook.result.data[1]).to.deep.equal({ name: 'Mary', age: 32});
       });
 
       it('converts a single mongoose model', () => {
@@ -70,10 +70,22 @@ describe('Feathers Mongoose Hooks', () => {
         expect(users[0].toObject).to.be.calledOnce;
         expect(hook.result).to.deep.equal({ name: 'Jerry', age: 23});
       });
+
+      it('converts non-paginated arrays of mongoose models', () => {
+        let hook = {
+          result: users
+        };
+
+        hooks.toObject()(hook);
+        expect(users[0].toObject).to.be.calledOnce;
+        expect(users[1].toObject).to.be.calledOnce;
+        expect(hook.result[0]).to.deep.equal({ name: 'Jerry', age: 23});
+        expect(hook.result[1]).to.deep.equal({ name: 'Mary', age: 32});
+      });
     });
 
     describe('when results are plain object(s)', () => {
-      let user1, user2;
+      let user1, user2, users;
 
       beforeEach(() => {
         user1 = {
@@ -85,14 +97,26 @@ describe('Feathers Mongoose Hooks', () => {
           name: 'Mary',
           age: 32
         };
+
+        users = [user1, user2];
       });
 
-      it('does not convert arrays of objects', () => {
+      it('does not convert paginated arrays of objects', () => {
         let hook = {
-          result: [user1, user2]
+          result: { data: users }
         };
 
         hooks.toObject()(hook);
+        expect(hook.result.data[0]).to.deep.equal(user1);
+        expect(hook.result.data[1]).to.deep.equal(user2);
+      });
+
+      it('does not convert non-paginated arrays of objects', () => {
+        let hook = {
+          result: users
+        };
+
+        hooks.toObject({}, null)(hook);
         expect(hook.result[0]).to.deep.equal(user1);
         expect(hook.result[1]).to.deep.equal(user2);
       });
