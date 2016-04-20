@@ -42,7 +42,7 @@
     "release:patch": "npm version patch && npm publish",
     "release:minor": "npm version minor && npm publish",
     "release:major": "npm version major && npm publish",
-    "compile": "rm -rf lib/ && babel -d lib/ src/",
+    "compile": "rimraf lib/ && babel -d lib/ src/",
     "start": "node example/app",
     "watch": "babel --watch -d lib/ src/",
     "jshint": "jshint src/. test/. --config",
@@ -74,6 +74,7 @@
     "mocha": "^2.3.3",
     "mongoose": "^4.1.0",
     "nsp": "^2.2.0",
+    "rimraf": "^2.5.2",
     "sinon": "^1.17.3",
     "sinon-chai": "^2.8.0"
   }
