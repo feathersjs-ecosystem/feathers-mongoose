@@ -129,8 +129,8 @@ class Service {
     return this.Model.create(data).catch(errorHandler);
   }
 
-  update(selector, data, params = {}) {
-    if(selector === null) {
+  update(id, data, params = {}) {
+    if(id === null) {
       return Promise.reject('Not replacing multiple records. Did you mean `patch`?');
     }
 
@@ -158,18 +158,6 @@ class Service {
         return result;
       })
       .catch(errorHandler);
-  }
-  
-  _multiOptions(id, params) {
-    let query = Object.assign({}, params.query);
-    let options = Object.assign({ multi: true }, params.options);
-
-    if (id !== null) {
-      options.multi = false;
-      query[this.id] = this._objectifyId(id);
-    }
-
-    return { query, options };
   }
 
   patch(id, data, params) {
