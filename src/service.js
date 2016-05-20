@@ -145,7 +145,7 @@ class Service {
       data[this.id] = id;
     }
     
-    const selector = Object.assign({}, { [this.id]: id }, typeof params === "object" ? params : undefined);
+    const selector = Object.assign({}, { [this.id]: id }, typeof params === 'object' ? params : undefined);
 
     // NOTE (EK): We don't use the findByIdAndUpdate method because these are functionally
     // equivalent and this allows a developer to set their id field as something other than _id.
