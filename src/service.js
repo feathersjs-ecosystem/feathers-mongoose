@@ -129,7 +129,7 @@ class Service {
     return this.Model.create(data).catch(errorHandler);
   }
 
-  update(id, data) {
+  update(id, data, params = {}) {
     if(id === null) {
       return Promise.reject('Not replacing multiple records. Did you mean `patch`?');
     }
@@ -144,12 +144,14 @@ class Service {
       // previous value. This prevents orphaned documents.
       data[this.id] = id;
     }
+    
+    const selector = Object.assign({}, { [this.id]: id }, typeof params === 'object' ? params : undefined);
 
     // NOTE (EK): We don't use the findByIdAndUpdate method because these are functionally
     // equivalent and this allows a developer to set their id field as something other than _id.
     return this
       .Model
-      .findOneAndUpdate({ [this.id]: id }, data, options)
+      .findOneAndUpdate(selector, data, options)
       .lean(this.lean)
       .exec()
       .then((result) => {
