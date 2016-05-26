@@ -137,7 +137,12 @@ class Service {
       return Promise.reject('Not replacing multiple records. Did you mean `patch`?');
     }
 
-    const options = {new: true, overwrite: this.overwrite};
+    const options = {
+      new: true, 
+      overwrite: this.overwrite
+      runValidators: true,
+      setDefaultsOnInsert: true
+    };
 
     if (this.id === '_id') {
       // We can not update default mongo ids
