@@ -139,7 +139,7 @@ class Service {
 
     const options = {
       new: true, 
-      overwrite: this.overwrite
+      overwrite: this.overwrite,
       runValidators: true,
       setDefaultsOnInsert: true
     };
