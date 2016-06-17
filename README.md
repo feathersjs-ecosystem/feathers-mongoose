@@ -98,60 +98,10 @@ console.log('Feathers Message mongoose service running on 127.0.0.1:3030');
 
 You can run this example by using `npm start` and going to [localhost:3030/messages](http://localhost:3030/messages). You should see an empty array. That's because you don't have any messages yet but you now have full CRUD for your new message service, including mongoose validations!
 
-## Changelog
-
-### 3.3.0
-
-- Gets now support `$populate`. ([#53](https://github.com/feathersjs/feathers-mongoose/issues/53))
-
-### 3.2.0
-
-- Fixes `toObject` hook so it doesn't call `toObject` if it's not a mongoose model. (#44)
-- Ensures that new fields get added when doing an update ([#48](https://github.com/feathersjs/feathers-mongoose/issues/48))
-- Adds 2 config params:
-   - `overwrite` (default: **true**) - updates overwrite existing data
-   - `lean` (default: **false**) - makes it so that queries call `.lean()` so that they run faster and return plain objects. ([#51](https://github.com/feathersjs/feathers-mongoose/issues/51))
-
-### 3.1.0
-
-- Use internal methods instead of service methods directly
-
-### 3.0.0
-
-- Compatibility with Feathers 2.x
-- Changing how a service is initialized
-- Removing mongoose as a bundled dependency
-- Converting over to ES6
-- Converting to use the new service test harness
-- Moving over to Promises.
-- Updating documentation and example.
-
-### 2.0.0
-
-- Consistency with other service adapters
-- Compatibility with Feathers 1.0+
-- Adequate tests
-- Autoreconnect by default when not passing a connection string
-- Add special query params:
-    - $sort
-    - $skip
-    - $limit
-    - $select
-    - $populate
-
-### 0.1.1
-
-- First working release
-
-### 0.1.0
-
-- Initial release.
-
 ## License
 
 [MIT](LICENSE)
 
 ## Authors
 
-- [Eric Kryski](http://erickryski.com)
-- [Glavin Wiechert](https://github.com/Glavin001)
+- [Feathers contributors](https://github.com/feathersjs/feathers-mongoose/graphs/contributors)
