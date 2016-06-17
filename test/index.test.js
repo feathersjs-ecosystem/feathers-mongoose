@@ -148,6 +148,17 @@ describe('Feathers Mongoose Service', () => {
         done();
       }).catch(done);
     });
+
+    it('runs validators on update', function(done) {
+      people.create({ name: 'David', age: 333 })
+        .then(person => people.update(person._id, { name: 'Dada', age: 'wrong' }))
+        .then(() => done(new Error('Update should not be successful')))
+        .catch(error => {
+          expect(error.name).to.equal('BadRequest');
+          expect(error.message).to.equal('Cast to number failed for value "wrong" at path "age"');
+          done();
+        });
+    });
   });
 
   describe('Lean Services', () => {

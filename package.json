@@ -47,7 +47,7 @@
     "watch": "babel --watch -d lib/ src/",
     "jshint": "jshint src/. test/. --config",
     "mocha": "mocha test/ --compilers js:babel-core/register",
-    "test": "npm run compile && npm run jshint && npm run mocha && nsp check"
+    "test": "npm run compile && npm run jshint && npm run mocha"
   },
   "directories": {
     "lib": "lib"
@@ -73,7 +73,6 @@
     "jshint": "^2.8.0",
     "mocha": "^2.5.0",
     "mongoose": "^4.1.0",
-    "nsp": "^2.2.0",
     "rimraf": "^2.5.2",
     "sinon": "^1.17.3",
     "sinon-chai": "^2.8.0"

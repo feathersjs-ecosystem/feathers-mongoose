@@ -65,7 +65,7 @@ class Service {
     const executeQuery = total => {
       return query.exec().then(data => {
         return {
-          total: total,
+          total,
           limit: filters.$limit,
           skip: filters.$skip || 0,
           data
@@ -132,17 +132,17 @@ class Service {
     return this.Model.create(data).catch(errorHandler);
   }
 
-  update(id, data) {
+  update(id, data, params) {
     if(id === null) {
       return Promise.reject('Not replacing multiple records. Did you mean `patch`?');
     }
 
-    const options = {
-      new: true, 
+    const options = Object.assign({
+      new: true,
       overwrite: this.overwrite,
       runValidators: true,
       setDefaultsOnInsert: true
-    };
+    }, params.mongoose);
 
     if (this.id === '_id') {
       // We can not update default mongo ids
@@ -153,16 +153,10 @@ class Service {
       data[this.id] = id;
     }
 
-    // NOTE (EK): We don't use the findByIdAndUpdate method because these are functionally
-    // equivalent and this allows a developer to set their id field as something other than _id.
-    return this
-      .Model
+    return this.Model
       .findOneAndUpdate({ [this.id]: id }, data, options)
       .lean(this.lean)
       .exec()
-      .then((result) => {
-        return result;
-      })
       .catch(errorHandler);
   }
 
@@ -171,7 +165,9 @@ class Service {
     data = Object.assign({}, data);
 
     // If we are updating multiple records
-    let multi = id === null;
+    let options = Object.assign({
+      multi: id === null
+    }, params.mongoose);
 
     if (id !== null) {
       params.query[this.id] = id;
@@ -186,9 +182,8 @@ class Service {
       data[this.id] = id;
     }
 
-    return this
-      .Model
-      .update(params.query, { $set: data }, { multi })
+    return this.Model
+      .update(params.query, { $set: data }, options)
       .lean(this.lean)
       .exec()
       .then(() => this._getOrFind(id, params))
@@ -204,16 +199,14 @@ class Service {
 
     // NOTE (EK): First fetch the record(s) so that we can return
     // it/them when we delete it/them.
-    return this
-      ._getOrFind(id, params)
-      .then(data => {
-        return this.Model
-                  .remove(query)
-                  .lean(this.lean)
-                  .exec()
-                  .then(() => data)
-                  .catch(errorHandler);
-      })
+    return this._getOrFind(id, params)
+      .then(data => this.Model
+        .remove(query)
+        .lean(this.lean)
+        .exec()
+        .then(() => data)
+        .catch(errorHandler)
+      )
       .catch(errorHandler);
   }
 }
