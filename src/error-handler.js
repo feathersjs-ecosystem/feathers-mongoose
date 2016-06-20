@@ -3,7 +3,7 @@ import errors from 'feathers-errors';
 export default function errorHandler(error) {
   let feathersError = error;
 
-  if (error.constructor.name === 'MongooseError' && error.name) {
+  if (error.name) {
     switch(error.name) {
       case 'ValidationError':
       case 'ValidatorError':
@@ -17,6 +17,14 @@ export default function errorHandler(error) {
       case 'MissingSchemaError':
       case 'DivergentArrayError':
         feathersError = new errors.GeneralError(error);
+        break;
+      case 'MongoError':
+        if (error.code === 11000) {
+          feathersError = new errors.BadRequest(error);
+        }
+        else {
+          feathersError = new errors.GeneralError(error);
+        }
         break;
     }
   }

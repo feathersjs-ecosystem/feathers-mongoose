@@ -159,6 +159,15 @@ describe('Feathers Mongoose Service', () => {
           done();
         });
     });
+
+    it('returns a BadRequest when unique index is violated', function(done) {
+      pets.create({ type: 'cat', name: 'Bob' })
+        .then(() => pets.create({ type: 'cat', name: 'Bob' }))
+        .catch(error => {
+          expect(error.name).to.equal('BadRequest');
+          done();
+        });
+    });
   });
 
   describe('Lean Services', () => {
