@@ -149,9 +149,56 @@ describe('Feathers Mongoose Service', () => {
       }).catch(done);
     });
 
+    it('can $push an item onto an array with update', function(done) {
+      pets.create({ type: 'cat', name: 'Margeaux' }).then(margeaux => {
+        people.update(_ids.Doug, { $push: { pets: margeaux } })
+          .then(() => {
+            var params = {
+              query: {
+                $populate: ['pets']
+              }
+            };
+
+            people.get(_ids.Doug, params).then(data => {
+              expect(data.pets[1].name).to.equal('Margeaux');
+              done();
+            }).catch(done);
+          }).catch(done);
+      }).catch(done);
+    });
+
+    it('can $push an item onto an array with patch', function(done) {
+      pets.create({ type: 'cat', name: 'Margeaux' }).then(margeaux => {
+        people.patch(_ids.Doug, { $push: { pets: margeaux } })
+          .then(() => {
+            var params = {
+              query: {
+                $populate: ['pets']
+              }
+            };
+
+            people.get(_ids.Doug, params).then(data => {
+              expect(data.pets[1].name).to.equal('Margeaux');
+              done();
+            }).catch(done);
+          }).catch(done);
+      }).catch(done);
+    });
+
     it('runs validators on update', function(done) {
-      people.create({ name: 'David', age: 333 })
+      people.create({ name: 'David', age: 33 })
         .then(person => people.update(person._id, { name: 'Dada', age: 'wrong' }))
+        .then(() => done(new Error('Update should not be successful')))
+        .catch(error => {
+          expect(error.name).to.equal('BadRequest');
+          expect(error.message).to.equal('Cast to number failed for value "wrong" at path "age"');
+          done();
+        });
+    });
+
+    it('runs validators on patch', function(done) {
+      people.create({ name: 'David', age: 33 })
+        .then(person => people.patch(person._id, { name: 'Dada', age: 'wrong' }))
         .then(() => done(new Error('Update should not be successful')))
         .catch(error => {
           expect(error.name).to.equal('BadRequest');

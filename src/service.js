@@ -166,7 +166,8 @@ class Service {
 
     // If we are updating multiple records
     let options = Object.assign({
-      multi: id === null
+      multi: id === null,
+      runValidators: true
     }, params.mongoose);
 
     if (id !== null) {
@@ -182,12 +183,23 @@ class Service {
       data[this.id] = id;
     }
 
-    return this.Model
-      .update(params.query, { $set: data }, options)
-      .lean(this.lean)
-      .exec()
-      .then(() => this._getOrFind(id, params))
-      .catch(errorHandler);
+    let promise;
+
+    // We need this shitty hack because update doesn't return
+    // a promise properly when runValidators is true. WTF!
+    try {
+      promise = this.Model
+        .update(params.query, data, options)
+        .lean(this.lean)
+        .exec()
+        .then(() => this._getOrFind(id, params))
+        .catch(errorHandler);
+    }
+    catch(e) {
+      promise = errorHandler(e);
+    }
+
+    return promise;
   }
 
   remove(id, params) {
