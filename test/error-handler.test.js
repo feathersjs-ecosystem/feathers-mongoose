@@ -98,4 +98,14 @@ describe('Feathers Mongoose Error Handler', () => {
       done();
     }).catch(done);
   });
+
+  it('wraps a DuplicateKey error as a BadRequest', done => {
+    let e = Error('Mock Duplicate Key Error');
+    e.name = 'MongoError';
+    e.code = 11000;
+    errorHandler(e).catch(error => {
+      expect(error).to.be.an.instanceof(errors.BadRequest);
+      done();
+    }).catch(done);
+  });
 });
