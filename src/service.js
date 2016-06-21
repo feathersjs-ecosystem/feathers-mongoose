@@ -183,12 +183,10 @@ class Service {
       data[this.id] = id;
     }
 
-    let promise;
-
     // We need this shitty hack because update doesn't return
     // a promise properly when runValidators is true. WTF!
     try {
-      promise = this.Model
+      return this.Model
         .update(params.query, data, options)
         .lean(this.lean)
         .exec()
@@ -196,10 +194,8 @@ class Service {
         .catch(errorHandler);
     }
     catch(e) {
-      promise = errorHandler(e);
+      return errorHandler(e);
     }
-
-    return promise;
   }
 
   remove(id, params) {
