@@ -141,6 +141,7 @@ class Service {
       new: true,
       overwrite: this.overwrite,
       runValidators: true,
+      context: 'query',
       setDefaultsOnInsert: true
     }, params.mongoose);
 
@@ -167,7 +168,8 @@ class Service {
     // If we are updating multiple records
     let options = Object.assign({
       multi: id === null,
-      runValidators: true
+      runValidators: true,
+      context: 'query'
     }, params.mongoose);
 
     if (id !== null) {
