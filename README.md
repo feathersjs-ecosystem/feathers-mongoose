@@ -80,8 +80,7 @@ const app = feathers()
   .use(bodyParser.urlencoded({extended: true}));
 
 // Connect to the db, create and register a Feathers service.
-app.use('messages', service({
-  name: 'message',
+app.use('messages', service({,
   Model: Message,
   paginate: {
     default: 2,
