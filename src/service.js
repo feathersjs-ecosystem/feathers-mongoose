@@ -28,9 +28,8 @@ class Service {
   }
 
   _find(params, count, getFilter = filter) {
-    const queryParams = params.query || {};
-    const filters = getFilter(queryParams);
-    const query = this.Model.find(queryParams).lean(this.lean);
+    const { filters, query } = getFilter(params.query || {});
+    const q = this.Model.find(query).lean(this.lean);
 
     // $select uses a specific find syntax, so it has to come first.
     if (filters.$select && filters.$select.length) {
@@ -40,31 +39,31 @@ class Service {
         fields[key] = 1;
       }
 
-      query.select(fields);
+      q.select(fields);
     }
 
     // Handle $sort
     if (filters.$sort) {
-      query.sort(filters.$sort);
+      q.sort(filters.$sort);
     }
 
     // Handle $limit
     if (filters.$limit) {
-      query.limit(filters.$limit);
+      q.limit(filters.$limit);
     }
 
     // Handle $skip
     if (filters.$skip) {
-      query.skip(filters.$skip);
+      q.skip(filters.$skip);
     }
 
     // Handle $populate
     if (filters.$populate){
-      query.populate(filters.$populate);
+      q.populate(filters.$populate);
     }
 
     const executeQuery = total => {
-      return query.exec().then(data => {
+      return q.exec().then(data => {
         return {
           total,
           limit: filters.$limit,
@@ -75,7 +74,7 @@ class Service {
     };
 
     if(count) {
-      return this.Model.where(queryParams).count().exec().then(executeQuery);
+      return this.Model.where(query).count().exec().then(executeQuery);
     }
 
     return executeQuery();
