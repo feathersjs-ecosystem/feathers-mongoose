@@ -1,5 +1,45 @@
 # Change Log
 
+## [v3.5.0](https://github.com/feathersjs/feathers-mongoose/tree/v3.5.0) (2016-07-09)
+[Full Changelog](https://github.com/feathersjs/feathers-mongoose/compare/v3.4.2...v3.5.0)
+
+**Fixed bugs:**
+
+- We shouldn't remove properties from original objects [\#98](https://github.com/feathersjs/feathers-mongoose/issues/98)
+
+**Merged pull requests:**
+
+- feathers-service-tests@0.6.2 breaks build 🚨 [\#100](https://github.com/feathersjs/feathers-mongoose/pull/100) ([greenkeeperio-bot](https://github.com/greenkeeperio-bot))
+
+## [v3.4.2](https://github.com/feathersjs/feathers-mongoose/tree/v3.4.2) (2016-07-07)
+[Full Changelog](https://github.com/feathersjs/feathers-mongoose/compare/v3.4.1...v3.4.2)
+
+**Closed issues:**
+
+- Update README.md to reflect change to 'name' option for the service. [\#96](https://github.com/feathersjs/feathers-mongoose/issues/96)
+- Can't use `$inc` in patch [\#95](https://github.com/feathersjs/feathers-mongoose/issues/95)
+- Is this possible for multiple insert using Feathers mongoose? [\#94](https://github.com/feathersjs/feathers-mongoose/issues/94)
+
+**Merged pull requests:**
+
+- Adding Context:'query' so validators get the updating document [\#99](https://github.com/feathersjs/feathers-mongoose/pull/99) ([quick691fr](https://github.com/quick691fr))
+- Update README.md [\#97](https://github.com/feathersjs/feathers-mongoose/pull/97) ([githugger](https://github.com/githugger))
+- mongoose@4.5.2 breaks build 🚨 [\#93](https://github.com/feathersjs/feathers-mongoose/pull/93) ([greenkeeperio-bot](https://github.com/greenkeeperio-bot))
+
+## [v3.4.1](https://github.com/feathersjs/feathers-mongoose/tree/v3.4.1) (2016-06-21)
+[Full Changelog](https://github.com/feathersjs/feathers-mongoose/compare/v3.4.0...v3.4.1)
+
+**Closed issues:**
+
+- Support passing mongoose specific params to queries. [\#70](https://github.com/feathersjs/feathers-mongoose/issues/70)
+- Add a way to $push in a PATCH [\#68](https://github.com/feathersjs/feathers-mongoose/issues/68)
+- Handle duplicate key errors as a special case [\#67](https://github.com/feathersjs/feathers-mongoose/issues/67)
+
+**Merged pull requests:**
+
+- Wrapping native mongoldb errors. Specifically duplicate key errors. [\#92](https://github.com/feathersjs/feathers-mongoose/pull/92) ([ekryski](https://github.com/ekryski))
+- Adding support to be able to do $push, $set, etc. on patch [\#91](https://github.com/feathersjs/feathers-mongoose/pull/91) ([ekryski](https://github.com/ekryski))
+
 ## [v3.4.0](https://github.com/feathersjs/feathers-mongoose/tree/v3.4.0) (2016-06-17)
 [Full Changelog](https://github.com/feathersjs/feathers-mongoose/compare/v3.3.7...v3.4.0)
 
