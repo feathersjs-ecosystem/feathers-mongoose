@@ -1,3 +1,4 @@
+import 'feathers';
 import { expect } from 'chai';
 import mongoose from 'mongoose';
 import errors from 'feathers-errors';

@@ -1,3 +1,4 @@
+import omit from 'lodash.omit';
 import Proto from 'uberproto';
 import filter from 'feathers-query-filters';
 import errors from 'feathers-errors';
@@ -147,11 +148,11 @@ class Service {
 
     if (this.id === '_id') {
       // We can not update default mongo ids
-      delete data[this.id];
+      data = omit(data, this.id);
     } else {
       // If not using the default Mongo _id field set the id to its
       // previous value. This prevents orphaned documents.
-      data[this.id] = id;
+      data = Object.assign({}, data, { [this.id]: id });
     }
 
     return this.Model
