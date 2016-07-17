@@ -3,6 +3,7 @@ import Proto from 'uberproto';
 import filter from 'feathers-query-filters';
 import errors from 'feathers-errors';
 import errorHandler from './error-handler';
+import { ObjectID } from 'mongodb';
 
 // Create the service.
 class Service {
@@ -95,6 +96,10 @@ class Service {
   }
 
   _get(id, params) {
+    if (!ObjectID.isValid(id)) {
+      throw new errors.NotFound(`No record found for id '${id}'`);
+    }
+
     let modelQuery = this
       .Model
       .findOne({ [this.id]: id });
