@@ -20,7 +20,7 @@ export default function errorHandler(error) {
         break;
       case 'MongoError':
         if (error.code === 11000) {
-          feathersError = new errors.BadRequest(error);
+          feathersError = new errors.Conflict(error);
         }
         else {
           feathersError = new errors.GeneralError(error);
