@@ -216,6 +216,10 @@ describe('Feathers Mongoose Service', () => {
           done();
         });
     });
+
+    it('returns a NotFound when id is invalid ObjectID on get', () => {
+      expect(function() { people.get('1234', {}); }).to.throw(errors.NotFound, `No record found for id '1234'`);
+    });
   });
 
   describe('Lean Services', () => {
