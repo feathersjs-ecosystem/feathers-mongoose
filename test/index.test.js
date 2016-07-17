@@ -207,12 +207,12 @@ describe('Feathers Mongoose Service', () => {
         });
     });
 
-    it('returns a BadRequest when unique index is violated', function(done) {
+    it('returns a Conflict when unique index is violated', function(done) {
       pets.create({ type: 'cat', name: 'Bob' })
         .then(() => pets.create({ type: 'cat', name: 'Bob' }))
         .then(() => done(new Error('Should not be successful')))
         .catch(error => {
-          expect(error.name).to.equal('BadRequest');
+          expect(error.name).to.equal('Conflict');
           done();
         });
     });
