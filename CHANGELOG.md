@@ -1,5 +1,25 @@
 # Change Log
 
+## [Unreleased](https://github.com/feathersjs/feathers-mongoose/tree/HEAD)
+
+[Full Changelog](https://github.com/feathersjs/feathers-mongoose/compare/v3.5.1...HEAD)
+
+**Closed issues:**
+
+- How to change response code and data [\#102](https://github.com/feathersjs/feathers-mongoose/issues/102)
+
+## [v3.5.1](https://github.com/feathersjs/feathers-mongoose/tree/v3.5.1) (2016-07-17)
+[Full Changelog](https://github.com/feathersjs/feathers-mongoose/compare/v3.5.0...v3.5.1)
+
+**Fixed bugs:**
+
+- Duplicate key errors should be Conflicts not BadRequests [\#104](https://github.com/feathersjs/feathers-mongoose/issues/104)
+
+**Merged pull requests:**
+
+- changing duplicate key error to feathers Conflict error. Closes \#104 [\#105](https://github.com/feathersjs/feathers-mongoose/pull/105) ([ekryski](https://github.com/ekryski))
+- Update feathers-query-filters to version 2.0.0 🚀 [\#101](https://github.com/feathersjs/feathers-mongoose/pull/101) ([greenkeeperio-bot](https://github.com/greenkeeperio-bot))
+
 ## [v3.5.0](https://github.com/feathersjs/feathers-mongoose/tree/v3.5.0) (2016-07-09)
 [Full Changelog](https://github.com/feathersjs/feathers-mongoose/compare/v3.4.2...v3.5.0)
 
