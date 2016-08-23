@@ -207,13 +207,9 @@ class Service {
     // We need this shitty hack because update doesn't return
     // a promise properly when runValidators is true. WTF!
     try {
-      let query = Object.assign({}, params.query);
-
       // If params.query.$populate was provided, remove it
       // from the query sent to mongoose.
-      if (query.$populate) {
-        delete query.$populate;
-      }
+      const query = omit(params.query, '$populate');
 
       return this.Model
         .update(query, data, options)
