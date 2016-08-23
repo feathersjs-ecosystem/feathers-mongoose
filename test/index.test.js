@@ -149,6 +149,24 @@ describe('Feathers Mongoose Service', () => {
       }).catch(done);
     });
 
+    it('can patch a mongoose model', function (done) {
+      people.get(_ids.Doug).then(dougModel => {
+        people.patch(_ids.Doug, dougModel).then(data => {
+          expect(data.name).to.equal('Doug');
+          done();
+        }).catch(done);
+      }).catch(done);
+    });
+
+    it('can patch a mongoose model', function (done) {
+      people.get(_ids.Doug).then(dougModel => {
+        people.update(_ids.Doug, dougModel).then(data => {
+          expect(data.name).to.equal('Doug');
+          done();
+        }).catch(done);
+      }).catch(done);
+    });
+
     it('can $push an item onto an array with update', function(done) {
       pets.create({ type: 'cat', name: 'Margeaux' }).then(margeaux => {
         people.update(_ids.Doug, { $push: { pets: margeaux } })
