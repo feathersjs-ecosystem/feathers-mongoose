@@ -135,8 +135,13 @@ class Service {
   }
 
   update(id, data, params) {
-    if(id === null) {
+    if (id === null) {
       return Promise.reject('Not replacing multiple records. Did you mean `patch`?');
+    }
+
+    // Handle case where data might be a mongoose model
+    if (typeof data.toObject === 'function') {
+      data = data.toObject();
     }
 
     const options = Object.assign({
@@ -170,6 +175,13 @@ class Service {
 
   patch(id, data, params) {
     params.query = params.query || {};
+
+    // Handle case where data might be a mongoose model
+    if (typeof data.toObject === 'function') {
+      data = data.toObject();
+    }
+
+    // ensure we are working on a copy
     data = Object.assign({}, data);
 
     // If we are updating multiple records
