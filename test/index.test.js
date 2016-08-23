@@ -149,6 +149,39 @@ describe('Feathers Mongoose Service', () => {
       }).catch(done);
     });
 
+    it('can $populate with update', function (done) {
+      var params = {
+        query: {
+          $populate: ['pets']
+        }
+      };
+
+      people.get(_ids.Doug).then(doug => {
+        var newDoug = doug.toObject();
+        newDoug.name = 'Bob';
+
+        people.update(_ids.Doug, newDoug, params).then(data => {
+          expect(data.name).to.equal('Bob');
+          expect(data.pets[0].name).to.equal('Rufus');
+          done();
+        }).catch(done);
+      }).catch(done);
+    });
+
+    it('can $populate with patch', function (done) {
+      var params = {
+        query: {
+          $populate: ['pets']
+        }
+      };
+
+      people.patch(_ids.Doug, { name: 'Bob' }, params).then(data => {
+        expect(data.name).to.equal('Bob');
+        expect(data.pets[0].name).to.equal('Rufus');
+        done();
+      }).catch(done);
+    });
+
     it('can $push an item onto an array with update', function(done) {
       pets.create({ type: 'cat', name: 'Margeaux' }).then(margeaux => {
         people.update(_ids.Doug, { $push: { pets: margeaux } })

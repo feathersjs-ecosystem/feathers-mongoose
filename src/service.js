@@ -94,12 +94,14 @@ class Service {
     return result;
   }
 
-  _get(id, params) {
+  _get(id, params = {}) {
+    params.query = params.query || {};
+
     let modelQuery = this
       .Model
       .findOne({ [this.id]: id });
 
-    if (params && params.query && params.query.$populate) {
+    if (params.query.$populate) {
       modelQuery = modelQuery.populate(params.query.$populate);
     }
 
@@ -125,7 +127,7 @@ class Service {
       return this._find(params).then(page => page.data);
     }
 
-    return this._get(id);
+    return this._get(id, params);
   }
 
   create(data) {
@@ -154,8 +156,13 @@ class Service {
       data = Object.assign({}, data, { [this.id]: id });
     }
 
-    return this.Model
-      .findOneAndUpdate({ [this.id]: id }, data, options)
+    let modelQuery = this.Model.findOneAndUpdate({ [this.id]: id }, data, options);
+
+    if (params && params.query && params.query.$populate) {
+      modelQuery = modelQuery.populate(params.query.$populate);
+    }
+
+    return modelQuery
       .lean(this.lean)
       .exec()
       .catch(errorHandler);
@@ -188,8 +195,12 @@ class Service {
     // We need this shitty hack because update doesn't return
     // a promise properly when runValidators is true. WTF!
     try {
+      // If params.query.$populate was provided, remove it
+      // from the query sent to mongoose.
+      const query = omit(params.query, '$populate');
+
       return this.Model
-        .update(params.query, data, options)
+        .update(query, data, options)
         .lean(this.lean)
         .exec()
         .then(() => this._getOrFind(id, params))
