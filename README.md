@@ -27,7 +27,7 @@ Please refer to the [Feathers database adapter documentation](http://docs.feathe
 
 ## Getting Started
 
-Creating an Mongoose service is this simple:
+Creating an Mongoose service is this simple (make sure your MongoDB server is up and running):
 
 ```js
 var mongoose = require('mongoose');
