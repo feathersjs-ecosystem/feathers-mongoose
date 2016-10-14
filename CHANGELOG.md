@@ -1,12 +1,39 @@
 # Change Log
 
-## [Unreleased](https://github.com/feathersjs/feathers-mongoose/tree/HEAD)
-
-[Full Changelog](https://github.com/feathersjs/feathers-mongoose/compare/v3.5.1...HEAD)
+## [v3.5.3](https://github.com/feathersjs/feathers-mongoose/tree/v3.5.3) (2016-10-14)
+[Full Changelog](https://github.com/feathersjs/feathers-mongoose/compare/v3.5.2...v3.5.3)
 
 **Closed issues:**
 
+- Add MongoDB requirement information to README [\#128](https://github.com/feathersjs/feathers-mongoose/issues/128)
+- Query filter does not work with booleans [\#122](https://github.com/feathersjs/feathers-mongoose/issues/122)
+- Extending rest api functionality [\#121](https://github.com/feathersjs/feathers-mongoose/issues/121)
+- $populate across multiple levels [\#119](https://github.com/feathersjs/feathers-mongoose/issues/119)
+- Cannot get REST response to work [\#118](https://github.com/feathersjs/feathers-mongoose/issues/118)
+- $or query with a REST GET request \($or needs an array\) [\#117](https://github.com/feathersjs/feathers-mongoose/issues/117)
+
+**Merged pull requests:**
+
+- Adds the posibility to send an object to the $select [\#129](https://github.com/feathersjs/feathers-mongoose/pull/129) ([stalinb87](https://github.com/stalinb87))
+
+## [v3.5.2](https://github.com/feathersjs/feathers-mongoose/tree/v3.5.2) (2016-08-23)
+[Full Changelog](https://github.com/feathersjs/feathers-mongoose/compare/v3.5.1...v3.5.2)
+
+**Fixed bugs:**
+
+- Cannot $populate on update or patch [\#111](https://github.com/feathersjs/feathers-mongoose/issues/111)
+
+**Closed issues:**
+
+- Soft Delete [\#109](https://github.com/feathersjs/feathers-mongoose/issues/109)
+- Routing Feathers service with express [\#108](https://github.com/feathersjs/feathers-mongoose/issues/108)
+- Wrong ObjectId passed to service methods on nested routes [\#106](https://github.com/feathersjs/feathers-mongoose/issues/106)
 - How to change response code and data [\#102](https://github.com/feathersjs/feathers-mongoose/issues/102)
+
+**Merged pull requests:**
+
+- Ensure we convert mongoose models to regular objects. Closes \#110. [\#112](https://github.com/feathersjs/feathers-mongoose/pull/112) ([ekryski](https://github.com/ekryski))
+- Update mocha to version 3.0.0 🚀 [\#107](https://github.com/feathersjs/feathers-mongoose/pull/107) ([greenkeeperio-bot](https://github.com/greenkeeperio-bot))
 
 ## [v3.5.1](https://github.com/feathersjs/feathers-mongoose/tree/v3.5.1) (2016-07-17)
 [Full Changelog](https://github.com/feathersjs/feathers-mongoose/compare/v3.5.0...v3.5.1)
