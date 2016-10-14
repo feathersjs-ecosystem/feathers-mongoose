@@ -40,6 +40,10 @@ class Service {
       }
 
       q.select(fields);
+    } else {
+      if(filters.$select && typeof filters.$select === 'object') {
+        q.select(filters.$select);
+      }
     }
 
     // Handle $sort
