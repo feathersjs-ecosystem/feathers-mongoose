@@ -1,7 +1,17 @@
+sudo: false
 language: node_js
 services: mongodb
 node_js:
-  - "0.10"
-  - "0.12"
-  - "node"
-  - "iojs"
+  - 'node'
+  - '6'
+  - '4'
+  - 'iojs' #end of life Jan. 2017
+  - '0.12' #end of life Jan. 2017
+  - '0.10' #end of life Jan. 2017
+addons:
+  code_climate:
+    repo_token: '02e23483b0d3f6c53015dd08512fcfee126ffee8f03e5ebe8a6b4d8bb5b8cf31'
+before_script:
+  - npm install -g codeclimate-test-reporter
+after_script:
+  - codeclimate-test-reporter < coverage/lcov.info

@@ -1,10 +1,11 @@
 feathers-mongoose
 ================
 
-[![NPM](https://nodei.co/npm/feathers-mongoose.png?downloads=true&stars=true)](https://nodei.co/npm/feathers-mongoose/)
-
-[![Build Status](https://travis-ci.org/feathersjs/feathers-mongoose.svg?branch=master)](https://travis-ci.org/feathersjs/feathers-mongoose)
-[![Code Climate](https://codeclimate.com/github/feathersjs/feathers-mongoose.png)](https://codeclimate.com/github/feathersjs/feathers-mongoose)
+[![Build Status](https://travis-ci.org/feathersjs/feathers-mongoose.png?branch=master)](https://travis-ci.org/feathersjs/feathers-mongoose)
+[![Code Climate](https://codeclimate.com/github/feathersjs/feathers-mongoose/badges/gpa.svg)](https://codeclimate.com/github/feathersjs/feathers-mongoose)
+[![Test Coverage](https://codeclimate.com/github/feathersjs/feathers-mongoose/badges/coverage.svg)](https://codeclimate.com/github/feathersjs/feathers-mongoose/coverage)
+[![Dependency Status](https://img.shields.io/david/feathersjs/feathers-mongoose.svg?style=flat-square)](https://david-dm.org/feathersjs/feathers-mongoose)
+[![Download Status](https://img.shields.io/npm/dm/feathers-mongoose.svg?style=flat-square)](https://www.npmjs.com/package/feathers-mongoose)
 
 
 > Create a [Mongoose](http://mongoosejs.com/) ORM wrapped service for [FeathersJS](https://github.com/feathersjs).
