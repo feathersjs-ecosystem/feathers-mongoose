@@ -1,4 +1,8 @@
 .babelrc
+.istanbul.yml
+.travis.yml
+.jshintrc
+.editorconfig
 .idea/
 src/
 test/
