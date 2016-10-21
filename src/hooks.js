@@ -25,8 +25,8 @@
  * @return {Object}  The hook object with the result as a plain js object.
  */
 
-export let toObject = function(options = {}, dataField = 'data') {
-  return function(hook) {
+export let toObject = function (options = {}, dataField = 'data') {
+  return function (hook) {
     // Only perform this if it's used as an after hook.
     if (hook.result) {
       let data = hook.result[dataField] || hook.result;
@@ -41,9 +41,7 @@ export let toObject = function(options = {}, dataField = 'data') {
 
           return obj;
         });
-      }
-      // Handle single mongoose models
-      else if (typeof data.toObject === 'function') {
+      } else if (typeof data.toObject === 'function') { // Handle single mongoose models
         res = data.toObject(options);
       }
       // If our data is transformed set it to appropriate location on the hook

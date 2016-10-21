@@ -1,10 +1,10 @@
 import errors from 'feathers-errors';
 
-export default function errorHandler(error) {
+export default function errorHandler (error) {
   let feathersError = error;
 
   if (error.name) {
-    switch(error.name) {
+    switch (error.name) {
       case 'ValidationError':
       case 'ValidatorError':
       case 'CastError':
@@ -21,8 +21,7 @@ export default function errorHandler(error) {
       case 'MongoError':
         if (error.code === 11000) {
           feathersError = new errors.Conflict(error);
-        }
-        else {
+        } else {
           feathersError = new errors.GeneralError(error);
         }
         break;

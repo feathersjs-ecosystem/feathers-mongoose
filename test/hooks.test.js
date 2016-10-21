@@ -2,7 +2,7 @@ import 'feathers';
 import chai from 'chai';
 import sinon from 'sinon';
 import sinonChai from 'sinon-chai';
-import { hooks } from '../src';
+import {hooks} from '../src';
 
 const expect = chai.expect;
 chai.use(sinonChai);
@@ -15,7 +15,7 @@ describe('Feathers Mongoose Hooks', () => {
       beforeEach(() => {
         toObject = sinon.spy();
         hook = {
-          result: { toObject }
+          result: {toObject}
         };
       });
 
@@ -25,7 +25,7 @@ describe('Feathers Mongoose Hooks', () => {
       });
 
       it('supports custom options', () => {
-        let options = { feathers: 'awesome' };
+        let options = {feathers: 'awesome'};
         hooks.toObject(options)(hook);
         expect(toObject).to.be.calledWith(options);
       });
@@ -38,13 +38,13 @@ describe('Feathers Mongoose Hooks', () => {
         user1 = {
           name: 'Jerry',
           age: 23,
-          toObject: sinon.stub().returns({ name: 'Jerry', age: 23})
+          toObject: sinon.stub().returns({name: 'Jerry', age: 23})
         };
 
         user2 = {
           name: 'Mary',
           age: 32,
-          toObject: sinon.stub().returns({ name: 'Mary', age: 32})
+          toObject: sinon.stub().returns({name: 'Mary', age: 32})
         };
 
         users = [user1, user2];
@@ -52,14 +52,14 @@ describe('Feathers Mongoose Hooks', () => {
 
       it('converts paginated arrays of mongoose models', () => {
         let hook = {
-          result: { data: users }
+          result: {data: users}
         };
 
         hooks.toObject()(hook);
         expect(users[0].toObject).to.be.calledOnce;
         expect(users[1].toObject).to.be.calledOnce;
-        expect(hook.result.data[0]).to.deep.equal({ name: 'Jerry', age: 23});
-        expect(hook.result.data[1]).to.deep.equal({ name: 'Mary', age: 32});
+        expect(hook.result.data[0]).to.deep.equal({name: 'Jerry', age: 23});
+        expect(hook.result.data[1]).to.deep.equal({name: 'Mary', age: 32});
       });
 
       it('converts a single mongoose model', () => {
@@ -69,7 +69,7 @@ describe('Feathers Mongoose Hooks', () => {
 
         hooks.toObject()(hook);
         expect(users[0].toObject).to.be.calledOnce;
-        expect(hook.result).to.deep.equal({ name: 'Jerry', age: 23});
+        expect(hook.result).to.deep.equal({name: 'Jerry', age: 23});
       });
 
       it('converts non-paginated arrays of mongoose models', () => {
@@ -80,8 +80,8 @@ describe('Feathers Mongoose Hooks', () => {
         hooks.toObject()(hook);
         expect(users[0].toObject).to.be.calledOnce;
         expect(users[1].toObject).to.be.calledOnce;
-        expect(hook.result[0]).to.deep.equal({ name: 'Jerry', age: 23});
-        expect(hook.result[1]).to.deep.equal({ name: 'Mary', age: 32});
+        expect(hook.result[0]).to.deep.equal({name: 'Jerry', age: 23});
+        expect(hook.result[1]).to.deep.equal({name: 'Mary', age: 32});
       });
     });
 
@@ -104,7 +104,7 @@ describe('Feathers Mongoose Hooks', () => {
 
       it('does not convert paginated arrays of objects', () => {
         let hook = {
-          result: { data: users }
+          result: {data: users}
         };
 
         hooks.toObject()(hook);

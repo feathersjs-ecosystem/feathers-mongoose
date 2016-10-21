@@ -92,7 +92,7 @@ describe('Feathers Mongoose Error Handler', () => {
   });
 
   it('wraps a DivergentArrayError as a GeneralError', done => {
-    let fn = function(){};
+    let fn = function () {};
     let e = new mongoose.Error.DivergentArrayError({join: fn});
     errorHandler(e).catch(error => {
       expect(error).to.be.an.instanceof(errors.GeneralError);
