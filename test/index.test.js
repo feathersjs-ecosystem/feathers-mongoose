@@ -103,7 +103,7 @@ describe('Feathers Mongoose Service', () => {
       pets.create({type: 'dog', name: 'Rufus'}).then(pet => {
         _petIds.Rufus = pet._id;
 
-        return people.create({ name: 'Doug', age: 32, pets: [pet._id] }).then(user => {
+        return people.patch({ name: 'Doug', age: 32, pets: [pet._id] }).then(user => {
           _ids.Doug = user._id;
           done();
         });
@@ -118,7 +118,7 @@ describe('Feathers Mongoose Service', () => {
       });
     });
 
-    base(people, _ids, errors, '_id');
+    base(app, errors);
 
     it('can $populate with find', function (done) {
       var params = {
@@ -289,7 +289,7 @@ describe('Feathers Mongoose Service', () => {
       });
     });
 
-    base(leanPeople, _ids, errors, '_id');
+    base(app, errors, 'people2');
 
     it('can $populate with find', function (done) {
       var params = {
