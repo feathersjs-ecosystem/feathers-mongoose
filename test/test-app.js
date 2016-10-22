@@ -16,7 +16,6 @@ mongoose.Promise = global.Promise;
 // Connect to your MongoDB instance(s)
 mongoose.connect('mongodb://localhost:27017/feathers');
 
-
 // Create a feathers instance.
 const app = feathers()
   // Enable Socket.io

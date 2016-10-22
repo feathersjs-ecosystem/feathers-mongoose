@@ -6,7 +6,7 @@ import errorHandler from './error-handler';
 
 // Create the service.
 class Service {
-  constructor(options) {
+  constructor (options) {
     if (!options) {
       throw new Error('Mongoose options have to be provided');
     }
@@ -20,14 +20,14 @@ class Service {
     this.id = options.id || '_id';
     this.paginate = options.paginate || {};
     this.lean = options.lean || false;
-    this.overwrite = (options.overwrite === false) ? false : true;
+    this.overwrite = options.overwrite !== false;
   }
 
-  extend(obj) {
+  extend (obj) {
     return Proto.extend(obj, this);
   }
 
-  _find(params, count, getFilter = filter) {
+  _find (params, count, getFilter = filter) {
     const { filters, query } = getFilter(params.query || {});
     const q = this.Model.find(query).lean(this.lean);
 
@@ -41,7 +41,7 @@ class Service {
 
       q.select(fields);
     } else {
-      if(filters.$select && typeof filters.$select === 'object') {
+      if (filters.$select && typeof filters.$select === 'object') {
         q.select(filters.$select);
       }
     }
@@ -62,7 +62,7 @@ class Service {
     }
 
     // Handle $populate
-    if (filters.$populate){
+    if (filters.$populate) {
       q.populate(filters.$populate);
     }
 
@@ -77,28 +77,27 @@ class Service {
       });
     };
 
-    if(count) {
+    if (count) {
       return this.Model.where(query).count().exec().then(executeQuery);
     }
 
     return executeQuery();
   }
 
-  find(params) {
-    const paginate = (params && typeof params.paginate !== 'undefined') ?
-      params.paginate : this.paginate;
+  find (params) {
+    const paginate = (params && typeof params.paginate !== 'undefined') ? params.paginate : this.paginate;
     const result = this._find(params, !!paginate.default,
       query => filter(query, paginate)
     );
 
-    if(!paginate.default) {
+    if (!paginate.default) {
       return result.then(page => page.data);
     }
 
     return result;
   }
 
-  _get(id, params = {}) {
+  _get (id, params = {}) {
     params.query = params.query || {};
 
     let modelQuery = this
@@ -113,7 +112,7 @@ class Service {
       .lean(this.lean)
       .exec()
       .then(data => {
-        if(!data) {
+        if (!data) {
           throw new errors.NotFound(`No record found for id '${id}'`);
         }
 
@@ -122,23 +121,23 @@ class Service {
       .catch(errorHandler);
   }
 
-  get(id, params) {
+  get (id, params) {
     return this._get(id, params);
   }
 
-  _getOrFind(id, params) {
-    if(id === null) {
+  _getOrFind (id, params) {
+    if (id === null) {
       return this._find(params).then(page => page.data);
     }
 
     return this._get(id, params);
   }
 
-  create(data) {
+  create (data) {
     return this.Model.create(data).catch(errorHandler);
   }
 
-  update(id, data, params) {
+  update (id, data, params) {
     if (id === null) {
       return Promise.reject('Not replacing multiple records. Did you mean `patch`?');
     }
@@ -177,7 +176,7 @@ class Service {
       .catch(errorHandler);
   }
 
-  patch(id, data, params) {
+  patch (id, data, params) {
     params.query = params.query || {};
 
     // Handle case where data might be a mongoose model
@@ -221,13 +220,12 @@ class Service {
         .exec()
         .then(() => this._getOrFind(id, params))
         .catch(errorHandler);
-    }
-    catch(e) {
+    } catch (e) {
       return errorHandler(e);
     }
   }
 
-  remove(id, params) {
+  remove (id, params) {
     const query = Object.assign({}, params.query);
 
     if (id !== null) {
@@ -248,7 +246,7 @@ class Service {
   }
 }
 
-export default function init(options) {
+export default function init (options) {
   return new Service(options);
 }
 

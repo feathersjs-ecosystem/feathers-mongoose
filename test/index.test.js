@@ -1,11 +1,8 @@
-// jshint expr:true
-
 import { expect } from 'chai';
 import { base, orm, example } from 'feathers-service-tests';
 import errors from 'feathers-errors';
 import feathers from 'feathers';
-import service from '../src';
-import { hooks, Service } from '../src';
+import service, { hooks, Service } from '../src';
 import server from './test-app';
 import User from './models/user';
 import Pet from './models/pet';
@@ -47,11 +44,12 @@ describe('Feathers Mongoose Service', () => {
     it('exposes the Service constructor', () => {
       // Check by calling the Service constructor without
       // any params. It should return an error.
+      let newService;
       try {
-        new Service();
-      }
-      catch(e) {
+        newService = new Service();
+      } catch (e) {
         expect(e).to.not.be.undefined;
+        expect(newService).to.be.undefined;
       }
     });
 
@@ -200,7 +198,7 @@ describe('Feathers Mongoose Service', () => {
       }).catch(done);
     });
 
-    it('can $push an item onto an array with update', function(done) {
+    it('can $push an item onto an array with update', function (done) {
       pets.create({ type: 'cat', name: 'Margeaux' }).then(margeaux => {
         people.update(_ids.Doug, { $push: { pets: margeaux } })
           .then(() => {
@@ -218,7 +216,7 @@ describe('Feathers Mongoose Service', () => {
       }).catch(done);
     });
 
-    it('can $push an item onto an array with patch', function(done) {
+    it('can $push an item onto an array with patch', function (done) {
       pets.create({ type: 'cat', name: 'Margeaux' }).then(margeaux => {
         people.patch(_ids.Doug, { $push: { pets: margeaux } })
           .then(() => {
@@ -236,7 +234,7 @@ describe('Feathers Mongoose Service', () => {
       }).catch(done);
     });
 
-    it('runs validators on update', function(done) {
+    it('runs validators on update', function (done) {
       people.create({ name: 'David', age: 33 })
         .then(person => people.update(person._id, { name: 'Dada', age: 'wrong' }))
         .then(() => done(new Error('Update should not be successful')))
@@ -247,7 +245,7 @@ describe('Feathers Mongoose Service', () => {
         });
     });
 
-    it('runs validators on patch', function(done) {
+    it('runs validators on patch', function (done) {
       people.create({ name: 'David', age: 33 })
         .then(person => people.patch(person._id, { name: 'Dada', age: 'wrong' }))
         .then(() => done(new Error('Update should not be successful')))
@@ -258,7 +256,7 @@ describe('Feathers Mongoose Service', () => {
         });
     });
 
-    it('returns a Conflict when unique index is violated', function(done) {
+    it('returns a Conflict when unique index is violated', function (done) {
       pets.create({ type: 'cat', name: 'Bob' })
         .then(() => pets.create({ type: 'cat', name: 'Bob' }))
         .then(() => done(new Error('Should not be successful')))
