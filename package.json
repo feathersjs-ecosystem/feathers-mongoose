@@ -83,7 +83,7 @@
     "feathers-socketio": "^1.3.3",
     "istanbul": "^1.1.0-alpha.1",
     "mocha": "^3.0.0",
-    "mongoose": "^4.5.2",
+    "mongoose": "^4.6.5",
     "rimraf": "^2.5.2",
     "semistandard": "^9.1.0",
     "sinon": "^1.17.3",
