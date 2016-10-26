@@ -15,3 +15,8 @@ before_script:
   - npm install -g codeclimate-test-reporter
 after_script:
   - codeclimate-test-reporter < coverage/lcov.info
+notifications:
+  email: false
+  slack:
+    rooms:
+      secure: gOWQdYpkyxHHAfkE8GeTeQ4bwaPoQufA1nOVt/7oTK/KqoTjEAIFtifuc8x6slR74UAL4fctTSSx7Gbw+De3vZxEhGiiNR35hPdq9S9hFH/QZCVy2mU6ppZiquouq8cYTkaCQKGQcU6L12GZp0Lk8jeoK+h05ilYUtaesTDGros=
