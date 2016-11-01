@@ -149,7 +149,6 @@ class Service {
 
     const options = Object.assign({
       new: true,
-      overwrite: this.overwrite,
       runValidators: true,
       context: 'query',
       setDefaultsOnInsert: true
