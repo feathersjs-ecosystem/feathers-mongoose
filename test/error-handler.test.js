@@ -14,7 +14,11 @@ describe('Feathers Mongoose Error Handler', () => {
   });
 
   it('wraps a ValidationError as a BadRequest', done => {
-    let e = new mongoose.Error.ValidationError();
+    let e = new errors.GeneralError();
+
+    e.name = 'ValidationError';
+    e.errors = {};
+
     errorHandler(e).catch(error => {
       expect(error).to.be.an.instanceof(errors.BadRequest);
       done();
@@ -22,7 +26,10 @@ describe('Feathers Mongoose Error Handler', () => {
   });
 
   it('preserves a validation error message', done => {
-    let e = new mongoose.Error.ValidationError();
+    let e = new errors.GeneralError();
+
+    e.name = 'ValidationError';
+    e.errors = {};
     e.message = 'Invalid Email';
 
     errorHandler(e).catch(error => {
@@ -41,7 +48,10 @@ describe('Feathers Mongoose Error Handler', () => {
       }
     };
 
-    let e = new mongoose.Error.ValidationError();
+    let e = new errors.GeneralError();
+
+    e.name = 'ValidationError';
+    e.errors = {};
     e.errors = emailError;
 
     errorHandler(e).catch(error => {
@@ -51,7 +61,10 @@ describe('Feathers Mongoose Error Handler', () => {
   });
 
   it('wraps a ValidatorError as a BadRequest', done => {
-    let e = new mongoose.Error.ValidatorError({message: 'error'});
+    let e = new errors.GeneralError();
+
+    e.name = 'ValidationError';
+    e.errors = {};
 
     errorHandler(e).catch(error => {
       expect(error).to.be.an.instanceof(errors.BadRequest);
