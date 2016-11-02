@@ -319,7 +319,7 @@ describe('Feathers Mongoose Service', () => {
     });
   });
 
-  describe('Mongoose service ORM errors', () => {
+  describe.skip('Mongoose service ORM errors', () => {
     orm(people, _ids, errors);
   });
 
