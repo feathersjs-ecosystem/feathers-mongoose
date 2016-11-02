@@ -11,12 +11,12 @@ const _ids = {};
 const _petIds = {};
 const app = feathers().use('/people', service({ name: 'User', Model: User }))
                       .use('/pets', service({ name: 'Pet', Model: Pet }))
-                      .use('/people2', service({ name: 'User', Model: User, lean: true }))
-                      .use('/pets2', service({ name: 'Pet', Model: Pet, lean: true }));
+                      .use('/people2', service({ name: 'User', Model: User, lean: false }))
+                      .use('/pets2', service({ name: 'Pet', Model: Pet, lean: false }));
 const people = app.service('people');
 const pets = app.service('pets');
-const leanPeople = app.service('people2');
-const leanPets = app.service('pets2');
+const notLeanPeople = app.service('people2');
+const notLeanPets = app.service('pets2');
 let testApp;
 
 describe('Feathers Mongoose Service', () => {
@@ -91,7 +91,7 @@ describe('Feathers Mongoose Service', () => {
 
     describe('when missing the lean option', () => {
       it('sets the default to be false', () => {
-        expect(people.lean).to.be.false;
+        expect(people.lean).to.be.true;
       });
     });
   });
@@ -173,7 +173,7 @@ describe('Feathers Mongoose Service', () => {
       };
 
       people.get(_ids.Doug).then(doug => {
-        var newDoug = doug.toObject();
+        var newDoug = Object.assign({}, doug);
         newDoug.name = 'Bob';
 
         people.update(_ids.Doug, newDoug, params).then(data => {
@@ -267,14 +267,14 @@ describe('Feathers Mongoose Service', () => {
     });
   });
 
-  describe('Lean Services', () => {
+  describe('Not Lean Services', () => {
     beforeEach((done) => {
       // FIXME (EK): This is shit. We should be loading fixtures
       // using the raw driver not our system under test
-      leanPets.create({type: 'dog', name: 'Rufus'}).then(pet => {
+      notLeanPets.create({type: 'dog', name: 'Rufus'}).then(pet => {
         _petIds.Rufus = pet._id;
 
-        return leanPeople.create({ name: 'Doug', age: 32, pets: [pet._id] }).then(user => {
+        return notLeanPeople.create({ name: 'Doug', age: 32, pets: [pet._id] }).then(user => {
           _ids.Doug = user._id;
           done();
         });
@@ -282,14 +282,14 @@ describe('Feathers Mongoose Service', () => {
     });
 
     afterEach(done => {
-      leanPets.remove(null, { query: {} }).then(() => {
-        return leanPeople.remove(null, { query: {} }).then(() => {
+      notLeanPets.remove(null, { query: {} }).then(() => {
+        return notLeanPeople.remove(null, { query: {} }).then(() => {
           return done();
         });
       });
     });
 
-    base(leanPeople, _ids, errors, '_id');
+    base(notLeanPeople, _ids, errors, '_id');
 
     it('can $populate with find', function (done) {
       var params = {
@@ -299,7 +299,7 @@ describe('Feathers Mongoose Service', () => {
         }
       };
 
-      leanPeople.find(params).then(data => {
+      notLeanPeople.find(params).then(data => {
         expect(data[0].pets[0].name).to.equal('Rufus');
         done();
       });
@@ -312,7 +312,7 @@ describe('Feathers Mongoose Service', () => {
         }
       };
 
-      leanPeople.get(_ids.Doug, params).then(data => {
+      notLeanPeople.get(_ids.Doug, params).then(data => {
         expect(data.pets[0].name).to.equal('Rufus');
         done();
       }).catch(done);

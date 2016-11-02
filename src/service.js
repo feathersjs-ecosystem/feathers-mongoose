@@ -19,7 +19,7 @@ class Service {
     this.Model = options.Model;
     this.id = options.id || '_id';
     this.paginate = options.paginate || {};
-    this.lean = options.lean || false;
+    this.lean = options.lean === undefined ? true : options.lean;
     this.overwrite = options.overwrite !== false;
   }
 
