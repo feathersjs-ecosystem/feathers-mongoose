@@ -193,7 +193,10 @@ class Service {
     const query = params.query || {};
     const patchQuery = {};
 
-    // Account for potentially modified data
+    // NOTE (EK): Account for potentially modified data. If you are
+    // modifying records but are querying for them based on the
+    // same fields we need to treat that as a special case.
+    // ie. patch(null, { name: 'Eric' }, { query: { name: 'David' } })
     Object.keys(query).forEach(key => {
       if (query[key] !== undefined && data[key] !== undefined &&
           typeof data[key] !== 'object') {
@@ -231,8 +234,8 @@ class Service {
       data[this.id] = id;
     }
 
-    // We need this shitty hack because update doesn't return
-    // a promise properly when runValidators is true. WTF!
+    // NOTE (EK): We need this shitty hack because update doesn't
+    // return a promise properly when runValidators is true. WTF!
     try {
       // If params.query.$populate was provided, remove it
       // from the query sent to mongoose.
