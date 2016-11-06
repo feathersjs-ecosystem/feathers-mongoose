@@ -10,8 +10,11 @@ const negativeAgeValidator = function () {
 };
 
 const UserSchema = new Schema({
-  name: {type: String, required: true},
-  age: {type: Number, validate: [negativeAgeValidator, 'Age couldn\'t be negative']},
+  name: { type: String, required: true },
+  age: {
+    type: Number,
+    validate: [negativeAgeValidator, 'Age couldn\'t be negative']
+  },
   created: {type: Boolean, 'default': false},
   time: {type: Number},
   pets: [{type: Schema.ObjectId, ref: 'Pet'}]

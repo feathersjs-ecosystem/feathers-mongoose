@@ -15,12 +15,12 @@ class Service {
       throw new Error('You must provide a Mongoose Model');
     }
 
-    // this.name = options.name;
     this.Model = options.Model;
     this.id = options.id || '_id';
     this.paginate = options.paginate || {};
     this.lean = options.lean || false;
     this.overwrite = options.overwrite !== false;
+    this.events = options.events || [];
   }
 
   extend (obj) {
@@ -134,6 +134,19 @@ class Service {
   }
 
   create (data) {
+    const convert = current => {
+      const result = Object.assign({}, current);
+      delete result[this.id];
+
+      return result;
+    };
+
+    if (Array.isArray(data)) {
+      data = data.map(convert);
+    } else {
+      data = convert(data);
+    }
+
     return this.Model.create(data).catch(errorHandler);
   }
 
@@ -177,7 +190,18 @@ class Service {
   }
 
   patch (id, data, params) {
-    params.query = params.query || {};
+    const query = params.query || {};
+    const patchQuery = {};
+
+    // Account for potentially modified data
+    Object.keys(query).forEach(key => {
+      if (query[key] !== undefined && data[key] !== undefined &&
+          typeof data[key] !== 'object') {
+        patchQuery[key] = data[key];
+      } else {
+        patchQuery[key] = query[key];
+      }
+    });
 
     // Handle case where data might be a mongoose model
     if (typeof data.toObject === 'function') {
@@ -195,7 +219,7 @@ class Service {
     }, params.mongoose);
 
     if (id !== null) {
-      params.query[this.id] = id;
+      query[this.id] = id;
     }
 
     if (this.id === '_id') {
@@ -212,13 +236,11 @@ class Service {
     try {
       // If params.query.$populate was provided, remove it
       // from the query sent to mongoose.
-      const query = omit(params.query, '$populate');
-
       return this.Model
-        .update(query, data, options)
+        .update(omit(query, '$populate'), data, options)
         .lean(this.lean)
         .exec()
-        .then(() => this._getOrFind(id, params))
+        .then(() => this._getOrFind(id, { query: patchQuery }))
         .catch(errorHandler);
     } catch (e) {
       return errorHandler(e);
@@ -235,12 +257,12 @@ class Service {
     // NOTE (EK): First fetch the record(s) so that we can return
     // it/them when we delete it/them.
     return this._getOrFind(id, params)
-      .then(data => this.Model
-        .remove(query)
-        .lean(this.lean)
-        .exec()
-        .then(() => data)
-        .catch(errorHandler)
+      .then(data =>
+        this.Model
+          .remove(query)
+          .lean(this.lean)
+          .exec()
+          .then(() => data)
       )
       .catch(errorHandler);
   }

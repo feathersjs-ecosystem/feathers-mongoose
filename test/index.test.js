@@ -1,22 +1,29 @@
 import { expect } from 'chai';
-import { base, orm, example } from 'feathers-service-tests';
+import { base, example } from 'feathers-service-tests';
 import errors from 'feathers-errors';
 import feathers from 'feathers';
 import service, { hooks, Service } from '../src';
 import server from './test-app';
-import User from './models/user';
-import Pet from './models/pet';
+import { User, Pet, Peeps, CustomPeeps } from './models';
 
 const _ids = {};
 const _petIds = {};
-const app = feathers().use('/people', service({ name: 'User', Model: User }))
-                      .use('/pets', service({ name: 'Pet', Model: Pet }))
-                      .use('/people2', service({ name: 'User', Model: User, lean: true }))
-                      .use('/pets2', service({ name: 'Pet', Model: Pet, lean: true }));
+const app = feathers()
+  .use('/peeps', service({ Model: Peeps, events: [ 'testing' ] }))
+  .use('/peeps-customid', service({
+    id: 'customid',
+    Model: CustomPeeps,
+    events: [ 'testing' ]
+  }))
+  .use('/people', service({ Model: User }))
+  .use('/pets', service({ Model: Pet }))
+  .use('/people2', service({ Model: User, lean: true }))
+  .use('/pets2', service({ Model: Pet, lean: true }));
 const people = app.service('people');
 const pets = app.service('pets');
 const leanPeople = app.service('people2');
 const leanPets = app.service('pets2');
+
 let testApp;
 
 describe('Feathers Mongoose Service', () => {
@@ -97,28 +104,27 @@ describe('Feathers Mongoose Service', () => {
   });
 
   describe('Common functionality', () => {
-    beforeEach((done) => {
+    beforeEach(() => {
       // FIXME (EK): This is shit. We should be loading fixtures
       // using the raw driver not our system under test
-      pets.create({type: 'dog', name: 'Rufus'}).then(pet => {
+      return pets.create({type: 'dog', name: 'Rufus'}).then(pet => {
         _petIds.Rufus = pet._id;
 
-        return people.create({ name: 'Doug', age: 32, pets: [pet._id] }).then(user => {
+        return people.create({
+          name: 'Doug',
+          age: 32,
+          pets: [pet._id]
+        }).then(user => {
           _ids.Doug = user._id;
-          done();
         });
       });
     });
 
-    afterEach(done => {
-      pets.remove(null, { query: {} }).then(() => {
-        return people.remove(null, { query: {} }).then(() => {
-          return done();
-        });
-      });
+    afterEach(() => {
+      return pets.remove(null, { query: {} }).then(() =>
+        people.remove(null, { query: {} })
+      );
     });
-
-    base(people, _ids, errors, '_id');
 
     it('can $populate with find', function (done) {
       var params = {
@@ -289,8 +295,6 @@ describe('Feathers Mongoose Service', () => {
       });
     });
 
-    base(leanPeople, _ids, errors, '_id');
-
     it('can $populate with find', function (done) {
       var params = {
         query: {
@@ -319,8 +323,14 @@ describe('Feathers Mongoose Service', () => {
     });
   });
 
-  describe.skip('Mongoose service ORM errors', () => {
-    orm(people, _ids, errors);
+  describe('Common tests', () => {
+    before(() => Promise.all([
+      app.service('peeps').remove(null),
+      app.service('peeps-customid').remove(null)
+    ]));
+
+    base(app, errors, 'peeps', '_id');
+    base(app, errors, 'peeps-customid', 'customid');
   });
 
   describe('Mongoose service example test', () => {

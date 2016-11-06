@@ -1,32 +1,26 @@
 import errors from 'feathers-errors';
 
 export default function errorHandler (error) {
-  let feathersError = error;
-
   if (error.name) {
     switch (error.name) {
       case 'ValidationError':
       case 'ValidatorError':
       case 'CastError':
       case 'VersionError':
-        feathersError = new errors.BadRequest(error);
-        break;
+        return Promise.reject(new errors.BadRequest(error));
       case 'OverwriteModelError':
-        feathersError = new errors.Conflict(error);
-        break;
+        return Promise.reject(new errors.Conflict(error));
       case 'MissingSchemaError':
       case 'DivergentArrayError':
-        feathersError = new errors.GeneralError(error);
-        break;
+        return Promise.reject(new errors.GeneralError(error));
       case 'MongoError':
         if (error.code === 11000) {
-          feathersError = new errors.Conflict(error);
-        } else {
-          feathersError = new errors.GeneralError(error);
+          return Promise.reject(new errors.Conflict(error));
         }
-        break;
+
+        return Promise.rejct(new errors.GeneralError(error));
     }
   }
 
-  return Promise.reject(feathersError);
+  return Promise.reject(error);
 }
