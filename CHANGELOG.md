@@ -1,5 +1,30 @@
 # Change Log
 
+## [v3.6.0](https://github.com/feathersjs/feathers-mongoose/tree/v3.6.0) (2016-11-12)
+[Full Changelog](https://github.com/feathersjs/feathers-mongoose/compare/v3.5.3...v3.6.0)
+
+**Fixed bugs:**
+
+- patch doesn't throw correct object [\#110](https://github.com/feathersjs/feathers-mongoose/issues/110)
+
+**Closed issues:**
+
+- Patch is deleting subdocument data [\#144](https://github.com/feathersjs/feathers-mongoose/issues/144)
+- How do I get average? [\#140](https://github.com/feathersjs/feathers-mongoose/issues/140)
+- Support $select in get [\#134](https://github.com/feathersjs/feathers-mongoose/issues/134)
+- Add changelog binary to repo [\#114](https://github.com/feathersjs/feathers-mongoose/issues/114)
+
+**Merged pull requests:**
+
+- Update feathers-service-tests to version 0.9.0 🚀 [\#150](https://github.com/feathersjs/feathers-mongoose/pull/150) ([greenkeeperio-bot](https://github.com/greenkeeperio-bot))
+- feathers-rest@1.5.2 breaks build ⚠️ [\#147](https://github.com/feathersjs/feathers-mongoose/pull/147) ([greenkeeperio-bot](https://github.com/greenkeeperio-bot))
+- Node 4+ [\#146](https://github.com/feathersjs/feathers-mongoose/pull/146) ([daffl](https://github.com/daffl))
+- babel-core@6.18.2 breaks build ⚠️ [\#143](https://github.com/feathersjs/feathers-mongoose/pull/143) ([greenkeeperio-bot](https://github.com/greenkeeperio-bot))
+- babel-cli@6.18.0 breaks build ⚠️ [\#138](https://github.com/feathersjs/feathers-mongoose/pull/138) ([greenkeeperio-bot](https://github.com/greenkeeperio-bot))
+- jshint —\> semistandard [\#131](https://github.com/feathersjs/feathers-mongoose/pull/131) ([corymsmith](https://github.com/corymsmith))
+- adding code coverage [\#130](https://github.com/feathersjs/feathers-mongoose/pull/130) ([ekryski](https://github.com/ekryski))
+- Update feathers-service-tests to version 0.8.1 🚀 [\#124](https://github.com/feathersjs/feathers-mongoose/pull/124) ([greenkeeperio-bot](https://github.com/greenkeeperio-bot))
+
 ## [v3.5.3](https://github.com/feathersjs/feathers-mongoose/tree/v3.5.3) (2016-10-14)
 [Full Changelog](https://github.com/feathersjs/feathers-mongoose/compare/v3.5.2...v3.5.3)
 
