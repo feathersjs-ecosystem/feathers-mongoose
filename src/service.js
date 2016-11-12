@@ -1,6 +1,7 @@
 import omit from 'lodash.omit';
 import Proto from 'uberproto';
 import filter from 'feathers-query-filters';
+import { select } from 'feathers-commons';
 import errors from 'feathers-errors';
 import errorHandler from './error-handler';
 
@@ -52,7 +53,7 @@ class Service {
     }
 
     // Handle $limit
-    if (filters.$limit) {
+    if (typeof filters.$limit !== 'undefined') {
       q.limit(filters.$limit);
     }
 
@@ -66,7 +67,7 @@ class Service {
       q.populate(filters.$populate);
     }
 
-    const executeQuery = total => {
+    let executeQuery = total => {
       return q.exec().then(data => {
         return {
           total,
@@ -76,6 +77,17 @@ class Service {
         };
       });
     };
+
+    if (filters.$limit === 0) {
+      executeQuery = total => {
+        return Promise.resolve({
+          total,
+          limit: filters.$limit,
+          skip: filters.$skip || 0,
+          data: []
+        });
+      };
+    }
 
     if (count) {
       return this.Model.where(query).count().exec().then(executeQuery);
@@ -104,8 +116,22 @@ class Service {
       .Model
       .findOne({ [this.id]: id });
 
+    // Handle $populate
     if (params.query.$populate) {
       modelQuery = modelQuery.populate(params.query.$populate);
+    }
+
+    // Handle $select
+    if (params.query.$select && params.query.$select.length) {
+      let fields = { [this.id]: 1 };
+
+      for (let key of params.query.$select) {
+        fields[key] = 1;
+      }
+
+      modelQuery.select(fields);
+    } else if (params.query.$select && typeof params.query.$select === 'object') {
+      modelQuery.select(params.query.$select);
     }
 
     return modelQuery
@@ -133,7 +159,7 @@ class Service {
     return this._get(id, params);
   }
 
-  create (data) {
+  create (data, params) {
     const convert = current => {
       const result = Object.assign({}, current);
       delete result[this.id];
@@ -147,7 +173,9 @@ class Service {
       data = convert(data);
     }
 
-    return this.Model.create(data).catch(errorHandler);
+    return this.Model.create(data)
+      .then(select(params, this.id))
+      .catch(errorHandler);
   }
 
   update (id, data, params) {
@@ -186,25 +214,19 @@ class Service {
     return modelQuery
       .lean(this.lean)
       .exec()
+      .then(select(params, this.id))
       .catch(errorHandler);
   }
 
   patch (id, data, params) {
-    const query = params.query || {};
-    const patchQuery = {};
+    const query = Object.assign({}, filter(params.query || {}).query);
+    const mapIds = page => page.data.map(current => current[this.id]);
 
-    // NOTE (EK): Account for potentially modified data. If you are
-    // modifying records but are querying for them based on the
-    // same fields we need to treat that as a special case.
-    // ie. patch(null, { name: 'Eric' }, { query: { name: 'David' } })
-    Object.keys(query).forEach(key => {
-      if (query[key] !== undefined && data[key] !== undefined &&
-          typeof data[key] !== 'object') {
-        patchQuery[key] = data[key];
-      } else {
-        patchQuery[key] = query[key];
-      }
-    });
+    // By default we will just query for the one id. For multi patch
+    // we create a list of the ids of all items that will be changed
+    // to re-query them after the update
+    const ids = id === null ? this._find(params)
+        .then(mapIds) : Promise.resolve([ id ]);
 
     // Handle case where data might be a mongoose model
     if (typeof data.toObject === 'function') {
@@ -228,7 +250,7 @@ class Service {
     if (this.id === '_id') {
       // We can not update default mongo ids
       delete data[this.id];
-    } else {
+    } else if (id !== null) {
       // If not using the default Mongo _id field set the id to its
       // previous value. This prevents orphaned documents.
       data[this.id] = id;
@@ -237,13 +259,29 @@ class Service {
     // NOTE (EK): We need this shitty hack because update doesn't
     // return a promise properly when runValidators is true. WTF!
     try {
-      // If params.query.$populate was provided, remove it
-      // from the query sent to mongoose.
-      return this.Model
-        .update(omit(query, '$populate'), data, options)
-        .lean(this.lean)
-        .exec()
-        .then(() => this._getOrFind(id, { query: patchQuery }))
+      return ids
+        .then(idList => {
+          // Create a new query that re-queries all ids that
+          // were originally changed
+          const findParams = Object.assign({}, params, {
+            query: {
+              [this.id]: { $in: idList }
+            }
+          });
+
+          if (params.query && params.query.$populate) {
+            findParams.query.$populate = params.query.$populate;
+          }
+
+          // If params.query.$populate was provided, remove it
+          // from the query sent to mongoose.
+          return this.Model
+            .update(omit(query, '$populate'), data, options)
+            .lean(this.lean)
+            .exec()
+            .then(() => this._getOrFind(id, findParams));
+        })
+        .then(select(params, this.id))
         .catch(errorHandler);
     } catch (e) {
       return errorHandler(e);
@@ -251,7 +289,7 @@ class Service {
   }
 
   remove (id, params) {
-    const query = Object.assign({}, params.query);
+    const query = Object.assign({}, filter(params.query || {}).query);
 
     if (id !== null) {
       query[this.id] = id;
@@ -266,6 +304,7 @@ class Service {
           .lean(this.lean)
           .exec()
           .then(() => data)
+          .then(select(params, this.id))
       )
       .catch(errorHandler);
   }
