@@ -123,7 +123,7 @@ class Service {
 
     // Handle $select
     if (params.query.$select && params.query.$select.length) {
-      let fields = {};
+      let fields = { [this.id]: 1 };
 
       for (let key of params.query.$select) {
         fields[key] = 1;
@@ -144,7 +144,6 @@ class Service {
 
         return data;
       })
-      .then(select(params, this.id))
       .catch(errorHandler);
   }
 
