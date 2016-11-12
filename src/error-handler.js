@@ -18,7 +18,7 @@ export default function errorHandler (error) {
           return Promise.reject(new errors.Conflict(error));
         }
 
-        return Promise.rejct(new errors.GeneralError(error));
+        return Promise.reject(new errors.GeneralError(error));
     }
   }
 
