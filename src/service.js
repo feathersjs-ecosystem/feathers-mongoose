@@ -116,8 +116,22 @@ class Service {
       .Model
       .findOne({ [this.id]: id });
 
+    // Handle $populate
     if (params.query.$populate) {
       modelQuery = modelQuery.populate(params.query.$populate);
+    }
+
+    // Handle $select
+    if (params.query.$select && params.query.$select.length) {
+      let fields = {};
+
+      for (let key of params.query.$select) {
+        fields[key] = 1;
+      }
+
+      modelQuery.select(fields);
+    } else if (params.query.$select && typeof params.query.$select === 'object') {
+      modelQuery.select(params.query.$select);
     }
 
     return modelQuery
