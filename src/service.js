@@ -160,19 +160,6 @@ class Service {
   }
 
   create (data, params) {
-    const convert = current => {
-      const result = Object.assign({}, current);
-      delete result[this.id];
-
-      return result;
-    };
-
-    if (Array.isArray(data)) {
-      data = data.map(convert);
-    } else {
-      data = convert(data);
-    }
-
     return this.Model.create(data)
       .then(select(params, this.id))
       .catch(errorHandler);
