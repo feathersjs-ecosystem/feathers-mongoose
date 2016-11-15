@@ -1,5 +1,17 @@
 # Change Log
 
+## [v3.6.1](https://github.com/feathersjs/feathers-mongoose/tree/v3.6.1) (2016-11-15)
+[Full Changelog](https://github.com/feathersjs/feathers-mongoose/compare/v3.6.0...v3.6.1)
+
+**Closed issues:**
+
+- feathers-mongoose@3.6.0 break custom model id [\#151](https://github.com/feathersjs/feathers-mongoose/issues/151)
+- Disable $where by default [\#148](https://github.com/feathersjs/feathers-mongoose/issues/148)
+
+**Merged pull requests:**
+
+- Do not delete model ids [\#152](https://github.com/feathersjs/feathers-mongoose/pull/152) ([daffl](https://github.com/daffl))
+
 ## [v3.6.0](https://github.com/feathersjs/feathers-mongoose/tree/v3.6.0) (2016-11-12)
 [Full Changelog](https://github.com/feathersjs/feathers-mongoose/compare/v3.5.3...v3.6.0)
 
