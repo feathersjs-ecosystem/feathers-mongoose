@@ -18,13 +18,223 @@ const app = feathers()
   .use('/people', service({ Model: User }))
   .use('/pets', service({ Model: Pet }))
   .use('/people2', service({ Model: User, lean: true }))
-  .use('/pets2', service({ Model: Pet, lean: true }));
+  .use('/pets2', service({ Model: Pet, lean: true }))
+  .use('/people3', service({
+    Model: User,
+    findOneQuery: (id) => {
+      // this id factory looks up by _id if incoming is of type
+      // object id, otherwise it looks up by slug
+
+      let query = {};
+      if (id) {
+        if (String(id).match(/^[0-9a-fA-F]{24}$/)) {
+          query = {_id: id};
+        } else {
+          query = {slug: id};
+        }
+      }
+
+      return query;
+    }
+  }));
 const people = app.service('people');
 const pets = app.service('pets');
 const leanPeople = app.service('people2');
 const leanPets = app.service('pets2');
+const slugPeople = app.service('people3');
 
 let testApp;
+
+const buildCommonTests = (peopleService, idProp) => {
+  return () => {
+    beforeEach(() => {
+      // FIXME (EK): This is shit. We should be loading fixtures
+      // using the raw driver not our system under test
+      return pets.create({type: 'dog', name: 'Rufus'}).then(pet => {
+        _petIds.Rufus = pet._id;
+
+        return peopleService.create({
+          name: 'Doug Jones',
+          age: 32,
+          pets: [pet._id]
+        }).then(user => {
+          _ids.Doug = user[idProp];
+        });
+      });
+    });
+
+    afterEach(() => {
+      return pets.remove(null, { query: {} }).then(() =>
+        peopleService.remove(null, { query: {} })
+      );
+    });
+
+    it('can $populate with find', function (done) {
+      var params = {
+        query: {
+          name: 'Doug Jones',
+          $populate: ['pets']
+        }
+      };
+
+      peopleService.find(params).then(data => {
+        expect(data[0].pets[0].name).to.equal('Rufus');
+        done();
+      });
+    });
+
+    it('can $populate with get', function (done) {
+      var params = {
+        query: {
+          $populate: ['pets']
+        }
+      };
+
+      peopleService.get(_ids.Doug, params).then(data => {
+        expect(data.pets[0].name).to.equal('Rufus');
+        done();
+      }).catch(done);
+    });
+
+    it('can get a mongoose model', function (done) {
+      peopleService.get(_ids.Doug).then(dougModel => {
+        expect(String(dougModel[idProp])).to.equal(String(_ids.Doug));
+        done();
+      }).catch(done);
+    });
+
+    it('can patch a mongoose model', function (done) {
+      peopleService.get(_ids.Doug).then(dougModel => {
+        peopleService.patch(_ids.Doug, dougModel).then(data => {
+          expect(data.name).to.equal('Doug Jones');
+          done();
+        }).catch(done);
+      }).catch(done);
+    });
+
+    it('can update a mongoose model', function (done) {
+      peopleService.get(_ids.Doug).then(dougModel => {
+        peopleService.update(_ids.Doug, dougModel).then(data => {
+          expect(data.name).to.equal('Doug Jones');
+          done();
+        }).catch(done);
+      }).catch(done);
+    });
+
+    it('can remove a mongoose model', function (done) {
+      peopleService.create({
+        name: 'Doug Jones2',
+        age: 32
+      }).then(dougModel => {
+        peopleService.remove(dougModel[idProp]).then(data => {
+          expect(data.name).to.equal('Doug Jones2');
+          done();
+        }).catch(done);
+      }).catch(done);
+    });
+
+    it('can $populate with update', function (done) {
+      var params = {
+        query: {
+          $populate: ['pets']
+        }
+      };
+
+      peopleService.get(_ids.Doug).then(doug => {
+        var newDoug = doug.toObject();
+        newDoug.name = 'Bob';
+
+        peopleService.update(_ids.Doug, newDoug, params).then(data => {
+          expect(data.name).to.equal('Bob');
+          expect(data.pets[0].name).to.equal('Rufus');
+          done();
+        }).catch(done);
+      }).catch(done);
+    });
+
+    it('can $populate with patch', function (done) {
+      var params = {
+        query: {
+          $populate: ['pets']
+        }
+      };
+
+      peopleService.patch(_ids.Doug, { name: 'Bob' }, params).then(data => {
+        expect(data.name).to.equal('Bob');
+        expect(data.pets[0].name).to.equal('Rufus');
+        done();
+      }).catch(done);
+    });
+
+    it('can $push an item onto an array with update', function (done) {
+      pets.create({ type: 'cat', name: 'Margeaux' }).then(margeaux => {
+        peopleService.update(_ids.Doug, { $push: { pets: margeaux } })
+          .then(() => {
+            var params = {
+              query: {
+                $populate: ['pets']
+              }
+            };
+
+            peopleService.get(_ids.Doug, params).then(data => {
+              expect(data.pets[1].name).to.equal('Margeaux');
+              done();
+            }).catch(done);
+          }).catch(done);
+      }).catch(done);
+    });
+
+    it('can $push an item onto an array with patch', function (done) {
+      pets.create({ type: 'cat', name: 'Margeaux' }).then(margeaux => {
+        peopleService.patch(_ids.Doug, { $push: { pets: margeaux } })
+          .then(() => {
+            var params = {
+              query: {
+                $populate: ['pets']
+              }
+            };
+
+            peopleService.get(_ids.Doug, params).then(data => {
+              expect(data.pets[1].name).to.equal('Margeaux');
+              done();
+            }).catch(done);
+          }).catch(done);
+      }).catch(done);
+    });
+
+    it('runs validators on update', function (done) {
+      peopleService.create({ name: 'David', age: 33 })
+        .then(person => peopleService.update(person._id, { name: 'Dada', age: 'wrong' }))
+        .then(() => done(new Error('Update should not be successful')))
+        .catch(error => {
+          expect(error.name).to.equal('BadRequest');
+          expect(error.message).to.equal('Cast to number failed for value "wrong" at path "age"');
+          done();
+        });
+    });
+
+    it('runs validators on patch', function (done) {
+      peopleService.create({ name: 'David', age: 33 })
+        .then(person => people.patch(person._id, { name: 'Dada', age: 'wrong' }))
+        .then(() => done(new Error('Update should not be successful')))
+        .catch(error => {
+          expect(error.name).to.equal('BadRequest');
+          expect(error.message).to.equal('Cast to number failed for value "wrong" at path "age"');
+          done();
+        });
+    });
+
+    it('returns a Conflict when unique index is violated', function (done) {
+      pets.create({ type: 'cat', name: 'Bob' })
+        .then(() => pets.create({ type: 'cat', name: 'Bob' }))
+        .then(() => done(new Error('Should not be successful')))
+        .catch(error => {
+          expect(error.name).to.equal('Conflict');
+          done();
+        });
+    });
+  };
+};
 
 describe('Feathers Mongoose Service', () => {
   describe('Requiring', () => {
@@ -84,6 +294,12 @@ describe('Feathers Mongoose Service', () => {
       });
     });
 
+    describe('when missing the findOneQuery option', () => {
+      it('sets the default to be the identity function', () => {
+        expect(people.findOneQuery('123')).to.deep.equal({ _id: '123' });
+      });
+    });
+
     describe('when missing the paginate option', () => {
       it('sets the default to be {}', () => {
         expect(people.paginate).to.deep.equal({});
@@ -103,175 +319,8 @@ describe('Feathers Mongoose Service', () => {
     });
   });
 
-  describe('Common functionality', () => {
-    beforeEach(() => {
-      // FIXME (EK): This is shit. We should be loading fixtures
-      // using the raw driver not our system under test
-      return pets.create({type: 'dog', name: 'Rufus'}).then(pet => {
-        _petIds.Rufus = pet._id;
-
-        return people.create({
-          name: 'Doug',
-          age: 32,
-          pets: [pet._id]
-        }).then(user => {
-          _ids.Doug = user._id;
-        });
-      });
-    });
-
-    afterEach(() => {
-      return pets.remove(null, { query: {} }).then(() =>
-        people.remove(null, { query: {} })
-      );
-    });
-
-    it('can $populate with find', function (done) {
-      var params = {
-        query: {
-          name: 'Doug',
-          $populate: ['pets']
-        }
-      };
-
-      people.find(params).then(data => {
-        expect(data[0].pets[0].name).to.equal('Rufus');
-        done();
-      });
-    });
-
-    it('can $populate with get', function (done) {
-      var params = {
-        query: {
-          $populate: ['pets']
-        }
-      };
-
-      people.get(_ids.Doug, params).then(data => {
-        expect(data.pets[0].name).to.equal('Rufus');
-        done();
-      }).catch(done);
-    });
-
-    it('can patch a mongoose model', function (done) {
-      people.get(_ids.Doug).then(dougModel => {
-        people.patch(_ids.Doug, dougModel).then(data => {
-          expect(data.name).to.equal('Doug');
-          done();
-        }).catch(done);
-      }).catch(done);
-    });
-
-    it('can patch a mongoose model', function (done) {
-      people.get(_ids.Doug).then(dougModel => {
-        people.update(_ids.Doug, dougModel).then(data => {
-          expect(data.name).to.equal('Doug');
-          done();
-        }).catch(done);
-      }).catch(done);
-    });
-
-    it('can $populate with update', function (done) {
-      var params = {
-        query: {
-          $populate: ['pets']
-        }
-      };
-
-      people.get(_ids.Doug).then(doug => {
-        var newDoug = doug.toObject();
-        newDoug.name = 'Bob';
-
-        people.update(_ids.Doug, newDoug, params).then(data => {
-          expect(data.name).to.equal('Bob');
-          expect(data.pets[0].name).to.equal('Rufus');
-          done();
-        }).catch(done);
-      }).catch(done);
-    });
-
-    it('can $populate with patch', function (done) {
-      var params = {
-        query: {
-          $populate: ['pets']
-        }
-      };
-
-      people.patch(_ids.Doug, { name: 'Bob' }, params).then(data => {
-        expect(data.name).to.equal('Bob');
-        expect(data.pets[0].name).to.equal('Rufus');
-        done();
-      }).catch(done);
-    });
-
-    it('can $push an item onto an array with update', function (done) {
-      pets.create({ type: 'cat', name: 'Margeaux' }).then(margeaux => {
-        people.update(_ids.Doug, { $push: { pets: margeaux } })
-          .then(() => {
-            var params = {
-              query: {
-                $populate: ['pets']
-              }
-            };
-
-            people.get(_ids.Doug, params).then(data => {
-              expect(data.pets[1].name).to.equal('Margeaux');
-              done();
-            }).catch(done);
-          }).catch(done);
-      }).catch(done);
-    });
-
-    it('can $push an item onto an array with patch', function (done) {
-      pets.create({ type: 'cat', name: 'Margeaux' }).then(margeaux => {
-        people.patch(_ids.Doug, { $push: { pets: margeaux } })
-          .then(() => {
-            var params = {
-              query: {
-                $populate: ['pets']
-              }
-            };
-
-            people.get(_ids.Doug, params).then(data => {
-              expect(data.pets[1].name).to.equal('Margeaux');
-              done();
-            }).catch(done);
-          }).catch(done);
-      }).catch(done);
-    });
-
-    it('runs validators on update', function (done) {
-      people.create({ name: 'David', age: 33 })
-        .then(person => people.update(person._id, { name: 'Dada', age: 'wrong' }))
-        .then(() => done(new Error('Update should not be successful')))
-        .catch(error => {
-          expect(error.name).to.equal('BadRequest');
-          expect(error.message).to.equal('Cast to number failed for value "wrong" at path "age"');
-          done();
-        });
-    });
-
-    it('runs validators on patch', function (done) {
-      people.create({ name: 'David', age: 33 })
-        .then(person => people.patch(person._id, { name: 'Dada', age: 'wrong' }))
-        .then(() => done(new Error('Update should not be successful')))
-        .catch(error => {
-          expect(error.name).to.equal('BadRequest');
-          expect(error.message).to.equal('Cast to number failed for value "wrong" at path "age"');
-          done();
-        });
-    });
-
-    it('returns a Conflict when unique index is violated', function (done) {
-      pets.create({ type: 'cat', name: 'Bob' })
-        .then(() => pets.create({ type: 'cat', name: 'Bob' }))
-        .then(() => done(new Error('Should not be successful')))
-        .catch(error => {
-          expect(error.name).to.equal('Conflict');
-          done();
-        });
-    });
-  });
+  describe('Common functionality', buildCommonTests(people, '_id'));
+  describe('Common functionality with findOneQuery set', buildCommonTests(slugPeople, 'slug'));
 
   describe('Lean Services', () => {
     beforeEach((done) => {
@@ -280,7 +329,7 @@ describe('Feathers Mongoose Service', () => {
       leanPets.create({type: 'dog', name: 'Rufus'}).then(pet => {
         _petIds.Rufus = pet._id;
 
-        return leanPeople.create({ name: 'Doug', age: 32, pets: [pet._id] }).then(user => {
+        return leanPeople.create({ name: 'Doug Jones', age: 32, pets: [pet._id] }).then(user => {
           _ids.Doug = user._id;
           done();
         });
@@ -298,7 +347,7 @@ describe('Feathers Mongoose Service', () => {
     it('can $populate with find', function (done) {
       var params = {
         query: {
-          name: 'Doug',
+          name: 'Doug Jones',
           $populate: ['pets']
         }
       };

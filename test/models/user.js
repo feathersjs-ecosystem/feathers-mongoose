@@ -11,6 +11,7 @@ const negativeAgeValidator = function () {
 
 const UserSchema = new Schema({
   name: { type: String, required: true },
+  slug: { type: String },
   age: {
     type: Number,
     validate: [negativeAgeValidator, 'Age couldn\'t be negative']
@@ -18,6 +19,14 @@ const UserSchema = new Schema({
   created: {type: Boolean, 'default': false},
   time: {type: Number},
   pets: [{type: Schema.ObjectId, ref: 'Pet'}]
+});
+
+UserSchema.pre('save', function (next) {
+  if (this.isNew) {
+    this.set('slug', this.name.toLowerCase().replace(/ /g, '-').replace(/[^\w-]+/g, ''));
+  }
+
+  next();
 });
 
 const UserModel = mongoose.model('User', UserSchema);

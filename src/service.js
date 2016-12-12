@@ -18,6 +18,13 @@ class Service {
 
     this.Model = options.Model;
     this.id = options.id || '_id';
+
+    if (options.findOneQuery) {
+      this.findOneQuery = options.findOneQuery;
+    } else {
+      this.findOneQuery = (id) => ({ [this.id]: id });
+    }
+
     this.paginate = options.paginate || {};
     this.lean = options.lean || false;
     this.overwrite = options.overwrite !== false;
@@ -114,7 +121,7 @@ class Service {
 
     let modelQuery = this
       .Model
-      .findOne({ [this.id]: id });
+      .findOne(this.findOneQuery(id, {}, params));
 
     // Handle $populate
     if (params.query.$populate) {
@@ -192,7 +199,7 @@ class Service {
       data = Object.assign({}, data, { [this.id]: id });
     }
 
-    let modelQuery = this.Model.findOneAndUpdate({ [this.id]: id }, data, options);
+    let modelQuery = this.Model.findOneAndUpdate(this.findOneQuery(id, data, params), data, options);
 
     if (params && params.query && params.query.$populate) {
       modelQuery = modelQuery.populate(params.query.$populate);
@@ -231,7 +238,7 @@ class Service {
     }, params.mongoose);
 
     if (id !== null) {
-      query[this.id] = id;
+      Object.assign(query, this.findOneQuery(id, data, params));
     }
 
     if (this.id === '_id') {
@@ -279,7 +286,7 @@ class Service {
     const query = Object.assign({}, filter(params.query || {}).query);
 
     if (id !== null) {
-      query[this.id] = id;
+      Object.assign(query, this.findOneQuery(id, {}, params));
     }
 
     // NOTE (EK): First fetch the record(s) so that we can return
