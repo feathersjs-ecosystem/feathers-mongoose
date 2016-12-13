@@ -168,7 +168,7 @@ class Service {
 
   create (data, params) {
     return this.Model.create(data)
-      .then(select(params, this.id))
+      .then((result) => select(params, this.id)(this.lean ? result.toObject() : result))
       .catch(errorHandler);
   }
 
