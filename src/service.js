@@ -168,7 +168,20 @@ class Service {
 
   create (data, params) {
     return this.Model.create(data)
-      .then((result) => select(params, this.id)(this.lean ? result.toObject() : result))
+      .then((result) => {
+        let results = result;
+        if (this.lean) {
+          if (results instanceof Array) {
+            for (const i in results) {
+              results[i] = results[i].toObject();
+            }
+          } else {
+            results = result.toObject();
+          }
+        }
+
+        return select(params, this.id)(results);
+      })
       .catch(errorHandler);
   }
 
