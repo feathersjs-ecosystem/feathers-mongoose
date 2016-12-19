@@ -11,8 +11,8 @@ class Service {
     if (!options) {
       throw new Error('Mongoose options have to be provided');
     }
-  
-    if (!options.lean && process.env.NODE_ENV.indexOf('prod') === -1) {
+
+    if (!options.lean && (process.env.NODE_ENV || '').indexOf('prod') === -1) {
       console.log('Mongoose option.lean is false. Use hook.results.toObject() to convert the results to JS objects');
     }
 
