@@ -37,7 +37,7 @@ class Service {
     const q = this.Model.find(query).lean(this.lean);
 
     // $select uses a specific find syntax, so it has to come first.
-    if(typeof filters.$select === 'string') {
+    if (typeof filters.$select === 'string') {
       var fields = filters.$select;
     } else if (filters.$select && filters.$select.length) {
       let fields = {};
