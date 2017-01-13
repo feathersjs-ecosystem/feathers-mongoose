@@ -107,7 +107,7 @@ describe('Feathers Mongoose Service', () => {
     beforeEach(() => {
       // FIXME (EK): This is shit. We should be loading fixtures
       // using the raw driver not our system under test
-      return pets.create({type: 'dog', name: 'Rufus'}).then(pet => {
+      return pets.create({type: 'dog', name: 'Rufus', gender: 'Unknown'}).then(pet => {
         _petIds.Rufus = pet._id;
 
         return people.create({
@@ -124,6 +124,48 @@ describe('Feathers Mongoose Service', () => {
       return pets.remove(null, { query: {} }).then(() =>
         people.remove(null, { query: {} })
       );
+    });
+
+    it('can $select with a String', function (done) {
+      var params = {
+        query: {
+          name: 'Rufus',
+          $select: '+gender'
+        }
+      };
+
+      pets.find(params).then(data => {
+        expect(data[0].gender).to.equal('Unknown');
+        done();
+      });
+    });
+
+    it('can $select with an Array', function (done) {
+      var params = {
+        query: {
+          name: 'Rufus',
+          $select: ['gender']
+        }
+      };
+
+      pets.find(params).then(data => {
+        expect(data[0].gender).to.equal('Unknown');
+        done();
+      });
+    });
+
+    it('can $select with an Object', function (done) {
+      var params = {
+        query: {
+          name: 'Rufus',
+          $select: {'gender': true}
+        }
+      };
+
+      pets.find(params).then(data => {
+        expect(data[0].gender).to.equal('Unknown');
+        done();
+      });
     });
 
     it('can $populate with find', function (done) {

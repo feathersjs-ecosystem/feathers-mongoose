@@ -37,7 +37,7 @@ class Service {
     const q = this.Model.find(query).lean(this.lean);
 
     // $select uses a specific find syntax, so it has to come first.
-    if (filters.$select && filters.$select.length) {
+    if (Array.isArray(filters.$select)) {
       let fields = {};
 
       for (let key of filters.$select) {
@@ -45,10 +45,8 @@ class Service {
       }
 
       q.select(fields);
-    } else {
-      if (filters.$select && typeof filters.$select === 'object') {
-        q.select(filters.$select);
-      }
+    } else if (typeof filters.$select === 'string' || typeof filters.$select === 'object') {
+      q.select(filters.$select);
     }
 
     // Handle $sort
