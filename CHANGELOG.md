@@ -1,5 +1,18 @@
 # Change Log
 
+## [v3.6.2](https://github.com/feathersjs/feathers-mongoose/tree/v3.6.2) (2017-01-13)
+[Full Changelog](https://github.com/feathersjs/feathers-mongoose/compare/v3.6.1...v3.6.2)
+
+**Closed issues:**
+
+- using lean options in a service with a subdocument model doesn't seem to work  [\#157](https://github.com/feathersjs/feathers-mongoose/issues/157)
+- Cast to ObjectId failed for value \_id [\#156](https://github.com/feathersjs/feathers-mongoose/issues/156)
+
+**Merged pull requests:**
+
+- Allow $select to catch and use string syntax [\#158](https://github.com/feathersjs/feathers-mongoose/pull/158) ([jamesjnadeau](https://github.com/jamesjnadeau))
+- Added warning msg when options.lean is falsey [\#155](https://github.com/feathersjs/feathers-mongoose/pull/155) ([eddyystop](https://github.com/eddyystop))
+
 ## [v3.6.1](https://github.com/feathersjs/feathers-mongoose/tree/v3.6.1) (2016-11-15)
 [Full Changelog](https://github.com/feathersjs/feathers-mongoose/compare/v3.6.0...v3.6.1)
 
