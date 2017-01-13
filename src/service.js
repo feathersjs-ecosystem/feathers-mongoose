@@ -38,7 +38,8 @@ class Service {
 
     // $select uses a specific find syntax, so it has to come first.
     if (typeof filters.$select === 'string') {
-      var fields = filters.$select;
+      let fields = filters.$select;
+      q.select(fields);
     } else if (filters.$select && filters.$select.length) {
       let fields = {};
 
