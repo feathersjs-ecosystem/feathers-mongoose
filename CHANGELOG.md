@@ -1,5 +1,16 @@
 # Change Log
 
+## [v4.0.0](https://github.com/feathersjs/feathers-mongoose/tree/v4.0.0) (2017-01-29)
+[Full Changelog](https://github.com/feathersjs/feathers-mongoose/compare/v3.6.2...v4.0.0)
+
+**Closed issues:**
+
+- Make lean: true by default [\#132](https://github.com/feathersjs/feathers-mongoose/issues/132)
+
+**Merged pull requests:**
+
+- Make lean true by default [\#159](https://github.com/feathersjs/feathers-mongoose/pull/159) ([daffl](https://github.com/daffl))
+
 ## [v3.6.2](https://github.com/feathersjs/feathers-mongoose/tree/v3.6.2) (2017-01-13)
 [Full Changelog](https://github.com/feathersjs/feathers-mongoose/compare/v3.6.1...v3.6.2)
 
