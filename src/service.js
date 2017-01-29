@@ -12,10 +12,6 @@ class Service {
       throw new Error('Mongoose options have to be provided');
     }
 
-    if (!options.lean && (process.env.NODE_ENV || '').indexOf('prod') === -1) {
-      console.log('Mongoose option.lean is false. Use hook.results.toObject() to convert the results to JS objects');
-    }
-
     if (!options.Model || !options.Model.modelName) {
       throw new Error('You must provide a Mongoose Model');
     }
@@ -23,7 +19,7 @@ class Service {
     this.Model = options.Model;
     this.id = options.id || '_id';
     this.paginate = options.paginate || {};
-    this.lean = options.lean || false;
+    this.lean = options.lean === undefined ? true : options.lean;
     this.overwrite = options.overwrite !== false;
     this.events = options.events || [];
   }
