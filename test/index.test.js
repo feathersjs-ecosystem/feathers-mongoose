@@ -15,10 +15,10 @@ const app = feathers()
     Model: CustomPeeps,
     events: [ 'testing' ]
   }))
-  .use('/people', service({ Model: User }))
-  .use('/pets', service({ Model: Pet }))
-  .use('/people2', service({ Model: User, lean: true }))
-  .use('/pets2', service({ Model: Pet, lean: true }));
+  .use('/people', service({ Model: User, lean: false }))
+  .use('/pets', service({ Model: Pet, lean: false }))
+  .use('/people2', service({ Model: User }))
+  .use('/pets2', service({ Model: Pet }));
 const people = app.service('people');
 const pets = app.service('pets');
 const leanPeople = app.service('people2');
