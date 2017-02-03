@@ -1,5 +1,12 @@
 # Change Log
 
+## [v4.0.1](https://github.com/feathersjs/feathers-mongoose/tree/v4.0.1) (2017-02-03)
+[Full Changelog](https://github.com/feathersjs/feathers-mongoose/compare/v4.0.0...v4.0.1)
+
+**Merged pull requests:**
+
+- Use toObject for create when lean is true [\#160](https://github.com/feathersjs/feathers-mongoose/pull/160) ([daffl](https://github.com/daffl))
+
 ## [v4.0.0](https://github.com/feathersjs/feathers-mongoose/tree/v4.0.0) (2017-01-29)
 [Full Changelog](https://github.com/feathersjs/feathers-mongoose/compare/v3.6.2...v4.0.0)
 
