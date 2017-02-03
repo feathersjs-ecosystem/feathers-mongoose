@@ -159,6 +159,7 @@ class Service {
 
   create (data, params) {
     return this.Model.create(data)
+      .then(result => (this.lean && result.toObject) ? result.toObject() : result)
       .then(select(params, this.id))
       .catch(errorHandler);
   }
