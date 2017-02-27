@@ -1,5 +1,26 @@
 # Change Log
 
+## [Unreleased](https://github.com/feathersjs/feathers-mongoose/tree/HEAD)
+
+[Full Changelog](https://github.com/feathersjs/feathers-mongoose/compare/v5.0.0...HEAD)
+
+**Closed issues:**
+
+- Potential security issue with 409 error [\#166](https://github.com/feathersjs/feathers-mongoose/issues/166)
+
+## [v5.0.0](https://github.com/feathersjs/feathers-mongoose/tree/v5.0.0) (2017-02-27)
+[Full Changelog](https://github.com/feathersjs/feathers-mongoose/compare/v4.0.1...v5.0.0)
+
+**Closed issues:**
+
+- Please provide a working example for $push [\#165](https://github.com/feathersjs/feathers-mongoose/issues/165)
+- Virtuals [\#164](https://github.com/feathersjs/feathers-mongoose/issues/164)
+- How can I pass additional query parameters in a REST `put` operation? [\#162](https://github.com/feathersjs/feathers-mongoose/issues/162)
+
+**Merged pull requests:**
+
+- adding better mongoose conflict error handling [\#168](https://github.com/feathersjs/feathers-mongoose/pull/168) ([ekryski](https://github.com/ekryski))
+
 ## [v4.0.1](https://github.com/feathersjs/feathers-mongoose/tree/v4.0.1) (2017-02-03)
 [Full Changelog](https://github.com/feathersjs/feathers-mongoose/compare/v4.0.0...v4.0.1)
 
