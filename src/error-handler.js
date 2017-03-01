@@ -20,8 +20,8 @@ export default function errorHandler (error) {
           const match1 = error.message.match(/_?([a-zA-Z]*)_?\d?\s*dup key/i);
           const match2 = error.message.match(/\s*dup key:\s*\{\s*:\s*"?(\S+)"?\s*\}/i);
 
-          const key = match1[1] || 'path';
-          let value = match2[1] || 'value';
+          const key = match1 ? match1[1] : 'path';
+          let value = match2 ? match2[1] : 'value';
 
           if (value === 'null') {
             value = null;
