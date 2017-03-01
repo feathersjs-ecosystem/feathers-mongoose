@@ -17,8 +17,11 @@ export default function errorHandler (error) {
         if (error.code === 11000 || error.code === 11001) {
           // NOTE (EK): Error parsing as discussed in this github thread
           // https://github.com/Automattic/mongoose/issues/2129
-          const key = error.message.match(/_?([a-zA-Z]*)_?\d?\s*dup key/i)[1];
-          let value = error.message.match(/\s*dup key:\s*\{\s*:\s*"?([a-zA-Z0-9'().]+)"?\s*\}/i)[1];
+          const match1 = error.message.match(/_?([a-zA-Z]*)_?\d?\s*dup key/i);
+          const match2 = error.message.match(/\s*dup key:\s*\{\s*:\s*"?(\S+)"?\s*\}/i);
+
+          const key = match1[1] || 'path';
+          let value = match2[1] || 'value';
 
           if (value === 'null') {
             value = null;
@@ -26,7 +29,7 @@ export default function errorHandler (error) {
             value = undefined;
           }
 
-          error.message = `${key} '${value}' already exists.`;
+          error.message = `${key}: ${value} already exists.`;
           error.errors = {
             [key]: value
           };

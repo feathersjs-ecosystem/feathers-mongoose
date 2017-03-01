@@ -129,7 +129,7 @@ describe('Feathers Mongoose Error Handler', () => {
       e.name = 'MongoError';
       e.code = 11000;
       errorHandler(e).catch(error => {
-        expect(error.message).to.equal(`id 'ObjectId('57226808ec55240c00000272')' already exists.`);
+        expect(error.message).to.equal(`id: ObjectId('57226808ec55240c00000272') already exists.`);
         done();
       }).catch(done);
     });
