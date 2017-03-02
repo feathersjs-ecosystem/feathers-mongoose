@@ -1,12 +1,22 @@
 # Change Log
 
-## [Unreleased](https://github.com/feathersjs/feathers-mongoose/tree/HEAD)
+## [v5.0.3](https://github.com/feathersjs/feathers-mongoose/tree/v5.0.3) (2017-03-02)
+[Full Changelog](https://github.com/feathersjs/feathers-mongoose/compare/v5.0.2...v5.0.3)
 
-[Full Changelog](https://github.com/feathersjs/feathers-mongoose/compare/v5.0.0...HEAD)
+## [v5.0.2](https://github.com/feathersjs/feathers-mongoose/tree/v5.0.2) (2017-03-01)
+[Full Changelog](https://github.com/feathersjs/feathers-mongoose/compare/v5.0.1...v5.0.2)
+
+## [v5.0.1](https://github.com/feathersjs/feathers-mongoose/tree/v5.0.1) (2017-03-01)
+[Full Changelog](https://github.com/feathersjs/feathers-mongoose/compare/v5.0.0...v5.0.1)
 
 **Closed issues:**
 
+- Blowing up Mongoose with undefined value in $push [\#167](https://github.com/feathersjs/feathers-mongoose/issues/167)
 - Potential security issue with 409 error [\#166](https://github.com/feathersjs/feathers-mongoose/issues/166)
+
+**Merged pull requests:**
+
+- Parsing fix [\#170](https://github.com/feathersjs/feathers-mongoose/pull/170) ([ekryski](https://github.com/ekryski))
 
 ## [v5.0.0](https://github.com/feathersjs/feathers-mongoose/tree/v5.0.0) (2017-02-27)
 [Full Changelog](https://github.com/feathersjs/feathers-mongoose/compare/v4.0.1...v5.0.0)
