@@ -17,6 +17,13 @@ class Service {
     }
 
     this.Model = options.Model;
+    this.discriminatorKey = this.Model.schema.options.discriminatorKey;
+    this.discriminators = {};
+    (options.discriminators || []).forEach(element => {
+      if (element.modelName) {
+        this.discriminators[element.modelName] = element;
+      }
+    });
     this.id = options.id || '_id';
     this.paginate = options.paginate || {};
     this.lean = options.lean === undefined ? true : options.lean;
@@ -30,7 +37,9 @@ class Service {
 
   _find (params, count, getFilter = filter) {
     const { filters, query } = getFilter(params.query || {});
-    const q = this.Model.find(query).lean(this.lean);
+    const discriminator = (params.query || {})[this.discriminatorKey] || this.discriminatorKey;
+    const model = this.discriminators[discriminator] || this.Model;
+    const q = model.find(query).lean(this.lean);
 
     // $select uses a specific find syntax, so it has to come first.
     if (Array.isArray(filters.$select)) {
@@ -88,7 +97,7 @@ class Service {
     }
 
     if (count) {
-      return this.Model.where(query).count().exec().then(executeQuery);
+      return model.where(query).count().exec().then(executeQuery);
     }
 
     return executeQuery();
@@ -110,8 +119,9 @@ class Service {
   _get (id, params = {}) {
     params.query = params.query || {};
 
-    let modelQuery = this
-      .Model
+    const discriminator = (params.query || {})[this.discriminatorKey] || this.discriminatorKey;
+    const model = this.discriminators[discriminator] || this.Model;
+    let modelQuery = model
       .findOne({ [this.id]: id });
 
     // Handle $populate
@@ -158,7 +168,9 @@ class Service {
   }
 
   create (data, params) {
-    return this.Model.create(data)
+    const discriminator = data[this.discriminatorKey] || this.discriminatorKey;
+    const model = this.discriminators[discriminator] || this.Model;
+    return model.create(data)
       .then(result => (this.lean && result.toObject) ? result.toObject() : result)
       .then(select(params, this.id))
       .catch(errorHandler);
@@ -191,7 +203,9 @@ class Service {
       data = Object.assign({}, data, { [this.id]: id });
     }
 
-    let modelQuery = this.Model.findOneAndUpdate({ [this.id]: id }, data, options);
+    const discriminator = (params.query || {})[this.discriminatorKey] || this.discriminatorKey;
+    const model = this.discriminators[discriminator] || this.Model;
+    let modelQuery = model.findOneAndUpdate({ [this.id]: id }, data, options);
 
     if (params && params.query && params.query.$populate) {
       modelQuery = modelQuery.populate(params.query.$populate);
@@ -261,7 +275,9 @@ class Service {
 
           // If params.query.$populate was provided, remove it
           // from the query sent to mongoose.
-          return this.Model
+          const discriminator = (params.query || {})[this.discriminatorKey] || this.discriminatorKey;
+          const model = this.discriminators[discriminator] || this.Model;
+          return model
             .update(omit(query, '$populate'), data, options)
             .lean(this.lean)
             .exec()
