@@ -86,7 +86,7 @@
     "mocha": "^3.0.0",
     "mongoose": "^4.5.2",
     "rimraf": "^2.5.2",
-    "semistandard": "^9.1.0",
+    "semistandard": "^10.0.0",
     "sinon": "^2.0.0",
     "sinon-chai": "^2.8.0"
   }
