@@ -1,3 +1,5 @@
+/* eslint-disable no-unused-expressions */
+
 import 'feathers';
 import chai from 'chai';
 import sinon from 'sinon';
