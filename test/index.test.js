@@ -1,3 +1,5 @@
+/* eslint-disable no-unused-expressions */
+
 import { expect } from 'chai';
 import { base, example } from 'feathers-service-tests';
 import errors from 'feathers-errors';
