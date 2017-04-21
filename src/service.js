@@ -109,10 +109,14 @@ class Service {
 
   _get (id, params = {}) {
     params.query = params.query || {};
+    const _query = Object.assign({}, params.query);
+    delete _query.$populate;
+    delete _query.$select;
+    _query[this.id]= id;
 
     let modelQuery = this
       .Model
-      .findOne({ [this.id]: id });
+      .findOne(_query);
 
     // Handle $populate
     if (params.query.$populate) {
