@@ -6,7 +6,7 @@ import errors from 'feathers-errors';
 import feathers from 'feathers';
 import service, { hooks, Service } from '../src';
 import server from './test-app';
-import { User, Pet, Peeps, CustomPeeps } from './models';
+import { User, Pet, Peeps, CustomPeeps, Post, TextPost } from './models';
 
 const _ids = {};
 const _petIds = {};
@@ -20,11 +20,13 @@ const app = feathers()
   .use('/people', service({ Model: User, lean: false }))
   .use('/pets', service({ Model: Pet, lean: false }))
   .use('/people2', service({ Model: User }))
-  .use('/pets2', service({ Model: Pet }));
+  .use('/pets2', service({ Model: Pet }))
+  .use('/posts', service({ Model: Post, discriminators: [TextPost] }));
 const people = app.service('people');
 const pets = app.service('pets');
 const leanPeople = app.service('people2');
 const leanPets = app.service('pets2');
+const posts = app.service('posts');
 
 let testApp;
 
@@ -364,6 +366,97 @@ describe('Feathers Mongoose Service', () => {
         expect(data.pets[0].name).to.equal('Rufus');
         done();
       }).catch(done);
+    });
+  });
+
+  describe('Discriminators', () => {
+    const data = {
+      _type: 'text',
+      text: 'Feathers!!!'
+    };
+
+    afterEach(done => {
+      posts.remove(null, { query: {} })
+      .then(data => {
+        done();
+      });
+    });
+
+    it('can get a discriminated model', function (done) {
+      posts.create(data)
+      .then(data => posts.get(data._id))
+      .then(data => {
+        expect(data._type).to.equal('text');
+        expect(data.text).to.equal('Feathers!!!');
+        done();
+      });
+    });
+
+    it('can find discriminated models by the type', function (done) {
+      posts.create(data)
+      .then(data => posts.find({ query: { _type: 'text' } }))
+      .then(data => {
+        data.forEach(element => {
+          expect(element._type).to.equal('text');
+        });
+        done();
+      });
+    });
+
+    it('can create a discriminated model', function (done) {
+      posts.create(data)
+      .then(data => {
+        expect(data._type).to.equal('text');
+        expect(data.text).to.equal('Feathers!!!');
+        done();
+      });
+    });
+
+    it('can update a discriminated model', function (done) {
+      const update = {
+        _type: 'text',
+        text: 'Hello, world!',
+        createdAt: Date.now(),
+        updatedAt: Date.now()
+      };
+      const params = {
+        query: {
+          _type: 'text'
+        }
+      };
+      posts.create(data)
+      .then(data => posts.update(data._id, update, params))
+      .then(data => {
+        expect(data._type).to.equal('text');
+        expect(data.text).to.equal('Hello, world!');
+        done();
+      });
+    });
+
+    it('can patch a discriminated model', function (done) {
+      const update = {
+        text: 'Howdy folks!'
+      };
+      const params = {
+        query: {
+          _type: 'text'
+        }
+      };
+      posts.create(data)
+      .then(data => posts.patch(data._id, update, params))
+      .then(data => {
+        expect(data.text).to.equal('Howdy folks!');
+        done();
+      });
+    });
+
+    it('can remove a discriminated model', function (done) {
+      posts.create(data)
+      .then(data => posts.remove(data._id, { query: { _type: 'text' } }))
+      .then(data => {
+        expect(data._type).to.equal('text');
+        done();
+      });
     });
   });
 
