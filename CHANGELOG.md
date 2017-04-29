@@ -1,5 +1,23 @@
 # Change Log
 
+## [v5.1.0](https://github.com/feathersjs/feathers-mongoose/tree/v5.1.0) (2017-04-29)
+[Full Changelog](https://github.com/feathersjs/feathers-mongoose/compare/v5.0.3...v5.1.0)
+
+**Closed issues:**
+
+- An in-range update of mongoose is breaking the build 🚨 [\#184](https://github.com/feathersjs/feathers-mongoose/issues/184)
+- Can't use mongoose plugin based on pre with patch or put [\#178](https://github.com/feathersjs/feathers-mongoose/issues/178)
+- virutal id plugin does not work anymore [\#175](https://github.com/feathersjs/feathers-mongoose/issues/175)
+- lean and populate [\#169](https://github.com/feathersjs/feathers-mongoose/issues/169)
+
+**Merged pull requests:**
+
+- Update semistandard to the latest version 🚀 [\#183](https://github.com/feathersjs/feathers-mongoose/pull/183) ([greenkeeper[bot]](https://github.com/integration/greenkeeper))
+- Update feathers-hooks to the latest version 🚀 [\#182](https://github.com/feathersjs/feathers-mongoose/pull/182) ([greenkeeper[bot]](https://github.com/integration/greenkeeper))
+- Update dependencies to enable Greenkeeper 🌴 [\#181](https://github.com/feathersjs/feathers-mongoose/pull/181) ([greenkeeper[bot]](https://github.com/integration/greenkeeper))
+- Discriminated Model Support [\#180](https://github.com/feathersjs/feathers-mongoose/pull/180) ([startupthekid](https://github.com/startupthekid))
+- Update sinon to version 2.0.0 🚀 [\#176](https://github.com/feathersjs/feathers-mongoose/pull/176) ([greenkeeperio-bot](https://github.com/greenkeeperio-bot))
+
 ## [v5.0.3](https://github.com/feathersjs/feathers-mongoose/tree/v5.0.3) (2017-03-02)
 [Full Changelog](https://github.com/feathersjs/feathers-mongoose/compare/v5.0.2...v5.0.3)
 
