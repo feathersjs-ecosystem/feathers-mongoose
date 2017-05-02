@@ -171,7 +171,15 @@ class Service {
     const discriminator = data[this.discriminatorKey] || this.discriminatorKey;
     const model = this.discriminators[discriminator] || this.Model;
     return model.create(data)
-      .then(result => (this.lean && result.toObject) ? result.toObject() : result)
+      .then(result => {
+        if (this.lean) {
+          if (Array.isArray(result)) {
+            return result.map(item => (item.toObject ? item.toObject() : item));
+          }
+          return result.toObject ? result.toObject() : result;
+        }
+        return result;
+      })
       .then(select(params, this.id))
       .catch(errorHandler);
   }
