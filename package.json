@@ -81,7 +81,7 @@
     "feathers-hooks": "^2.0.0",
     "feathers-rest": "^1.5.2",
     "feathers-service-tests": "^0.10.0",
-    "feathers-socketio": "^1.3.3",
+    "feathers-socketio": "^2.0.0",
     "istanbul": "^1.1.0-alpha.1",
     "mocha": "^3.0.0",
     "mongoose": "^4.5.2",
