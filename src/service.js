@@ -168,12 +168,155 @@ class Service {
   }
 
   create (data, params) {
+    if (Array.isArray(data)) {
+      return this._createbulk(data, params);
+    }
+
     const discriminator = data[this.discriminatorKey] || this.discriminatorKey;
     const model = this.discriminators[discriminator] || this.Model;
     return model.create(data)
       .then(result => (this.lean && result.toObject) ? result.toObject() : result)
       .then(select(params, this.id))
       .catch(errorHandler);
+  }
+
+  _createbulk (data, params) {
+    return this._insertMany(data)
+      .then(result => (this.lean && result.toObject) ? result.toObject() : result)
+      .then(select(params, this.id))
+      .catch(errorHandler);
+  }
+
+  _insertMany (data) {
+    const INSERT_MANY_CONVERT_OPTIONS = {
+      depopulate: true,
+      transform: false,
+      _skipDepopulateTopLevel: true,
+      flattenDecimals: false
+    };
+    const discriminator = data[this.discriminatorKey] || this.discriminatorKey;
+    const Model = this.discriminators[discriminator] || this.Model;
+
+    return new Promise((resolve, reject) => {
+      if (!Array.isArray(data)) {
+        data = [data];
+      }
+
+      // validate the docs against the mongoose schema
+      const validate = function validate (doc) {  // sample async action
+        return new Promise(resolve => {
+          let model = new Model(doc);
+          model.validate({ __noPromise: true }, error => {
+            if (error) {
+              // Resolve the error, so we can track it
+              let _error = new Error(error);
+              _error._id = model._id;
+
+              return resolve(_error);
+            }
+            // resolve the validated model
+            return resolve(model);
+          });
+        });
+      };
+      // Map the validate promises to be executed together
+      let toExecute = data.map(validate);
+
+      // Execute the validation promises
+      Promise.all(toExecute)
+      .then(docs => {
+        // Filter out any errors
+        let successDocs = docs.filter(doc => {
+          return (!(doc instanceof Error) && doc !== null);
+        });
+        // Get the errors
+        let errorDocs = docs.filter(doc => {
+          return (doc instanceof Error);
+        })
+        .reduce((acc, cur) => {
+          acc.push({ ValidationError: cur.message, _id: cur._id });
+          return acc;
+        }, []);
+
+        // Escape while there aren't any valid docs
+        if (successDocs.length < 1) {
+          // error first, then success documents
+          // data[0] = errors
+          // data[1] = success data
+          resolve({ data: [errorDocs, null] });
+          return;
+        }
+
+        // parse the documents as per mongoose functionality
+        var docObjects = successDocs.map(function (doc) {
+          if (doc.schema.options.versionKey) {
+            doc[doc.schema.options.versionKey] = 0;
+          }
+          if (doc.initializeTimestamps) {
+            return doc.initializeTimestamps().toObject(INSERT_MANY_CONVERT_OPTIONS);
+          }
+          return doc.toObject(INSERT_MANY_CONVERT_OPTIONS);
+        });
+
+        // Run the native insertMany method
+        // { ordered: false } ## ordered operations stop after an error, while unordered operations continue to process any remaining write operations in the queue.
+        Model.collection.insertMany(docObjects, { ordered: false }, (error, docs) => {
+          let writeErrors;
+          // If we have an error, lets find which docs where successful and return those
+          if (error) {
+            // Get a list of the insertIds, which will be all of the docs
+            // as mongoose creates _ids client-side
+            docs = docs.toJSON().insertedIds;
+
+            // Check if we have singular error
+            if (!error.writeErrors) {
+              let _error = error.toJSON();
+              writeErrors = [{ WriteError: _error.errmsg, _id: _error.op._id }];
+            } else {
+                // Get a list of the errors and the ids
+                // so we can filter out the those that failed from the successful ones
+              writeErrors = error.writeErrors.reduce((acc, cur) => {
+                let error = cur.toJSON();
+                acc.push({ WriteError: error.errmsg, _id: error.op._id });
+                return acc;
+              }, []);
+            }
+          }
+
+          // If we have failed documents, filter them out
+          if (writeErrors) {
+            successDocs = successDocs.filter(doc => writeErrors.every(cur => cur._id.toString() !== doc._id.toString()));
+            // Merge the validation errors with the write errors
+            errorDocs = [...errorDocs, ...writeErrors];
+          }
+
+          // Map the mongoose methods to each document
+          successDocs = successDocs.map(doc => {
+            doc.isNew = false;
+            doc.emit('isNew', false);
+            doc.constructor.emit('isNew', false);
+            return doc;
+          });
+
+          // remove any _ids from the errors as they are irrevelant as they never got saved
+          errorDocs = errorDocs.map(doc => {
+            delete doc._id;
+            return doc;
+          });
+
+          errorDocs = errorDocs.length ? errorDocs : null;
+
+          // return combination of success and error documents
+          // error first, then success documents
+          // data[0] = errors
+          // data[1] = success data
+          resolve({ data: [errorDocs, successDocs] });
+        });
+      })
+      .catch(err => {
+        reject(err);
+      });
+    });
   }
 
   update (id, data, params) {
