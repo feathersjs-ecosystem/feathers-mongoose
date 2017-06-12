@@ -183,8 +183,20 @@ class Service {
 
   _createbulk (data, params) {
     return this._insertMany(data)
-      .then(result => (this.lean && result.toObject) ? result.toObject() : result)
-      .then(select(params, this.id))
+      .then(result => {
+        if (!Array.isArray(result.data[1])) {
+          return result;
+        }
+        result.data[1] = result.data[1].map(result => (this.lean && result.toObject) ? result.toObject() : result);
+        return result;
+      })
+      .then(result => {
+        if (!Array.isArray(result.data[1])) {
+          return result;
+        }
+        result.data[1] = result.data[1].map(result => select(params, this.id)(result));
+        return result;
+      })
       .catch(errorHandler);
   }
 
@@ -310,6 +322,7 @@ class Service {
           });
 
           errorDocs = errorDocs.length ? errorDocs : null;
+          successDocs = successDocs.length ? successDocs : null;
 
           // return combination of success and error documents
           // error first, then success documents

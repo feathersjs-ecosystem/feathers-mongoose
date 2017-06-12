@@ -141,11 +141,12 @@ describe('Feathers Mongoose Service', () => {
         }
       ])
       .then(sortAge)
-      .then(users => {
-        expect(users.data[0]).to.be.an('array');
-        let validationErrors = users.data[0].filter(user => Object.keys(user)[0] === 'ValidationError');
+      .then(result => {
+        let [errors, users] = result.data;
+        expect(users).to.be.an('array');
+        let validationErrors = errors.filter(error => Object.keys(error)[0] === 'ValidationError');
         expect(validationErrors.length).to.equal(2);
-        expect(users.data[1][0].name).to.equal('David');
+        expect(users[0].name).to.equal('David');
       });
     });
 
@@ -165,8 +166,10 @@ describe('Feathers Mongoose Service', () => {
             age: 20
           }
         ])
-        .then(user => {
-          expect(Object.keys(user.data[0][0])[0]).to.equal('WriteError');
+        .then(result => {
+          let [errors, users] = result.data;
+          expect(Object.keys(errors[0])[0]).to.equal('WriteError');
+          expect(users).to.be.null;
           done();
         })
         .catch(done);
@@ -198,8 +201,8 @@ describe('Feathers Mongoose Service', () => {
           }
         ])
         .then(sortAge)
-        .then(data => {
-          let [errors, users] = data.data;
+        .then(result => {
+          let [errors, users] = result.data;
           let validationErrors = errors.filter(error => Object.keys(error)[0] === 'ValidationError');
           let writeErrors = errors.filter(error => Object.keys(error)[0] === 'WriteError');
           expect(validationErrors.length).to.equal(1);
@@ -224,11 +227,12 @@ describe('Feathers Mongoose Service', () => {
         }
       ])
       .then(sortAge)
-      .then(users => {
-        expect(users.data[0]).to.be.null;
-        expect(users.data[1].length).to.equal(2);
-        expect(users.data[1][0].name).to.equal('David');
-        expect(users.data[1][1].name).to.equal('Peter');
+      .then(result => {
+        let [errors, users] = result.data;
+        expect(errors).to.be.null;
+        expect(users.length).to.equal(2);
+        expect(users[0].name).to.equal('David');
+        expect(users[1].name).to.equal('Peter');
         done();
       })
       .catch(done);
