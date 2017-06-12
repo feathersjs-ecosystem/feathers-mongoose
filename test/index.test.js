@@ -198,12 +198,13 @@ describe('Feathers Mongoose Service', () => {
           }
         ])
         .then(sortAge)
-        .then(users => {
-          let validationErrors = users.data[0].filter(user => Object.keys(user)[0] === 'ValidationError');
-          let writeErrors = users.data[0].filter(user => Object.keys(user)[0] === 'WriteError');
+        .then(data => {
+          let [errors, users] = data.data;
+          let validationErrors = errors.filter(error => Object.keys(error)[0] === 'ValidationError');
+          let writeErrors = errors.filter(error => Object.keys(error)[0] === 'WriteError');
           expect(validationErrors.length).to.equal(1);
           expect(writeErrors.length).to.equal(1);
-          expect(users.data[1].length).to.equal(1);
+          expect(users.length).to.equal(1);
           done();
         })
         .catch(done);

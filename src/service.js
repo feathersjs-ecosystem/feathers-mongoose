@@ -1,4 +1,5 @@
 import omit from 'lodash.omit';
+import isEqual from 'lodash.isequal';
 import Proto from 'uberproto';
 import filter from 'feathers-query-filters';
 import { select } from 'feathers-commons';
@@ -209,10 +210,9 @@ class Service {
           model.validate({ __noPromise: true }, error => {
             if (error) {
               // Resolve the error, so we can track it
-              let _error = new Error(error);
-              _error._id = model._id;
-
-              return resolve(_error);
+              let errorDoc = new Error(error.message);
+              errorDoc.data = omit(model.toJSON(), '__v');
+              return resolve(error);
             }
             // resolve the validated model
             return resolve(model);
@@ -234,7 +234,7 @@ class Service {
           return (doc instanceof Error);
         })
         .reduce((acc, cur) => {
-          acc.push({ ValidationError: cur.message, _id: cur._id });
+          acc.push({ ValidationError: cur.message, data: cur.data });
           return acc;
         }, []);
 
@@ -271,13 +271,13 @@ class Service {
             // Check if we have singular error
             if (!error.writeErrors) {
               let _error = error.toJSON();
-              writeErrors = [{ WriteError: _error.errmsg, _id: _error.op._id }];
+              writeErrors = [Object.assign({}, { WriteError: _error.errmsg }, { data: omit(_error.op, '__v') })];
             } else {
                 // Get a list of the errors and the ids
                 // so we can filter out the those that failed from the successful ones
               writeErrors = error.writeErrors.reduce((acc, cur) => {
                 let error = cur.toJSON();
-                acc.push({ WriteError: error.errmsg, _id: error.op._id });
+                acc.push(Object.assign({}, { WriteError: error.errmsg }, { data: omit(error.op, '__v') }));
                 return acc;
               }, []);
             }
@@ -285,7 +285,18 @@ class Service {
 
           // If we have failed documents, filter them out
           if (writeErrors) {
-            successDocs = successDocs.filter(doc => writeErrors.every(cur => cur._id.toString() !== doc._id.toString()));
+            successDocs = successDocs.reduce((acc, doc) => {
+              // remove duplicate key docs
+              let errorDoc = writeErrors.find(curError => {
+                let data = omit(doc.toJSON(), '__v');
+                return isEqual(curError.data, data) && curError.WriteError.includes('duplicate key');
+              });
+              if (errorDoc) {
+                return acc;
+              }
+              acc.push(doc);
+              return acc;
+            }, []);
             // Merge the validation errors with the write errors
             errorDocs = [...errorDocs, ...writeErrors];
           }
@@ -295,12 +306,6 @@ class Service {
             doc.isNew = false;
             doc.emit('isNew', false);
             doc.constructor.emit('isNew', false);
-            return doc;
-          });
-
-          // remove any _ids from the errors as they are irrevelant as they never got saved
-          errorDocs = errorDocs.map(doc => {
-            delete doc._id;
             return doc;
           });
 
