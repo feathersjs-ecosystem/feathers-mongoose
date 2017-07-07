@@ -281,9 +281,7 @@ class Service {
             .update(omit(query, '$populate'), data, options)
             .lean(this.lean)
             .exec()
-            .then(() => {
-              return this._getOrFind(id, findParams);
-            });
+            .then(() => this._getOrFind(id, findParams));
         })
         .then(select(params, this.id))
         .catch(errorHandler);
