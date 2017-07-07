@@ -55,6 +55,9 @@ Session.vim
 # === Webstorm ===
 .idea
 
+# === Visual Studio Code ===
+.vscode
+
 # Users Environment Variables
 .lock-wscript
 
