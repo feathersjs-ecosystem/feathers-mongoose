@@ -1,5 +1,24 @@
 # Change Log
 
+## [v5.1.1](https://github.com/feathersjs/feathers-mongoose/tree/v5.1.1) (2017-07-07)
+[Full Changelog](https://github.com/feathersjs/feathers-mongoose/compare/v5.1.0...v5.1.1)
+
+**Closed issues:**
+
+- Mongoose middleware not working correctly with feathers? [\#196](https://github.com/feathersjs/feathers-mongoose/issues/196)
+- Mongoose dependency issues [\#193](https://github.com/feathersjs/feathers-mongoose/issues/193)
+- An in-range update of mongoose is breaking the build 🚨 [\#192](https://github.com/feathersjs/feathers-mongoose/issues/192)
+- Default for mongoose update not really good \(override true\) [\#191](https://github.com/feathersjs/feathers-mongoose/issues/191)
+- Using \[$in\] with a single value [\#185](https://github.com/feathersjs/feathers-mongoose/issues/185)
+
+**Merged pull requests:**
+
+- Handle upserts with patch [\#200](https://github.com/feathersjs/feathers-mongoose/pull/200) ([marshallswain](https://github.com/marshallswain))
+- Greenkeeper/mongoose 4.10.4 [\#195](https://github.com/feathersjs/feathers-mongoose/pull/195) ([daffl](https://github.com/daffl))
+- Update chai to the latest version 🚀 [\#194](https://github.com/feathersjs/feathers-mongoose/pull/194) ([greenkeeper[bot]](https://github.com/apps/greenkeeper))
+- Update feathers-socketio to the latest version 🚀 [\#190](https://github.com/feathersjs/feathers-mongoose/pull/190) ([greenkeeper[bot]](https://github.com/apps/greenkeeper))
+- Update feathers-service-tests to the latest version 🚀 [\#187](https://github.com/feathersjs/feathers-mongoose/pull/187) ([greenkeeper[bot]](https://github.com/apps/greenkeeper))
+
 ## [v5.1.0](https://github.com/feathersjs/feathers-mongoose/tree/v5.1.0) (2017-04-29)
 [Full Changelog](https://github.com/feathersjs/feathers-mongoose/compare/v5.0.3...v5.1.0)
 
@@ -12,9 +31,9 @@
 
 **Merged pull requests:**
 
-- Update semistandard to the latest version 🚀 [\#183](https://github.com/feathersjs/feathers-mongoose/pull/183) ([greenkeeper[bot]](https://github.com/integration/greenkeeper))
-- Update feathers-hooks to the latest version 🚀 [\#182](https://github.com/feathersjs/feathers-mongoose/pull/182) ([greenkeeper[bot]](https://github.com/integration/greenkeeper))
-- Update dependencies to enable Greenkeeper 🌴 [\#181](https://github.com/feathersjs/feathers-mongoose/pull/181) ([greenkeeper[bot]](https://github.com/integration/greenkeeper))
+- Update semistandard to the latest version 🚀 [\#183](https://github.com/feathersjs/feathers-mongoose/pull/183) ([greenkeeper[bot]](https://github.com/apps/greenkeeper))
+- Update feathers-hooks to the latest version 🚀 [\#182](https://github.com/feathersjs/feathers-mongoose/pull/182) ([greenkeeper[bot]](https://github.com/apps/greenkeeper))
+- Update dependencies to enable Greenkeeper 🌴 [\#181](https://github.com/feathersjs/feathers-mongoose/pull/181) ([greenkeeper[bot]](https://github.com/apps/greenkeeper))
 - Discriminated Model Support [\#180](https://github.com/feathersjs/feathers-mongoose/pull/180) ([startupthekid](https://github.com/startupthekid))
 - Update sinon to version 2.0.0 🚀 [\#176](https://github.com/feathersjs/feathers-mongoose/pull/176) ([greenkeeperio-bot](https://github.com/greenkeeperio-bot))
 
