@@ -263,11 +263,11 @@ class Service {
         .then(idList => {
           // Create a new query that re-queries all ids that
           // were originally changed
-          const findParams = Object.assign({}, params, {
+          const findParams = idList.length ? Object.assign({}, params, {
             query: {
               [this.id]: { $in: idList }
             }
-          });
+          }) : params;
 
           if (params.query && params.query.$populate) {
             findParams.query.$populate = params.query.$populate;
@@ -281,7 +281,9 @@ class Service {
             .update(omit(query, '$populate'), data, options)
             .lean(this.lean)
             .exec()
-            .then(() => this._getOrFind(id, findParams));
+            .then(() => {
+              return this._getOrFind(id, findParams);
+            });
         })
         .then(select(params, this.id))
         .catch(errorHandler);
