@@ -1,12 +1,13 @@
 /* eslint-disable no-unused-expressions */
 
-import { expect } from 'chai';
-import { base, example } from 'feathers-service-tests';
-import errors from 'feathers-errors';
-import feathers from 'feathers';
-import service, { hooks, Service } from '../src';
-import server from './test-app';
-import { User, Pet, Peeps, CustomPeeps, Post, TextPost } from './models';
+const { expect } = require('chai');
+const { base, example } = require('feathers-service-tests');
+const errors = require('feathers-errors');
+const feathers = require('feathers');
+const service = require('../lib');
+const { hooks, Service } = require('../lib');
+const server = require('./test-app');
+const { User, Pet, Peeps, CustomPeeps, Post, TextPost } = require('./models');
 
 const _ids = {};
 const _petIds = {};

@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const PeepsSchema = new Schema({
@@ -8,4 +8,4 @@ const PeepsSchema = new Schema({
   time: {type: Number}
 });
 
-export default mongoose.model('Peeps', PeepsSchema);
+module.exports = mongoose.model('Peeps', PeepsSchema);
