@@ -1,47 +1,57 @@
+/* eslint-disable no-unused-expressions */
+
 import { expect } from 'chai';
 import { base, example } from 'feathers-service-tests';
 import errors from 'feathers-errors';
 import feathers from 'feathers';
 import service, { hooks, Service } from '../src';
 import server from './test-app';
-import { User, Pet, Peeps, CustomPeeps } from './models';
+import { User, Pet, Peeps, CustomPeeps, Post, TextPost } from './models';
 
 const _ids = {};
 const _petIds = {};
 const app = feathers()
-  .use('/peeps', service({ Model: Peeps, events: [ 'testing' ] }))
-  .use('/peeps-customid', service({
-    id: 'customid',
-    Model: CustomPeeps,
-    events: [ 'testing' ]
-  }))
+  .use('/peeps', service({ Model: Peeps, events: ['testing'] }))
+  .use(
+    '/peeps-customid',
+    service({
+      id: 'customid',
+      Model: CustomPeeps,
+      events: ['testing'],
+    })
+  )
   .use('/people', service({ Model: User }))
   .use('/pets', service({ Model: Pet }))
   .use('/people2', service({ Model: User, lean: true }))
   .use('/pets2', service({ Model: Pet, lean: true }))
-  .use('/people3', service({
-    Model: User,
-    findOneQuery: (id) => {
-      // this id factory looks up by _id if incoming is of type
-      // object id, otherwise it looks up by slug
+  .use('/posts', service({ Model: Post, discriminators: [TextPost] }))
+  .use(
+    '/people3',
+    service({
+      Model: User,
+      findOneQuery: id => {
+        // this id factory looks up by _id if incoming is of type
+        // object id, otherwise it looks up by slug
 
-      let query = {};
-      if (id) {
-        if (String(id).match(/^[0-9a-fA-F]{24}$/)) {
-          query = {_id: id};
-        } else {
-          query = {slug: id};
+        let query = {};
+        if (id) {
+          if (String(id).match(/^[0-9a-fA-F]{24}$/)) {
+            query = { _id: id };
+          } else {
+            query = { slug: id };
+          }
         }
-      }
 
-      return query;
-    }
-  }));
+        return query;
+      },
+    })
+  );
 const people = app.service('people');
 const pets = app.service('pets');
 const leanPeople = app.service('people2');
 const leanPets = app.service('pets2');
 const slugPeople = app.service('people3');
+const posts = app.service('posts');
 
 let testApp;
 
@@ -50,31 +60,73 @@ const buildCommonTests = (peopleService, idProp) => {
     beforeEach(() => {
       // FIXME (EK): This is shit. We should be loading fixtures
       // using the raw driver not our system under test
-      return pets.create({type: 'dog', name: 'Rufus'}).then(pet => {
+      return pets.create({ type: 'dog', name: 'Rufus', gender: 'Unknown' }).then(pet => {
         _petIds.Rufus = pet._id;
 
-        return peopleService.create({
-          name: 'Doug Jones',
-          age: 32,
-          pets: [pet._id]
-        }).then(user => {
-          _ids.Doug = user[idProp];
-        });
+        return peopleService
+          .create({
+            name: 'Doug Jones',
+            age: 32,
+            pets: [pet._id],
+          })
+          .then(user => {
+            _ids.Doug = user[idProp];
+          });
       });
     });
 
     afterEach(() => {
-      return pets.remove(null, { query: {} }).then(() =>
-        peopleService.remove(null, { query: {} })
-      );
+      return pets.remove(null, { query: {} }).then(() => peopleService.remove(null, { query: {} }));
     });
 
-    it('can $populate with find', function (done) {
+    it('can $select with a String', function(done) {
+      var params = {
+        query: {
+          name: 'Rufus',
+          $select: '+gender',
+        },
+      };
+
+      pets.find(params).then(data => {
+        expect(data[0].gender).to.equal('Unknown');
+        done();
+      });
+    });
+
+    it('can $select with an Array', function(done) {
+      var params = {
+        query: {
+          name: 'Rufus',
+          $select: ['gender'],
+        },
+      };
+
+      pets.find(params).then(data => {
+        expect(data[0].gender).to.equal('Unknown');
+        done();
+      });
+    });
+
+    it('can $select with an Object', function(done) {
+      var params = {
+        query: {
+          name: 'Rufus',
+          $select: { gender: true },
+        },
+      };
+
+      pets.find(params).then(data => {
+        expect(data[0].gender).to.equal('Unknown');
+        done();
+      });
+    });
+
+    it('can $populate with find', function(done) {
       var params = {
         query: {
           name: 'Doug Jones',
-          $populate: ['pets']
-        }
+          $populate: ['pets'],
+        },
       };
 
       peopleService.find(params).then(data => {
@@ -83,138 +135,209 @@ const buildCommonTests = (peopleService, idProp) => {
       });
     });
 
-    it('can $populate with get', function (done) {
+    it('can $populate with get', function(done) {
       var params = {
         query: {
-          $populate: ['pets']
-        }
+          $populate: ['pets'],
+        },
       };
 
-      peopleService.get(_ids.Doug, params).then(data => {
-        expect(data.pets[0].name).to.equal('Rufus');
-        done();
-      }).catch(done);
-    });
-
-    it('can get a mongoose model', function (done) {
-      peopleService.get(_ids.Doug).then(dougModel => {
-        expect(String(dougModel[idProp])).to.equal(String(_ids.Doug));
-        done();
-      }).catch(done);
-    });
-
-    it('can patch a mongoose model', function (done) {
-      peopleService.get(_ids.Doug).then(dougModel => {
-        peopleService.patch(_ids.Doug, dougModel).then(data => {
-          expect(data.name).to.equal('Doug Jones');
+      peopleService
+        .get(_ids.Doug, params)
+        .then(data => {
+          expect(data.pets[0].name).to.equal('Rufus');
           done();
-        }).catch(done);
-      }).catch(done);
+        })
+        .catch(done);
     });
 
-    it('can update a mongoose model', function (done) {
-      peopleService.get(_ids.Doug).then(dougModel => {
-        peopleService.update(_ids.Doug, dougModel).then(data => {
-          expect(data.name).to.equal('Doug Jones');
+    it('can get a mongoose model', function(done) {
+      peopleService
+        .get(_ids.Doug)
+        .then(dougModel => {
+          expect(String(dougModel[idProp])).to.equal(String(_ids.Doug));
           done();
-        }).catch(done);
-      }).catch(done);
+        })
+        .catch(done);
     });
 
-    it('can remove a mongoose model', function (done) {
-      peopleService.create({
-        name: 'Doug Jones2',
-        age: 32
-      }).then(dougModel => {
-        peopleService.remove(dougModel[idProp]).then(data => {
-          expect(data.name).to.equal('Doug Jones2');
+    it('can patch a mongoose model', function(done) {
+      peopleService
+        .get(_ids.Doug)
+        .then(dougModel => {
+          peopleService
+            .patch(_ids.Doug, dougModel)
+            .then(data => {
+              expect(data.name).to.equal('Doug Jones');
+              done();
+            })
+            .catch(done);
+        })
+        .catch(done);
+    });
+
+    it('can update a mongoose model', function(done) {
+      peopleService
+        .get(_ids.Doug)
+        .then(dougModel => {
+          peopleService
+            .update(_ids.Doug, dougModel)
+            .then(data => {
+              expect(data.name).to.equal('Doug Jones');
+              done();
+            })
+            .catch(done);
+        })
+        .catch(done);
+    });
+
+    it('can remove a mongoose model', function(done) {
+      peopleService
+        .create({
+          name: 'Doug Jones2',
+          age: 32,
+        })
+        .then(dougModel => {
+          peopleService
+            .remove(dougModel[idProp])
+            .then(data => {
+              expect(data.name).to.equal('Doug Jones2');
+              done();
+            })
+            .catch(done);
+        })
+        .catch(done);
+    });
+
+    it('can upsert with patch', function(done) {
+      var data = { name: 'Henry', age: 300 };
+      var params = {
+        mongoose: { upsert: true },
+        query: { name: 'Henry' },
+      };
+
+      people
+        .patch(null, data, params)
+        .then(data => {
+          expect(Array.isArray(data)).to.equal(true);
+
+          var henry = data[0];
+          expect(henry.name).to.equal('Henry');
           done();
-        }).catch(done);
-      }).catch(done);
+        })
+        .catch(done);
     });
 
-    it('can $populate with update', function (done) {
+    it('can $populate with update', function(done) {
       var params = {
         query: {
-          $populate: ['pets']
-        }
+          $populate: ['pets'],
+        },
       };
 
-      peopleService.get(_ids.Doug).then(doug => {
-        var newDoug = doug.toObject();
-        newDoug.name = 'Bob';
+      peopleService
+        .get(_ids.Doug)
+        .then(doug => {
+          var newDoug = doug.toObject();
+          newDoug.name = 'Bob';
 
-        peopleService.update(_ids.Doug, newDoug, params).then(data => {
+          peopleService
+            .update(_ids.Doug, newDoug, params)
+            .then(data => {
+              expect(data.name).to.equal('Bob');
+              expect(data.pets[0].name).to.equal('Rufus');
+              done();
+            })
+            .catch(done);
+        })
+        .catch(done);
+    });
+
+    it('can $populate with patch', function(done) {
+      var params = {
+        query: {
+          $populate: ['pets'],
+        },
+      };
+
+      peopleService
+        .patch(_ids.Doug, { name: 'Bob' }, params)
+        .then(data => {
           expect(data.name).to.equal('Bob');
           expect(data.pets[0].name).to.equal('Rufus');
           done();
-        }).catch(done);
-      }).catch(done);
+        })
+        .catch(done);
     });
 
-    it('can $populate with patch', function (done) {
-      var params = {
-        query: {
-          $populate: ['pets']
-        }
-      };
+    it('can $push an item onto an array with update', function(done) {
+      pets
+        .create({ type: 'cat', name: 'Margeaux' })
+        .then(margeaux => {
+          peopleService
+            .update(_ids.Doug, { $push: { pets: margeaux } })
+            .then(() => {
+              var params = {
+                query: {
+                  $populate: ['pets'],
+                },
+              };
 
-      peopleService.patch(_ids.Doug, { name: 'Bob' }, params).then(data => {
-        expect(data.name).to.equal('Bob');
-        expect(data.pets[0].name).to.equal('Rufus');
-        done();
-      }).catch(done);
+              peopleService
+                .get(_ids.Doug, params)
+                .then(data => {
+                  expect(data.pets[1].name).to.equal('Margeaux');
+                  done();
+                })
+                .catch(done);
+            })
+            .catch(done);
+        })
+        .catch(done);
     });
 
-    it('can $push an item onto an array with update', function (done) {
-      pets.create({ type: 'cat', name: 'Margeaux' }).then(margeaux => {
-        peopleService.update(_ids.Doug, { $push: { pets: margeaux } })
-          .then(() => {
-            var params = {
-              query: {
-                $populate: ['pets']
-              }
-            };
+    it('can $push an item onto an array with patch', function(done) {
+      pets
+        .create({ type: 'cat', name: 'Margeaux' })
+        .then(margeaux => {
+          peopleService
+            .patch(_ids.Doug, { $push: { pets: margeaux } })
+            .then(() => {
+              var params = {
+                query: {
+                  $populate: ['pets'],
+                },
+              };
 
-            peopleService.get(_ids.Doug, params).then(data => {
-              expect(data.pets[1].name).to.equal('Margeaux');
-              done();
-            }).catch(done);
-          }).catch(done);
-      }).catch(done);
+              peopleService
+                .get(_ids.Doug, params)
+                .then(data => {
+                  expect(data.pets[1].name).to.equal('Margeaux');
+                  done();
+                })
+                .catch(done);
+            })
+            .catch(done);
+        })
+        .catch(done);
     });
 
-    it('can $push an item onto an array with patch', function (done) {
-      pets.create({ type: 'cat', name: 'Margeaux' }).then(margeaux => {
-        peopleService.patch(_ids.Doug, { $push: { pets: margeaux } })
-          .then(() => {
-            var params = {
-              query: {
-                $populate: ['pets']
-              }
-            };
-
-            peopleService.get(_ids.Doug, params).then(data => {
-              expect(data.pets[1].name).to.equal('Margeaux');
-              done();
-            }).catch(done);
-          }).catch(done);
-      }).catch(done);
-    });
-
-    it('runs validators on update', function (done) {
-      peopleService.create({ name: 'David', age: 33 })
+    it('runs validators on update', function(done) {
+      peopleService
+        .create({ name: 'David', age: 33 })
         .then(person => peopleService.update(person._id, { name: 'Dada', age: 'wrong' }))
         .then(() => done(new Error('Update should not be successful')))
         .catch(error => {
           expect(error.name).to.equal('BadRequest');
-          expect(error.message).to.equal('Cast to number failed for value "wrong" at path "age"');
-          done();
+          expect(error.message).to.equal(
+            'User validation failed: age: Cast to Number failed for value "wrong" at path "age"'
+          );
         });
     });
 
-    it('runs validators on patch', function (done) {
-      peopleService.create({ name: 'David', age: 33 })
+    it('runs validators on patch', function(done) {
+      peopleService
+        .create({ name: 'David', age: 33 })
         .then(person => people.patch(person._id, { name: 'Dada', age: 'wrong' }))
         .then(() => done(new Error('Update should not be successful')))
         .catch(error => {
@@ -224,8 +347,9 @@ const buildCommonTests = (peopleService, idProp) => {
         });
     });
 
-    it('returns a Conflict when unique index is violated', function (done) {
-      pets.create({ type: 'cat', name: 'Bob' })
+    it('returns a Conflict when unique index is violated', function(done) {
+      pets
+        .create({ type: 'cat', name: 'Bob' })
         .then(() => pets.create({ type: 'cat', name: 'Bob' }))
         .then(() => done(new Error('Should not be successful')))
         .catch(error => {
@@ -323,10 +447,10 @@ describe('Feathers Mongoose Service', () => {
   describe('Common functionality with findOneQuery set', buildCommonTests(slugPeople, 'slug'));
 
   describe('Lean Services', () => {
-    beforeEach((done) => {
+    beforeEach(done => {
       // FIXME (EK): This is shit. We should be loading fixtures
       // using the raw driver not our system under test
-      leanPets.create({type: 'dog', name: 'Rufus'}).then(pet => {
+      leanPets.create({ type: 'dog', name: 'Rufus' }).then(pet => {
         _petIds.Rufus = pet._id;
 
         return leanPeople.create({ name: 'Doug Jones', age: 32, pets: [pet._id] }).then(user => {
@@ -344,12 +468,12 @@ describe('Feathers Mongoose Service', () => {
       });
     });
 
-    it('can $populate with find', function (done) {
+    it('can $populate with find', function(done) {
       var params = {
         query: {
           name: 'Doug Jones',
-          $populate: ['pets']
-        }
+          $populate: ['pets'],
+        },
       };
 
       leanPeople.find(params).then(data => {
@@ -358,25 +482,128 @@ describe('Feathers Mongoose Service', () => {
       });
     });
 
-    it('can $populate with get', function (done) {
+    it('can $populate with get', function(done) {
       var params = {
         query: {
-          $populate: ['pets']
-        }
+          $populate: ['pets'],
+        },
       };
 
-      leanPeople.get(_ids.Doug, params).then(data => {
-        expect(data.pets[0].name).to.equal('Rufus');
+      leanPeople
+        .get(_ids.Doug, params)
+        .then(data => {
+          expect(data.pets[0].name).to.equal('Rufus');
+          done();
+        })
+        .catch(done);
+    });
+
+    it('can upsert with patch', function(done) {
+      var data = { name: 'Henry', age: 300 };
+      var params = {
+        mongoose: { upsert: true },
+        query: { name: 'Henry' },
+      };
+
+      leanPeople
+        .patch(null, data, params)
+        .then(data => {
+          expect(Array.isArray(data)).to.equal(true);
+
+          var henry = data[0];
+          expect(henry.name).to.equal('Henry');
+          done();
+        })
+        .catch(done);
+    });
+  });
+
+  describe('Discriminators', () => {
+    const data = {
+      _type: 'text',
+      text: 'Feathers!!!',
+    };
+
+    afterEach(done => {
+      posts.remove(null, { query: {} }).then(data => {
         done();
-      }).catch(done);
+      });
+    });
+
+    it('can get a discriminated model', function(done) {
+      posts.create(data).then(data => posts.get(data._id)).then(data => {
+        expect(data._type).to.equal('text');
+        expect(data.text).to.equal('Feathers!!!');
+        done();
+      });
+    });
+
+    it('can find discriminated models by the type', function(done) {
+      posts.create(data).then(data => posts.find({ query: { _type: 'text' } })).then(data => {
+        data.forEach(element => {
+          expect(element._type).to.equal('text');
+        });
+        done();
+      });
+    });
+
+    it('can create a discriminated model', function(done) {
+      posts.create(data).then(data => {
+        expect(data._type).to.equal('text');
+        expect(data.text).to.equal('Feathers!!!');
+        done();
+      });
+    });
+
+    it('can update a discriminated model', function(done) {
+      const update = {
+        _type: 'text',
+        text: 'Hello, world!',
+        createdAt: Date.now(),
+        updatedAt: Date.now(),
+      };
+      const params = {
+        query: {
+          _type: 'text',
+        },
+      };
+      posts.create(data).then(data => posts.update(data._id, update, params)).then(data => {
+        expect(data._type).to.equal('text');
+        expect(data.text).to.equal('Hello, world!');
+        done();
+      });
+    });
+
+    it('can patch a discriminated model', function(done) {
+      const update = {
+        text: 'Howdy folks!',
+      };
+      const params = {
+        query: {
+          _type: 'text',
+        },
+      };
+      posts.create(data).then(data => posts.patch(data._id, update, params)).then(data => {
+        expect(data.text).to.equal('Howdy folks!');
+        done();
+      });
+    });
+
+    it('can remove a discriminated model', function(done) {
+      posts
+        .create(data)
+        .then(data => posts.remove(data._id, { query: { _type: 'text' } }))
+        .then(data => {
+          expect(data._type).to.equal('text');
+          done();
+        });
     });
   });
 
   describe('Common tests', () => {
-    before(() => Promise.all([
-      app.service('peeps').remove(null),
-      app.service('peeps-customid').remove(null)
-    ]));
+    before(() =>
+      Promise.all([app.service('peeps').remove(null), app.service('peeps-customid').remove(null)])
+    );
 
     base(app, errors, 'peeps', '_id');
     base(app, errors, 'peeps-customid', 'customid');

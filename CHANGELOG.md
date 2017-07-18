@@ -1,5 +1,104 @@
 # Change Log
 
+## [v5.1.1](https://github.com/feathersjs/feathers-mongoose/tree/v5.1.1) (2017-07-07)
+[Full Changelog](https://github.com/feathersjs/feathers-mongoose/compare/v5.1.0...v5.1.1)
+
+**Closed issues:**
+
+- Mongoose middleware not working correctly with feathers? [\#196](https://github.com/feathersjs/feathers-mongoose/issues/196)
+- Mongoose dependency issues [\#193](https://github.com/feathersjs/feathers-mongoose/issues/193)
+- An in-range update of mongoose is breaking the build 🚨 [\#192](https://github.com/feathersjs/feathers-mongoose/issues/192)
+- Default for mongoose update not really good \(override true\) [\#191](https://github.com/feathersjs/feathers-mongoose/issues/191)
+- Using \[$in\] with a single value [\#185](https://github.com/feathersjs/feathers-mongoose/issues/185)
+
+**Merged pull requests:**
+
+- Handle upserts with patch [\#200](https://github.com/feathersjs/feathers-mongoose/pull/200) ([marshallswain](https://github.com/marshallswain))
+- Greenkeeper/mongoose 4.10.4 [\#195](https://github.com/feathersjs/feathers-mongoose/pull/195) ([daffl](https://github.com/daffl))
+- Update chai to the latest version 🚀 [\#194](https://github.com/feathersjs/feathers-mongoose/pull/194) ([greenkeeper[bot]](https://github.com/apps/greenkeeper))
+- Update feathers-socketio to the latest version 🚀 [\#190](https://github.com/feathersjs/feathers-mongoose/pull/190) ([greenkeeper[bot]](https://github.com/apps/greenkeeper))
+- Update feathers-service-tests to the latest version 🚀 [\#187](https://github.com/feathersjs/feathers-mongoose/pull/187) ([greenkeeper[bot]](https://github.com/apps/greenkeeper))
+
+## [v5.1.0](https://github.com/feathersjs/feathers-mongoose/tree/v5.1.0) (2017-04-29)
+[Full Changelog](https://github.com/feathersjs/feathers-mongoose/compare/v5.0.3...v5.1.0)
+
+**Closed issues:**
+
+- An in-range update of mongoose is breaking the build 🚨 [\#184](https://github.com/feathersjs/feathers-mongoose/issues/184)
+- Can't use mongoose plugin based on pre with patch or put [\#178](https://github.com/feathersjs/feathers-mongoose/issues/178)
+- virutal id plugin does not work anymore [\#175](https://github.com/feathersjs/feathers-mongoose/issues/175)
+- lean and populate [\#169](https://github.com/feathersjs/feathers-mongoose/issues/169)
+
+**Merged pull requests:**
+
+- Update semistandard to the latest version 🚀 [\#183](https://github.com/feathersjs/feathers-mongoose/pull/183) ([greenkeeper[bot]](https://github.com/apps/greenkeeper))
+- Update feathers-hooks to the latest version 🚀 [\#182](https://github.com/feathersjs/feathers-mongoose/pull/182) ([greenkeeper[bot]](https://github.com/apps/greenkeeper))
+- Update dependencies to enable Greenkeeper 🌴 [\#181](https://github.com/feathersjs/feathers-mongoose/pull/181) ([greenkeeper[bot]](https://github.com/apps/greenkeeper))
+- Discriminated Model Support [\#180](https://github.com/feathersjs/feathers-mongoose/pull/180) ([startupthekid](https://github.com/startupthekid))
+- Update sinon to version 2.0.0 🚀 [\#176](https://github.com/feathersjs/feathers-mongoose/pull/176) ([greenkeeperio-bot](https://github.com/greenkeeperio-bot))
+
+## [v5.0.3](https://github.com/feathersjs/feathers-mongoose/tree/v5.0.3) (2017-03-02)
+[Full Changelog](https://github.com/feathersjs/feathers-mongoose/compare/v5.0.2...v5.0.3)
+
+## [v5.0.2](https://github.com/feathersjs/feathers-mongoose/tree/v5.0.2) (2017-03-01)
+[Full Changelog](https://github.com/feathersjs/feathers-mongoose/compare/v5.0.1...v5.0.2)
+
+## [v5.0.1](https://github.com/feathersjs/feathers-mongoose/tree/v5.0.1) (2017-03-01)
+[Full Changelog](https://github.com/feathersjs/feathers-mongoose/compare/v5.0.0...v5.0.1)
+
+**Closed issues:**
+
+- Blowing up Mongoose with undefined value in $push [\#167](https://github.com/feathersjs/feathers-mongoose/issues/167)
+- Potential security issue with 409 error [\#166](https://github.com/feathersjs/feathers-mongoose/issues/166)
+
+**Merged pull requests:**
+
+- Parsing fix [\#170](https://github.com/feathersjs/feathers-mongoose/pull/170) ([ekryski](https://github.com/ekryski))
+
+## [v5.0.0](https://github.com/feathersjs/feathers-mongoose/tree/v5.0.0) (2017-02-27)
+[Full Changelog](https://github.com/feathersjs/feathers-mongoose/compare/v4.0.1...v5.0.0)
+
+**Closed issues:**
+
+- Please provide a working example for $push [\#165](https://github.com/feathersjs/feathers-mongoose/issues/165)
+- Virtuals [\#164](https://github.com/feathersjs/feathers-mongoose/issues/164)
+- How can I pass additional query parameters in a REST `put` operation? [\#162](https://github.com/feathersjs/feathers-mongoose/issues/162)
+
+**Merged pull requests:**
+
+- adding better mongoose conflict error handling [\#168](https://github.com/feathersjs/feathers-mongoose/pull/168) ([ekryski](https://github.com/ekryski))
+
+## [v4.0.1](https://github.com/feathersjs/feathers-mongoose/tree/v4.0.1) (2017-02-03)
+[Full Changelog](https://github.com/feathersjs/feathers-mongoose/compare/v4.0.0...v4.0.1)
+
+**Merged pull requests:**
+
+- Use toObject for create when lean is true [\#160](https://github.com/feathersjs/feathers-mongoose/pull/160) ([daffl](https://github.com/daffl))
+
+## [v4.0.0](https://github.com/feathersjs/feathers-mongoose/tree/v4.0.0) (2017-01-29)
+[Full Changelog](https://github.com/feathersjs/feathers-mongoose/compare/v3.6.2...v4.0.0)
+
+**Closed issues:**
+
+- Make lean: true by default [\#132](https://github.com/feathersjs/feathers-mongoose/issues/132)
+
+**Merged pull requests:**
+
+- Make lean true by default [\#159](https://github.com/feathersjs/feathers-mongoose/pull/159) ([daffl](https://github.com/daffl))
+
+## [v3.6.2](https://github.com/feathersjs/feathers-mongoose/tree/v3.6.2) (2017-01-13)
+[Full Changelog](https://github.com/feathersjs/feathers-mongoose/compare/v3.6.1...v3.6.2)
+
+**Closed issues:**
+
+- using lean options in a service with a subdocument model doesn't seem to work  [\#157](https://github.com/feathersjs/feathers-mongoose/issues/157)
+- Cast to ObjectId failed for value \_id [\#156](https://github.com/feathersjs/feathers-mongoose/issues/156)
+
+**Merged pull requests:**
+
+- Allow $select to catch and use string syntax [\#158](https://github.com/feathersjs/feathers-mongoose/pull/158) ([jamesjnadeau](https://github.com/jamesjnadeau))
+- Added warning msg when options.lean is falsey [\#155](https://github.com/feathersjs/feathers-mongoose/pull/155) ([eddyystop](https://github.com/eddyystop))
+
 ## [v3.6.1](https://github.com/feathersjs/feathers-mongoose/tree/v3.6.1) (2016-11-15)
 [Full Changelog](https://github.com/feathersjs/feathers-mongoose/compare/v3.6.0...v3.6.1)
 

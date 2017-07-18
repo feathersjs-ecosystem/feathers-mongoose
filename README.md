@@ -1,6 +1,8 @@
 feathers-mongoose
 ================
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/feathersjs/feathers-mongoose.svg)](https://greenkeeper.io/)
+
 [![Build Status](https://travis-ci.org/feathersjs/feathers-mongoose.png?branch=master)](https://travis-ci.org/feathersjs/feathers-mongoose)
 [![Code Climate](https://codeclimate.com/github/feathersjs/feathers-mongoose/badges/gpa.svg)](https://codeclimate.com/github/feathersjs/feathers-mongoose)
 [![Test Coverage](https://codeclimate.com/github/feathersjs/feathers-mongoose/badges/coverage.svg)](https://codeclimate.com/github/feathersjs/feathers-mongoose/coverage)
