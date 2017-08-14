@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const PetSchema = new Schema({
@@ -7,6 +7,4 @@ const PetSchema = new Schema({
   gender: {type: String, required: false, select: false}
 });
 
-const PetModel = mongoose.model('Pet', PetSchema);
-
-export default PetModel;
+module.exports = mongoose.model('Pet', PetSchema);

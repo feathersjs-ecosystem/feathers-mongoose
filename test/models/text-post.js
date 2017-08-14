@@ -1,17 +1,15 @@
-var mongoose = require('mongoose');
-var Schema = mongoose.Schema;
-var Post = require('./post');
+const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
+const Post = require('./post');
 
-var options = {
+const options = {
   discriminatorKey: '_type'
 };
 
-var TextPostSchema = new Schema({
+const TextPostSchema = new Schema({
   text: { type: String, default: null }
 }, options);
 
 TextPostSchema.index({'updatedAt': -1, background: true});
 
-var TextPostModel = Post.discriminator('text', TextPostSchema);
-
-module.exports = TextPostModel;
+module.exports = Post.discriminator('text', TextPostSchema);

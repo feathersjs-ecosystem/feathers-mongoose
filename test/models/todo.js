@@ -1,7 +1,7 @@
-var mongoose = require('mongoose');
-var Schema = mongoose.Schema;
+const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 
-var TodoSchema = new Schema({
+const TodoSchema = new Schema({
   text: {type: String, required: true},
   complete: {type: Boolean, 'default': false, index: true},
   createdAt: {type: Date, 'default': Date.now},
@@ -10,6 +10,4 @@ var TodoSchema = new Schema({
 
 TodoSchema.index({'updatedAt': -1, background: true});
 
-var TodoModel = mongoose.model('Todo', TodoSchema);
-
-module.exports = TodoModel;
+module.exports = mongoose.model('Todo', TodoSchema);

@@ -4,7 +4,6 @@ services: mongodb
 node_js:
   - 'node'
   - '6'
-  - '4'
 addons:
   code_climate:
     repo_token: '02e23483b0d3f6c53015dd08512fcfee126ffee8f03e5ebe8a6b4d8bb5b8cf31'

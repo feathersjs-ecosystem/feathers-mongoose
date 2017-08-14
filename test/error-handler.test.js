@@ -1,8 +1,8 @@
-import 'feathers';
-import { expect } from 'chai';
-import mongoose from 'mongoose';
-import errors from 'feathers-errors';
-import errorHandler from '../src/error-handler';
+require('feathers');
+const { expect } = require('chai');
+const mongoose = require('mongoose');
+const errors = require('feathers-errors');
+const errorHandler = require('../lib/error-handler');
 
 describe('Feathers Mongoose Error Handler', () => {
   it('throws a feathers error', done => {

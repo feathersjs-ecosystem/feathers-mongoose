@@ -1,17 +1,15 @@
-var mongoose = require('mongoose');
-var Schema = mongoose.Schema;
+const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 
-var options = {
+const options = {
   discriminatorKey: '_type'
 };
 
-var PostSchema = new Schema({
+const PostSchema = new Schema({
   createdAt: {type: Date, 'default': Date.now},
   updatedAt: {type: Date, 'default': Date.now}
 }, options);
 
 PostSchema.index({'updatedAt': -1, background: true});
 
-var PostModel = mongoose.model('Post', PostSchema);
-
-module.exports = PostModel;
+module.exports = mongoose.model('Post', PostSchema);

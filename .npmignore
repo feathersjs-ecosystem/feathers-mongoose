@@ -3,8 +3,8 @@
 .travis.yml
 .editorconfig
 .idea/
-src/
 test/
 !lib/
 .github/
-coverage
+coverage/
+.vscode/
