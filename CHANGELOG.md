@@ -1,5 +1,24 @@
 # Change Log
 
+## [v5.1.2](https://github.com/feathersjs/feathers-mongoose/tree/v5.1.2) (2017-08-14)
+[Full Changelog](https://github.com/feathersjs/feathers-mongoose/compare/v5.1.1...v5.1.2)
+
+**Closed issues:**
+
+- Changing embedded documents [\#208](https://github.com/feathersjs/feathers-mongoose/issues/208)
+- Query $in with more than 21 items throw a MongooseError.CastError [\#205](https://github.com/feathersjs/feathers-mongoose/issues/205)
+- Service should provide a hook to loaded resource or respect filters in all methods [\#204](https://github.com/feathersjs/feathers-mongoose/issues/204)
+- Custom ID Not working [\#189](https://github.com/feathersjs/feathers-mongoose/issues/189)
+- Discriminators is not working [\#188](https://github.com/feathersjs/feathers-mongoose/issues/188)
+- Make sure create many works with lean:true.  Follow up on \#160 [\#161](https://github.com/feathersjs/feathers-mongoose/issues/161)
+- PUT \(update\) does not run mongoose validators [\#115](https://github.com/feathersjs/feathers-mongoose/issues/115)
+
+**Merged pull requests:**
+
+- Update sinon to the latest version 🚀 [\#206](https://github.com/feathersjs/feathers-mongoose/pull/206) ([greenkeeper[bot]](https://github.com/apps/greenkeeper))
+- Fixing broken links to docs [\#203](https://github.com/feathersjs/feathers-mongoose/pull/203) ([corymsmith](https://github.com/corymsmith))
+- Ensure bulk create returns plain objects when lean is 'true' [\#186](https://github.com/feathersjs/feathers-mongoose/pull/186) ([DesignByOnyx](https://github.com/DesignByOnyx))
+
 ## [v5.1.1](https://github.com/feathersjs/feathers-mongoose/tree/v5.1.1) (2017-07-07)
 [Full Changelog](https://github.com/feathersjs/feathers-mongoose/compare/v5.1.0...v5.1.1)
 
