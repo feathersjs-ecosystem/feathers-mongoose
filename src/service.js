@@ -7,7 +7,7 @@ import errorHandler from './error-handler';
 
 // Create the service.
 class Service {
-  constructor (options) {
+  constructor(options) {
     if (!options) {
       throw new Error('Mongoose options have to be provided');
     }
@@ -25,17 +25,24 @@ class Service {
       }
     });
     this.id = options.id || '_id';
+
+    if (options.findOneQuery) {
+      this.findOneQuery = options.findOneQuery;
+    } else {
+      this.findOneQuery = id => ({ [this.id]: id });
+    }
+
     this.paginate = options.paginate || {};
     this.lean = options.lean === undefined ? true : options.lean;
     this.overwrite = options.overwrite !== false;
     this.events = options.events || [];
   }
 
-  extend (obj) {
+  extend(obj) {
     return Proto.extend(obj, this);
   }
 
-  _find (params, count, getFilter = filter) {
+  _find(params, count, getFilter = filter) {
     const { filters, query } = getFilter(params.query || {});
     const discriminator = (params.query || {})[this.discriminatorKey] || this.discriminatorKey;
     const model = this.discriminators[discriminator] || this.Model;
@@ -80,7 +87,7 @@ class Service {
           total,
           limit: filters.$limit,
           skip: filters.$skip || 0,
-          data
+          data,
         };
       });
     };
@@ -91,7 +98,7 @@ class Service {
           total,
           limit: filters.$limit,
           skip: filters.$skip || 0,
-          data: []
+          data: [],
         });
       };
     }
@@ -103,11 +110,10 @@ class Service {
     return executeQuery();
   }
 
-  find (params) {
-    const paginate = (params && typeof params.paginate !== 'undefined') ? params.paginate : this.paginate;
-    const result = this._find(params, !!paginate.default,
-      query => filter(query, paginate)
-    );
+  find(params) {
+    const paginate =
+      params && typeof params.paginate !== 'undefined' ? params.paginate : this.paginate;
+    const result = this._find(params, !!paginate.default, query => filter(query, paginate));
 
     if (!paginate.default) {
       return result.then(page => page.data);
@@ -116,13 +122,12 @@ class Service {
     return result;
   }
 
-  _get (id, params = {}) {
+  _get(id, params = {}) {
     params.query = params.query || {};
 
     const discriminator = (params.query || {})[this.discriminatorKey] || this.discriminatorKey;
     const model = this.discriminators[discriminator] || this.Model;
-    let modelQuery = model
-      .findOne({ [this.id]: id });
+    let modelQuery = model.findOne(this.findOneQuery(id, {}, params));
 
     // Handle $populate
     if (params.query.$populate) {
@@ -155,11 +160,11 @@ class Service {
       .catch(errorHandler);
   }
 
-  get (id, params) {
+  get(id, params) {
     return this._get(id, params);
   }
 
-  _getOrFind (id, params) {
+  _getOrFind(id, params) {
     if (id === null) {
       return this._find(params).then(page => page.data);
     }
@@ -167,18 +172,31 @@ class Service {
     return this._get(id, params);
   }
 
-  create (data, params) {
-    const discriminator = data[this.discriminatorKey] || this.discriminatorKey;
-    const model = this.discriminators[discriminator] || this.Model;
-    return model.create(data)
-      .then(result => (this.lean && result.toObject) ? result.toObject() : result)
-      .then(select(params, this.id))
+  create(data, params) {
+    return model
+      .create(data)
+      .then(result => {
+        let results = result;
+        if (this.lean) {
+          if (results instanceof Array) {
+            for (const i in results) {
+              results[i] = results[i].toObject();
+            }
+          } else {
+            results = result.toObject();
+          }
+        }
+
+        return select(params, this.id)(results);
+      })
       .catch(errorHandler);
   }
 
-  update (id, data, params) {
+  update(id, data, params) {
     if (id === null) {
-      return Promise.reject(new errors.BadRequest('Not replacing multiple records. Did you mean `patch`?'));
+      return Promise.reject(
+        new errors.BadRequest('Not replacing multiple records. Did you mean `patch`?')
+      );
     }
 
     // Handle case where data might be a mongoose model
@@ -186,13 +204,16 @@ class Service {
       data = data.toObject();
     }
 
-    const options = Object.assign({
-      new: true,
-      overwrite: this.overwrite,
-      runValidators: true,
-      context: 'query',
-      setDefaultsOnInsert: true
-    }, params.mongoose);
+    const options = Object.assign(
+      {
+        new: true,
+        overwrite: this.overwrite,
+        runValidators: true,
+        context: 'query',
+        setDefaultsOnInsert: true,
+      },
+      params.mongoose
+    );
 
     if (this.id === '_id') {
       // We can not update default mongo ids
@@ -205,28 +226,23 @@ class Service {
 
     const discriminator = (params.query || {})[this.discriminatorKey] || this.discriminatorKey;
     const model = this.discriminators[discriminator] || this.Model;
-    let modelQuery = model.findOneAndUpdate({ [this.id]: id }, data, options);
+    let modelQuery = model.findOneAndUpdate(this.findOneQuery(id, data, params), data, options);
 
     if (params && params.query && params.query.$populate) {
       modelQuery = modelQuery.populate(params.query.$populate);
     }
 
-    return modelQuery
-      .lean(this.lean)
-      .exec()
-      .then(select(params, this.id))
-      .catch(errorHandler);
+    return modelQuery.lean(this.lean).exec().then(select(params, this.id)).catch(errorHandler);
   }
 
-  patch (id, data, params) {
+  patch(id, data, params) {
     const query = Object.assign({}, filter(params.query || {}).query);
     const mapIds = page => page.data.map(current => current[this.id]);
 
     // By default we will just query for the one id. For multi patch
     // we create a list of the ids of all items that will be changed
     // to re-query them after the update
-    const ids = id === null ? this._find(params)
-        .then(mapIds) : Promise.resolve([ id ]);
+    const ids = id === null ? this._find(params).then(mapIds) : Promise.resolve([id]);
 
     // Handle case where data might be a mongoose model
     if (typeof data.toObject === 'function') {
@@ -237,14 +253,17 @@ class Service {
     data = Object.assign({}, data);
 
     // If we are updating multiple records
-    let options = Object.assign({
-      multi: id === null,
-      runValidators: true,
-      context: 'query'
-    }, params.mongoose);
+    let options = Object.assign(
+      {
+        multi: id === null,
+        runValidators: true,
+        context: 'query',
+      },
+      params.mongoose
+    );
 
     if (id !== null) {
-      query[this.id] = id;
+      Object.assign(query, this.findOneQuery(id, data, params));
     }
 
     if (this.id === '_id') {
@@ -263,11 +282,13 @@ class Service {
         .then(idList => {
           // Create a new query that re-queries all ids that
           // were originally changed
-          const findParams = idList.length ? Object.assign({}, params, {
-            query: {
-              [this.id]: { $in: idList }
-            }
-          }) : params;
+          const findParams = idList.length
+            ? Object.assign({}, params, {
+                query: {
+                  [this.id]: { $in: idList },
+                },
+              })
+            : params;
 
           if (params.query && params.query.$populate) {
             findParams.query.$populate = params.query.$populate;
@@ -275,7 +296,8 @@ class Service {
 
           // If params.query.$populate was provided, remove it
           // from the query sent to mongoose.
-          const discriminator = (params.query || {})[this.discriminatorKey] || this.discriminatorKey;
+          const discriminator =
+            (params.query || {})[this.discriminatorKey] || this.discriminatorKey;
           const model = this.discriminators[discriminator] || this.Model;
           return model
             .update(omit(query, '$populate'), data, options)
@@ -290,11 +312,11 @@ class Service {
     }
   }
 
-  remove (id, params) {
+  remove(id, params) {
     const query = Object.assign({}, filter(params.query || {}).query);
 
     if (id !== null) {
-      query[this.id] = id;
+      Object.assign(query, this.findOneQuery(id, {}, params));
     }
 
     // NOTE (EK): First fetch the record(s) so that we can return
@@ -312,7 +334,7 @@ class Service {
   }
 }
 
-export default function init (options) {
+export default function init(options) {
   return new Service(options);
 }
 
