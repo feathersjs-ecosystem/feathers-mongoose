@@ -191,19 +191,25 @@ class Service {
 
   _createbulk (data, params) {
     return this._insertMany(data)
-      .then(result => {
-        if (!Array.isArray(result.data[1])) {
-          return result;
+      .then(({ data, failed }) => {
+        if (!Array.isArray(data)) {
+          return { data, failed };
         }
-        result.data[1] = result.data[1].map(result => (this.lean && result.toObject) ? result.toObject() : result);
-        return result;
+        data = data.map(result => (this.lean && result.toObject) ? result.toObject() : result);
+        return { data, failed };
       })
-      .then(result => {
-        if (!Array.isArray(result.data[1])) {
-          return result;
+      .then(({ data, failed }) => {
+        if (!Array.isArray(data)) {
+          // Add the failed results to params.errors
+          params.errors = failed;
+
+          return data;
         }
-        result.data[1] = result.data[1].map(result => select(params, this.id)(result));
-        return result;
+        data = data.map(result => select(params, this.id)(result));
+        // Add the failed results to params.errors
+        params.errors = failed;
+
+        return data;
       })
       .catch(errorHandler);
   }
@@ -217,6 +223,7 @@ class Service {
     };
     const discriminator = data[this.discriminatorKey] || this.discriminatorKey;
     const Model = this.discriminators[discriminator] || this.Model;
+    let errorDocs, successDocs;
 
     return new Promise((resolve, reject) => {
       if (!Array.isArray(data)) {
@@ -246,11 +253,11 @@ class Service {
       Promise.all(toExecute)
       .then(docs => {
         // Filter out any errors
-        let successDocs = docs.filter(doc => {
+        successDocs = docs.filter(doc => {
           return (!(doc instanceof Error) && doc !== null);
         });
         // Get the errors
-        let errorDocs = docs.filter(doc => {
+        errorDocs = docs.filter(doc => {
           return (doc instanceof Error);
         })
         .reduce((acc, cur) => {
@@ -263,7 +270,7 @@ class Service {
           // error first, then success documents
           // data[0] = errors
           // data[1] = success data
-          resolve({ data: [errorDocs, null] });
+          resolve({ failed: errorDocs });
           return;
         }
 
@@ -336,7 +343,7 @@ class Service {
           // error first, then success documents
           // data[0] = errors
           // data[1] = success data
-          resolve({ data: [errorDocs, successDocs] });
+          resolve({ data: successDocs, failed: errorDocs });
         });
       })
       .catch(err => {
