@@ -176,7 +176,15 @@ class Service {
     const discriminator = data[this.discriminatorKey] || this.discriminatorKey;
     const model = this.discriminators[discriminator] || this.Model;
     return model.create(data)
-      .then(result => (this.lean && result.toObject) ? result.toObject() : result)
+      .then(result => {
+        if (this.lean) {
+          if (Array.isArray(result)) {
+            return result.map(item => (item.toObject ? item.toObject() : item));
+          }
+          return result.toObject ? result.toObject() : result;
+        }
+        return result;
+      })
       .then(select(params, this.id))
       .catch(errorHandler);
   }
@@ -424,11 +432,11 @@ class Service {
         .then(idList => {
           // Create a new query that re-queries all ids that
           // were originally changed
-          const findParams = Object.assign({}, params, {
+          const findParams = idList.length ? Object.assign({}, params, {
             query: {
               [this.id]: { $in: idList }
             }
-          });
+          }) : params;
 
           if (params.query && params.query.$populate) {
             findParams.query.$populate = params.query.$populate;

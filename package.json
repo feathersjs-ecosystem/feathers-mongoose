@@ -1,7 +1,7 @@
 {
   "name": "feathers-mongoose",
   "description": "A Feathers service adapter for the Mongoose ORM",
-  "version": "5.1.0",
+  "version": "5.1.2",
   "homepage": "https://github.com/feathersjs/feathers-mongoose",
   "main": "lib/",
   "keywords": [
@@ -88,7 +88,7 @@
     "mongoose": "^4.10.4",
     "rimraf": "^2.5.2",
     "semistandard": "^11.0.0",
-    "sinon": "^2.0.0",
+    "sinon": "^3.0.0",
     "sinon-chai": "^2.8.0"
   }
 }

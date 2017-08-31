@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-expressions */
 
 import { expect } from 'chai';
-import { base, example } from 'feathers-service-tests';
+import { base, example, orm } from 'feathers-service-tests';
 import errors from 'feathers-errors';
 import feathers from 'feathers';
 import service, { hooks, Service } from '../src';
@@ -349,6 +349,22 @@ describe('Feathers Mongoose Service', () => {
       }).catch(done);
     });
 
+    it('can upsert with patch', function (done) {
+      var data = { name: 'Henry', age: 300 };
+      var params = {
+        mongoose: { upsert: true },
+        query: { name: 'Henry' }
+      };
+
+      people.patch(null, data, params).then(data => {
+        expect(Array.isArray(data)).to.equal(true);
+
+        var henry = data[0];
+        expect(henry.name).to.equal('Henry');
+        done();
+      }).catch(done);
+    });
+
     it('can $populate with update', function (done) {
       var params = {
         query: {
@@ -450,6 +466,8 @@ describe('Feathers Mongoose Service', () => {
           done();
         });
     });
+
+    orm(leanPeople, errors, '_id');
   });
 
   describe('Lean Services', () => {
@@ -497,6 +515,22 @@ describe('Feathers Mongoose Service', () => {
 
       leanPeople.get(_ids.Doug, params).then(data => {
         expect(data.pets[0].name).to.equal('Rufus');
+        done();
+      }).catch(done);
+    });
+
+    it('can upsert with patch', function (done) {
+      var data = { name: 'Henry', age: 300 };
+      var params = {
+        mongoose: { upsert: true },
+        query: { name: 'Henry' }
+      };
+
+      leanPeople.patch(null, data, params).then(data => {
+        expect(Array.isArray(data)).to.equal(true);
+
+        var henry = data[0];
+        expect(henry.name).to.equal('Henry');
         done();
       }).catch(done);
     });
