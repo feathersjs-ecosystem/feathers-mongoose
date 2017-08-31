@@ -66,6 +66,7 @@
     "feathers-commons": "^0.8.4",
     "feathers-errors": "^2.0.1",
     "feathers-query-filters": "^2.1.2",
+    "lodash.isequal": "^4.5.0",
     "lodash.omit": "^4.3.0",
     "uberproto": "^1.2.0"
   },

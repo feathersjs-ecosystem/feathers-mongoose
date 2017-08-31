@@ -28,6 +28,16 @@ const leanPeople = app.service('people2');
 const leanPets = app.service('pets2');
 const posts = app.service('posts');
 
+const sortAge = (items) => {
+  if (Array.isArray(items[1])) {
+    // Order is not guaranteed so lets just order by age
+    items[1] = items[1].sort((a, b) => {
+      return a.age > b.age;
+    });
+  }
+  return items;
+};
+
 let testApp;
 
 describe('Feathers Mongoose Service', () => {
@@ -104,6 +114,119 @@ describe('Feathers Mongoose Service', () => {
       it('sets the default to be false', () => {
         expect(people.lean).to.be.false;
       });
+    });
+  });
+
+  describe('insertMany', () => {
+    afterEach(() => {
+      return people.remove(null, { query: {} });
+    });
+
+    it('can return all validation errors', function () {
+      return people.create([
+        {
+          name: 'David',
+          age: 10
+        },
+        {
+          name: 'Peter',
+          age: -6
+        },
+        {
+          age: 7
+        },
+        {
+          name: 'Christopher',
+          age: 5
+        }
+      ])
+      .then(sortAge)
+      .then(data => {
+        expect(data).to.be.an('array');
+        expect(data.length).to.equal(2);
+        expect(data[0].name).to.equal('David');
+        expect(data[1].name).to.equal('Christopher');
+      });
+    });
+
+    it('can return duplicate key errors', function (done) {
+      people.create([
+        {
+          name: 'David',
+          age: 10
+        }
+      ])
+      .then(data => {
+        _ids.David = data[0]._id;
+        people.create([
+          {
+            _id: _ids.David,
+            name: 'Matt',
+            age: 20
+          }
+        ])
+        .then(data => {
+          expect(data).to.be.null;
+          done();
+        })
+        .catch(done);
+      })
+      .catch(done);
+    });
+
+    it('can return combination of duplicate key and validation errors', function (done) {
+      people.create([
+        {
+          name: 'David',
+          age: 10
+        }
+      ])
+      .then(data => {
+        _ids.David = data[0]._id;
+        people.create([
+          {
+            _id: _ids.David,
+            name: 'David',
+            age: 20
+          },
+          {
+            age: 20
+          },
+          {
+            name: 'Peter',
+            age: 27
+          }
+        ])
+        .then(sortAge)
+        .then(data => {
+          expect(data.length).to.equal(1);
+          expect(data[0].name).to.equal('Peter');
+          done();
+        })
+        .catch(done);
+      })
+      .catch(done);
+    });
+
+    it('can create with array', function (done) {
+      people.create([
+        {
+          name: 'David',
+          age: 10
+        },
+        {
+          name: 'Peter',
+          age: 27
+        }
+      ])
+      .then(sortAge)
+      .then(data => {
+        expect(data.length).to.equal(2);
+        expect(data[0].name).to.equal('David');
+        expect(data[1].name).to.equal('Peter');
+        done();
+      })
+      .catch(done);
     });
   });
 
