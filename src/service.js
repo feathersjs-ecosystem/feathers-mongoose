@@ -26,6 +26,7 @@ class Service {
       }
     });
     this.id = options.id || '_id';
+    this.bulkErrorsKey = options.bulkErrorsKey || 'errors';
     this.paginate = options.paginate || {};
     this.lean = options.lean === undefined ? true : options.lean;
     this.overwrite = options.overwrite !== false;
@@ -191,23 +192,23 @@ class Service {
 
   _createbulk (data, params) {
     return this._insertMany(data)
-      .then(({ data, failed }) => {
+      .then(({ data, errors }) => {
         if (!Array.isArray(data)) {
-          return { data, failed };
+          return { data, errors };
         }
         data = data.map(result => (this.lean && result.toObject) ? result.toObject() : result);
-        return { data, failed };
+        return { data, errors };
       })
-      .then(({ data, failed }) => {
+      .then(({ data, errors }) => {
         if (!Array.isArray(data)) {
-          // Add the failed results to params.errors
-          params.errors = failed;
+          // Add the errors results to params.errors
+          params[this.bulkErrorsKey] = errors;
 
           return data;
         }
         data = data.map(result => select(params, this.id)(result));
-        // Add the failed results to params.errors
-        params.errors = failed;
+        // Add the errors results to params.errors
+        params[this.bulkErrorsKey] = errors;
 
         return data;
       })
@@ -267,7 +268,7 @@ class Service {
 
         // Escape while there aren't any valid docs
         if (successDocs.length < 1) {
-          resolve({ failed: errorDocs });
+          resolve({ errors: errorDocs });
           return;
         }
 
@@ -337,7 +338,7 @@ class Service {
           successDocs = successDocs.length ? successDocs : null;
 
           // return combination of success and error documents
-          resolve({ data: successDocs, failed: errorDocs });
+          resolve({ data: successDocs, errors: errorDocs });
         });
       })
       .catch(err => {
