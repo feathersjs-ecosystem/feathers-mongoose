@@ -231,7 +231,7 @@ class Service {
       }
 
       // validate the docs against the mongoose schema
-      const validate = function validate (doc) {  // sample async action
+      const validate = function validate (doc) {
         return new Promise(resolve => {
           let model = new Model(doc);
           model.validate({ __noPromise: true }, error => {
@@ -261,15 +261,12 @@ class Service {
           return (doc instanceof Error);
         })
         .reduce((acc, cur) => {
-          acc.push({ ValidationError: cur.message, data: cur.data });
+          acc.push({ error: { type: 'ValidationError', message: cur.message }, data: cur.data });
           return acc;
         }, []);
 
         // Escape while there aren't any valid docs
         if (successDocs.length < 1) {
-          // error first, then success documents
-          // data[0] = errors
-          // data[1] = success data
           resolve({ failed: errorDocs });
           return;
         }
@@ -298,13 +295,13 @@ class Service {
             // Check if we have singular error
             if (!error.writeErrors) {
               let _error = error.toJSON();
-              writeErrors = [Object.assign({}, { WriteError: _error.errmsg }, { data: omit(_error.op, '__v') })];
+              writeErrors = [{ error: { type: 'WriteError', message: _error.errmsg }, data: _error.op }];
             } else {
                 // Get a list of the errors and the ids
                 // so we can filter out the those that failed from the successful ones
               writeErrors = error.writeErrors.reduce((acc, cur) => {
                 let error = cur.toJSON();
-                acc.push(Object.assign({}, { WriteError: error.errmsg }, { data: omit(error.op, '__v') }));
+                acc.push({ error: { type: 'WriteError', message: error.errmsg }, data: error.op });
                 return acc;
               }, []);
             }
@@ -315,8 +312,8 @@ class Service {
             successDocs = successDocs.reduce((acc, doc) => {
               // remove duplicate key docs
               let errorDoc = writeErrors.find(curError => {
-                let data = omit(doc.toJSON(), '__v');
-                return isEqual(curError.data, data) && curError.WriteError.includes('duplicate key');
+                let data = doc.toJSON();
+                return isEqual(curError.data, data) && curError.error.message.includes('duplicate key');
               });
               if (errorDoc) {
                 return acc;
@@ -340,9 +337,6 @@ class Service {
           successDocs = successDocs.length ? successDocs : null;
 
           // return combination of success and error documents
-          // error first, then success documents
-          // data[0] = errors
-          // data[1] = success data
           resolve({ data: successDocs, failed: errorDocs });
         });
       })
