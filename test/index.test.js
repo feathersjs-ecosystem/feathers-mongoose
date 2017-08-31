@@ -222,8 +222,8 @@ describe('Feathers Mongoose Service', () => {
       .then(sortAge)
       .then(data => {
         expect(data.length).to.equal(2);
-        expect(data[0].name).to.equal('Peter');
-        expect(data[1].name).to.equal('David');
+        expect(data[0].name).to.equal('David');
+        expect(data[1].name).to.equal('Peter');
         done();
       })
       .catch(done);
