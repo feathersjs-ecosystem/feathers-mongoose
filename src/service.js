@@ -200,15 +200,20 @@ class Service {
         return { data, errors };
       })
       .then(({ data, errors }) => {
+        // Check the errors exists
+        if (!params[this.bulkErrorsKey]) {
+          params[this.bulkErrorsKey] = [];
+        }
+
         if (!Array.isArray(data)) {
           // Add the errors results to params.errors
-          params[this.bulkErrorsKey] = errors;
+          params[this.bulkErrorsKey] = params[this.bulkErrorsKey].concat(errors);
 
           return data;
         }
         data = data.map(result => select(params, this.id)(result));
         // Add the errors results to params.errors
-        params[this.bulkErrorsKey] = errors;
+        params[this.bulkErrorsKey] = params[this.bulkErrorsKey].concat(errors);
 
         return data;
       })
