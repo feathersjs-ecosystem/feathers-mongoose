@@ -83,7 +83,7 @@
     "feathers-service-tests": "^0.10.0",
     "feathers-socketio": "^2.0.0",
     "istanbul": "^1.1.0-alpha.1",
-    "mocha": "^3.0.0",
+    "mocha": "^4.0.0",
     "mongoose": "^4.10.4",
     "rimraf": "^2.5.2",
     "semistandard": "^11.0.0",
