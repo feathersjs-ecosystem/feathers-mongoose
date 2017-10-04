@@ -236,7 +236,7 @@ class Service {
     const mapIds = page => page.data.map(current => current[this.id]);
 
     if (params.collation) {
-      query.collation = params.collation
+      query.collation = params.collation;
     }
 
     // By default we will just query for the one id. For multi patch
@@ -311,7 +311,7 @@ class Service {
     const query = Object.assign({}, filter(params.query || {}).query);
 
     if (params.collation) {
-      query.collation = params.collation
+      query.collation = params.collation;
     }
 
     if (id !== null) {
