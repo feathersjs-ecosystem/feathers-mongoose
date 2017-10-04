@@ -59,6 +59,11 @@ class Service {
       q.sort(filters.$sort);
     }
 
+    // Handle collation
+    if (params.collation) {
+      q.collation(params.collation);
+    }
+
     // Handle $limit
     if (typeof filters.$limit !== 'undefined') {
       q.limit(filters.$limit);
@@ -230,6 +235,10 @@ class Service {
     const query = Object.assign({}, filter(params.query || {}).query);
     const mapIds = page => page.data.map(current => current[this.id]);
 
+    if (params.collation) {
+      query.collation = params.collation;
+    }
+
     // By default we will just query for the one id. For multi patch
     // we create a list of the ids of all items that will be changed
     // to re-query them after the update
@@ -300,6 +309,10 @@ class Service {
 
   remove (id, params) {
     const query = Object.assign({}, filter(params.query || {}).query);
+
+    if (params.collation) {
+      query.collation = params.collation;
+    }
 
     if (id !== null) {
       query[this.id] = id;
