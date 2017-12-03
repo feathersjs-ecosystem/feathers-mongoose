@@ -1,7 +1,8 @@
-const feathers = require('feathers');
-const rest = require('feathers-rest');
-const socketio = require('feathers-socketio');
-const handler = require('feathers-errors/handler');
+const feathers = require('@feathersjs/feathers');
+const express = require('@feathersjs/express');
+const rest = require('@feathersjs/express/rest');
+const socketio = require('@feathersjs/socketio');
+const handler = require('@feathersjs/express/errors');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const mongooseService = require('../lib');
@@ -17,8 +18,8 @@ mongoose.Promise = global.Promise;
 mongoose.connect('mongodb://localhost:27017/feathers');
 
 // Create a feathers instance.
-const app = feathers()
-  // Enable Socket.io
+const app = express(// Enable Socket.io
+feathers())
   .configure(socketio())
   // Enable REST services
   .configure(rest())
