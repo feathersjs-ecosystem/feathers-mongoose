@@ -1,16 +1,12 @@
 /* eslint-disable no-unused-expressions */
 const { expect } = require('chai');
-
-const {
-  base,
-  example,
-  orm
-} = require('feathers-service-tests');
+const { base, orm } = require('feathers-service-tests');
+const mongoose = require('mongoose');
 
 const errors = require('@feathersjs/errors');
 const feathers = require('@feathersjs/feathers');
+
 const adapter = require('../lib');
-const server = require('./test-app');
 
 const {
   User,
@@ -41,7 +37,12 @@ const leanPeople = app.service('people2');
 const leanPets = app.service('pets2');
 const posts = app.service('posts');
 
-let testApp;
+// Tell mongoose to use native promises
+// See http://mongoosejs.com/docs/promises.html
+mongoose.Promise = global.Promise;
+
+// Connect to your MongoDB instance(s)
+mongoose.connect('mongodb://localhost:27017/feathers');
 
 describe('Feathers Mongoose Service', () => {
   describe('Requiring', () => {
@@ -494,18 +495,5 @@ describe('Feathers Mongoose Service', () => {
 
     base(app, errors, 'peeps', '_id');
     base(app, errors, 'peeps-customid', 'customid');
-  });
-
-  describe('Mongoose service example test', () => {
-    before(done => {
-      server.service('todos').remove(null, {}).then(() => {
-        testApp = server.listen(3030);
-        return done();
-      });
-    });
-
-    after(done => testApp.close(() => done()));
-
-    example('_id');
   });
 });
