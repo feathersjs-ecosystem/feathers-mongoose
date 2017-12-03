@@ -1,5 +1,34 @@
 # Change Log
 
+## [v6.0.0](https://github.com/feathersjs-ecosystem/feathers-mongoose/tree/v6.0.0) (2017-12-03)
+[Full Changelog](https://github.com/feathersjs-ecosystem/feathers-mongoose/compare/v5.1.2...v6.0.0)
+
+**Implemented enhancements:**
+
+- Suggestion - insertMany [\#197](https://github.com/feathersjs-ecosystem/feathers-mongoose/issues/197)
+
+**Closed issues:**
+
+- mongoose validation error \(in hook\)  kills nodejs process [\#222](https://github.com/feathersjs-ecosystem/feathers-mongoose/issues/222)
+- Add example for nested schemas using feathers [\#221](https://github.com/feathersjs-ecosystem/feathers-mongoose/issues/221)
+- Are nested schemas saved? [\#220](https://github.com/feathersjs-ecosystem/feathers-mongoose/issues/220)
+- Feathers error 409 - conflict: message 'follows: null already exists'' [\#219](https://github.com/feathersjs-ecosystem/feathers-mongoose/issues/219)
+-  Find Query with $in array of ObjectId's  [\#216](https://github.com/feathersjs-ecosystem/feathers-mongoose/issues/216)
+- Can not call update with a null id [\#214](https://github.com/feathersjs-ecosystem/feathers-mongoose/issues/214)
+- poulate after create hook [\#213](https://github.com/feathersjs-ecosystem/feathers-mongoose/issues/213)
+- Mongoose query aggregation [\#212](https://github.com/feathersjs-ecosystem/feathers-mongoose/issues/212)
+- Can't update field that is used as id [\#202](https://github.com/feathersjs-ecosystem/feathers-mongoose/issues/202)
+- $populate enhancement [\#149](https://github.com/feathersjs-ecosystem/feathers-mongoose/issues/149)
+- Mongoose ValidationError messages do not surface [\#116](https://github.com/feathersjs-ecosystem/feathers-mongoose/issues/116)
+
+**Merged pull requests:**
+
+- Remove examples [\#225](https://github.com/feathersjs-ecosystem/feathers-mongoose/pull/225) ([daffl](https://github.com/daffl))
+- Update to Feathers Buzzard \(v3\) [\#224](https://github.com/feathersjs-ecosystem/feathers-mongoose/pull/224) ([daffl](https://github.com/daffl))
+- Update to new plugin infrastructure [\#223](https://github.com/feathersjs-ecosystem/feathers-mongoose/pull/223) ([daffl](https://github.com/daffl))
+- Update mocha to the latest version 🚀 [\#217](https://github.com/feathersjs-ecosystem/feathers-mongoose/pull/217) ([greenkeeper[bot]](https://github.com/apps/greenkeeper))
+- Update sinon to the latest version 🚀 [\#215](https://github.com/feathersjs-ecosystem/feathers-mongoose/pull/215) ([greenkeeper[bot]](https://github.com/apps/greenkeeper))
+
 ## [v5.1.2](https://github.com/feathersjs-ecosystem/feathers-mongoose/tree/v5.1.2) (2017-08-14)
 [Full Changelog](https://github.com/feathersjs-ecosystem/feathers-mongoose/compare/v5.1.1...v5.1.2)
 
