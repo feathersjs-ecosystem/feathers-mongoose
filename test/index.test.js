@@ -1,27 +1,40 @@
 /* eslint-disable no-unused-expressions */
+const { expect } = require('chai');
 
-import { expect } from 'chai';
-import { base, example, orm } from 'feathers-service-tests';
-import errors from 'feathers-errors';
-import feathers from 'feathers';
-import service, { hooks, Service } from '../src';
-import server from './test-app';
-import { User, Pet, Peeps, CustomPeeps, Post, TextPost } from './models';
+const {
+  base,
+  example,
+  orm
+} = require('feathers-service-tests');
+
+const errors = require('feathers-errors');
+const feathers = require('feathers');
+const adapter = require('../lib');
+const server = require('./test-app');
+
+const {
+  User,
+  Pet,
+  Peeps,
+  CustomPeeps,
+  Post,
+  TextPost
+} = require('./models');
 
 const _ids = {};
 const _petIds = {};
 const app = feathers()
-  .use('/peeps', service({ Model: Peeps, events: [ 'testing' ] }))
-  .use('/peeps-customid', service({
+  .use('/peeps', adapter({ Model: Peeps, events: [ 'testing' ] }))
+  .use('/peeps-customid', adapter({
     id: 'customid',
     Model: CustomPeeps,
     events: [ 'testing' ]
   }))
-  .use('/people', service({ Model: User, lean: false }))
-  .use('/pets', service({ Model: Pet, lean: false }))
-  .use('/people2', service({ Model: User }))
-  .use('/pets2', service({ Model: Pet }))
-  .use('/posts', service({ Model: Post, discriminators: [TextPost] }));
+  .use('/people', adapter({ Model: User, lean: false }))
+  .use('/pets', adapter({ Model: Pet, lean: false }))
+  .use('/people2', adapter({ Model: User }))
+  .use('/pets2', adapter({ Model: Pet }))
+  .use('/posts', adapter({ Model: Post, discriminators: [TextPost] }));
 const people = app.service('people');
 const pets = app.service('pets');
 const leanPeople = app.service('people2');
@@ -47,38 +60,16 @@ describe('Feathers Mongoose Service', () => {
     });
   });
 
-  describe('Importing', () => {
-    it('exposes the service as a default module', () => {
-      expect(typeof service).to.equal('function');
-    });
-
-    it('exposes the Service constructor', () => {
-      // Check by calling the Service constructor without
-      // any params. It should return an error.
-      let newService;
-      try {
-        newService = new Service();
-      } catch (e) {
-        expect(e).to.not.be.undefined;
-        expect(newService).to.be.undefined;
-      }
-    });
-
-    it('exposes hooks', () => {
-      expect(typeof hooks).to.equal('object');
-    });
-  });
-
   describe('Initialization', () => {
     describe('when missing options', () => {
       it('throws an error', () => {
-        expect(service.bind(null)).to.throw('Mongoose options have to be provided');
+        expect(adapter.bind(null)).to.throw('Mongoose options have to be provided');
       });
     });
 
     describe('when missing a Model', () => {
       it('throws an error', () => {
-        expect(service.bind(null, { name: 'Test' })).to.throw(/You must provide a Mongoose Model/);
+        expect(adapter.bind(null, { name: 'Test' })).to.throw(/You must provide a Mongoose Model/);
       });
     });
 

@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const negativeAgeValidator = function () {
@@ -22,4 +22,4 @@ const UserSchema = new Schema({
 
 const UserModel = mongoose.model('User', UserSchema);
 
-export default UserModel;
+module.exports = UserModel;
