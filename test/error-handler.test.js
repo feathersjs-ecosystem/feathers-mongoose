@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-expressions */
 const { expect } = require('chai');
 const mongoose = require('mongoose');
-const errors = require('feathers-errors');
+const errors = require('@feathersjs/errors');
 
 const errorHandler = require('../lib/error-handler');
 

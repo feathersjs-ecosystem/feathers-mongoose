@@ -7,8 +7,8 @@ const {
   orm
 } = require('feathers-service-tests');
 
-const errors = require('feathers-errors');
-const feathers = require('feathers');
+const errors = require('@feathersjs/errors');
+const feathers = require('@feathersjs/feathers');
 const adapter = require('../lib');
 const server = require('./test-app');
 
