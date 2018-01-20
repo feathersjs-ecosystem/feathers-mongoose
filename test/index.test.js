@@ -404,39 +404,39 @@ describe('Feathers Mongoose Service', () => {
 
     afterEach(done => {
       posts.remove(null, { query: {} })
-      .then(data => {
-        done();
-      });
+        .then(data => {
+          done();
+        });
     });
 
     it('can get a discriminated model', function (done) {
       posts.create(data)
-      .then(data => posts.get(data._id))
-      .then(data => {
-        expect(data._type).to.equal('text');
-        expect(data.text).to.equal('Feathers!!!');
-        done();
-      });
+        .then(data => posts.get(data._id))
+        .then(data => {
+          expect(data._type).to.equal('text');
+          expect(data.text).to.equal('Feathers!!!');
+          done();
+        });
     });
 
     it('can find discriminated models by the type', function (done) {
       posts.create(data)
-      .then(data => posts.find({ query: { _type: 'text' } }))
-      .then(data => {
-        data.forEach(element => {
-          expect(element._type).to.equal('text');
+        .then(data => posts.find({ query: { _type: 'text' } }))
+        .then(data => {
+          data.forEach(element => {
+            expect(element._type).to.equal('text');
+          });
+          done();
         });
-        done();
-      });
     });
 
     it('can create a discriminated model', function (done) {
       posts.create(data)
-      .then(data => {
-        expect(data._type).to.equal('text');
-        expect(data.text).to.equal('Feathers!!!');
-        done();
-      });
+        .then(data => {
+          expect(data._type).to.equal('text');
+          expect(data.text).to.equal('Feathers!!!');
+          done();
+        });
     });
 
     it('can update a discriminated model', function (done) {
@@ -452,12 +452,12 @@ describe('Feathers Mongoose Service', () => {
         }
       };
       posts.create(data)
-      .then(data => posts.update(data._id, update, params))
-      .then(data => {
-        expect(data._type).to.equal('text');
-        expect(data.text).to.equal('Hello, world!');
-        done();
-      });
+        .then(data => posts.update(data._id, update, params))
+        .then(data => {
+          expect(data._type).to.equal('text');
+          expect(data.text).to.equal('Hello, world!');
+          done();
+        });
     });
 
     it('can patch a discriminated model', function (done) {
@@ -470,20 +470,20 @@ describe('Feathers Mongoose Service', () => {
         }
       };
       posts.create(data)
-      .then(data => posts.patch(data._id, update, params))
-      .then(data => {
-        expect(data.text).to.equal('Howdy folks!');
-        done();
-      });
+        .then(data => posts.patch(data._id, update, params))
+        .then(data => {
+          expect(data.text).to.equal('Howdy folks!');
+          done();
+        });
     });
 
     it('can remove a discriminated model', function (done) {
       posts.create(data)
-      .then(data => posts.remove(data._id, { query: { _type: 'text' } }))
-      .then(data => {
-        expect(data._type).to.equal('text');
-        done();
-      });
+        .then(data => posts.remove(data._id, { query: { _type: 'text' } }))
+        .then(data => {
+          expect(data._type).to.equal('text');
+          done();
+        });
     });
   });
 
