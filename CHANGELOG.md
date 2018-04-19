@@ -1,5 +1,20 @@
 # Change Log
 
+## [v6.1.1](https://github.com/feathersjs-ecosystem/feathers-mongoose/tree/v6.1.1) (2018-04-19)
+[Full Changelog](https://github.com/feathersjs-ecosystem/feathers-mongoose/compare/v6.1.0...v6.1.1)
+
+**Closed issues:**
+
+- Mongoose 5 warning "The `useMongoClient` option is no longer necessary in mongoose 5.x, please remove it." [\#239](https://github.com/feathersjs-ecosystem/feathers-mongoose/issues/239)
+- Grouping [\#236](https://github.com/feathersjs-ecosystem/feathers-mongoose/issues/236)
+- Mongoose ObjectId not be recognised as \_id in create [\#232](https://github.com/feathersjs-ecosystem/feathers-mongoose/issues/232)
+
+**Merged pull requests:**
+
+- Remove indexes [\#241](https://github.com/feathersjs-ecosystem/feathers-mongoose/pull/241) ([daffl](https://github.com/daffl))
+- Fix bug where regex fails in error-handler [\#240](https://github.com/feathersjs-ecosystem/feathers-mongoose/pull/240) ([cdimitroulas](https://github.com/cdimitroulas))
+- Update sinon-chai to the latest version 🚀 [\#234](https://github.com/feathersjs-ecosystem/feathers-mongoose/pull/234) ([greenkeeper[bot]](https://github.com/apps/greenkeeper))
+
 ## [v6.1.0](https://github.com/feathersjs-ecosystem/feathers-mongoose/tree/v6.1.0) (2018-01-20)
 [Full Changelog](https://github.com/feathersjs-ecosystem/feathers-mongoose/compare/v6.0.0...v6.1.0)
 
@@ -315,7 +330,7 @@
 
 **Merged pull requests:**
 
-- Fix for toObject hook [\#78](https://github.com/feathersjs-ecosystem/feathers-mongoose/pull/78) ([harangue](https://github.com/harangue))
+- Fix for toObject hook [\#78](https://github.com/feathersjs-ecosystem/feathers-mongoose/pull/78) ([jack-guy](https://github.com/jack-guy))
 - Fixed overwrite option: was always true [\#72](https://github.com/feathersjs-ecosystem/feathers-mongoose/pull/72) ([leo-nard](https://github.com/leo-nard))
 
 ## [v3.3.6](https://github.com/feathersjs-ecosystem/feathers-mongoose/tree/v3.3.6) (2016-02-24)
