@@ -125,7 +125,17 @@ describe('Feathers Mongoose Error Handler', () => {
       }).catch(done);
     });
 
-    it('has the correct error message', done => {
+    it('has the correct error message #1', done => {
+      let e = Error('E11000 duplicate key error collection: db.users index: name_1 dup key: { : "Kate" }');
+      e.name = 'MongoError';
+      e.code = 11000;
+      errorHandler(e).catch(error => {
+        expect(error.message).to.equal(`name: Kate already exists.`);
+        done();
+      }).catch(done);
+    });
+
+    it('has the correct error message #2', done => {
       let e = Error("E11000 duplicate key error index: myDb.myCollection.$id dup key: { : ObjectId('57226808ec55240c00000272') }");
       e.name = 'MongoError';
       e.code = 11000;
@@ -135,12 +145,22 @@ describe('Feathers Mongoose Error Handler', () => {
       }).catch(done);
     });
 
-    it('has the correct errors object', done => {
+    it('has the correct errors object #1', done => {
       let e = Error('E11000 duplicate key error index: test.collection.$a.b_1 dup key: { : null }');
       e.name = 'MongoError';
       e.code = 11000;
       errorHandler(e).catch(error => {
         expect(error.errors).to.deep.equal({ b: null });
+        done();
+      }).catch(done);
+    });
+
+    it('has the correct errors object #2', done => {
+      let e = Error('E11000 duplicate key error collection: db.users index: name_1 dup key: { : "Kate" }');
+      e.name = 'MongoError';
+      e.code = 11000;
+      errorHandler(e).catch(error => {
+        expect(error.errors).to.deep.equal({ name: 'Kate' });
         done();
       }).catch(done);
     });
