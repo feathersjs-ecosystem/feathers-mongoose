@@ -10,8 +10,6 @@ var PostSchema = new Schema({
   updatedAt: {type: Date, 'default': Date.now}
 }, options);
 
-PostSchema.index({'updatedAt': -1, background: true});
-
 var PostModel = mongoose.model('Post', PostSchema);
 
 module.exports = PostModel;
