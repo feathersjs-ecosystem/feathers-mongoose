@@ -1,5 +1,14 @@
 # Change Log
 
+## [v6.1.0](https://github.com/feathersjs-ecosystem/feathers-mongoose/tree/v6.1.0) (2018-01-20)
+[Full Changelog](https://github.com/feathersjs-ecosystem/feathers-mongoose/compare/v6.0.0...v6.1.0)
+
+**Merged pull requests:**
+
+- Update mocha to the latest version 🚀 [\#229](https://github.com/feathersjs-ecosystem/feathers-mongoose/pull/229) ([greenkeeper[bot]](https://github.com/apps/greenkeeper))
+- Update mongoose to the latest version 🚀 [\#228](https://github.com/feathersjs-ecosystem/feathers-mongoose/pull/228) ([greenkeeper[bot]](https://github.com/apps/greenkeeper))
+- Update semistandard to the latest version 🚀 [\#227](https://github.com/feathersjs-ecosystem/feathers-mongoose/pull/227) ([greenkeeper[bot]](https://github.com/apps/greenkeeper))
+
 ## [v6.0.0](https://github.com/feathersjs-ecosystem/feathers-mongoose/tree/v6.0.0) (2017-12-03)
 [Full Changelog](https://github.com/feathersjs-ecosystem/feathers-mongoose/compare/v5.1.2...v6.0.0)
 

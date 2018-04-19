@@ -8,8 +8,6 @@ var TodoSchema = new Schema({
   updatedAt: {type: Date, 'default': Date.now}
 });
 
-TodoSchema.index({'updatedAt': -1, background: true});
-
 var TodoModel = mongoose.model('Todo', TodoSchema);
 
 module.exports = TodoModel;
