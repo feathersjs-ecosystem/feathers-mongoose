@@ -131,9 +131,7 @@ const Model = require('./message-model');
 mongoose.Promise = global.Promise;
 
 // Connect to your MongoDB instance(s)
-mongoose.connect('mongodb://localhost:27017/feathers', {
-  useMongoClient: true
-});
+mongoose.connect('mongodb://localhost:27017/feathers');
 
 // Create an Express compatible Feathers application instance.
 const app = express(feathers());
