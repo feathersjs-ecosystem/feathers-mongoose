@@ -213,8 +213,6 @@ var TextPostSchema = new Schema({
   text: { type: String, default: null }
 }, options);
 
-TextPostSchema.index({'updatedAt': -1, background: true});
-
 // Note the use of `Post.discriminator` rather than `mongoose.discriminator`.
 var TextPost = Post.discriminator('text', TextPostSchema);
 
