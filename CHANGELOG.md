@@ -1,5 +1,18 @@
 # Change Log
 
+## [v6.1.2](https://github.com/feathersjs-ecosystem/feathers-mongoose/tree/v6.1.2) (2018-06-03)
+[Full Changelog](https://github.com/feathersjs-ecosystem/feathers-mongoose/compare/v6.1.1...v6.1.2)
+
+**Closed issues:**
+
+- Patch/update should load the document and then save to call defaults/setters [\#231](https://github.com/feathersjs-ecosystem/feathers-mongoose/issues/231)
+- Working example of sort by distance with latitude/longitude and maxDistance? [\#230](https://github.com/feathersjs-ecosystem/feathers-mongoose/issues/230)
+- Virtuals Lean and Populate and toObject [\#198](https://github.com/feathersjs-ecosystem/feathers-mongoose/issues/198)
+
+**Merged pull requests:**
+
+- Update uberproto to the latest version 🚀 [\#242](https://github.com/feathersjs-ecosystem/feathers-mongoose/pull/242) ([greenkeeper[bot]](https://github.com/apps/greenkeeper))
+
 ## [v6.1.1](https://github.com/feathersjs-ecosystem/feathers-mongoose/tree/v6.1.1) (2018-04-19)
 [Full Changelog](https://github.com/feathersjs-ecosystem/feathers-mongoose/compare/v6.1.0...v6.1.1)
 
