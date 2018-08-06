@@ -56,6 +56,9 @@
   "directories": {
     "lib": "lib"
   },
+  "peerDependencies": {
+    "mongoose": "^5.2.5"
+  },
   "dependencies": {
     "@feathersjs/commons": "^1.3.0",
     "@feathersjs/errors": "^3.2.0",
