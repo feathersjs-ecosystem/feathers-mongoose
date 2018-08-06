@@ -1,5 +1,21 @@
 # Change Log
 
+## [Unreleased](https://github.com/feathersjs-ecosystem/feathers-mongoose/tree/HEAD)
+
+[Full Changelog](https://github.com/feathersjs-ecosystem/feathers-mongoose/compare/v6.1.3...HEAD)
+
+**Closed issues:**
+
+- DeprecationWarning: collection.count is deprecated, and will be removed in a future version [\#246](https://github.com/feathersjs-ecosystem/feathers-mongoose/issues/246)
+
+## [v6.1.3](https://github.com/feathersjs-ecosystem/feathers-mongoose/tree/v6.1.3) (2018-08-06)
+[Full Changelog](https://github.com/feathersjs-ecosystem/feathers-mongoose/compare/v6.1.2...v6.1.3)
+
+**Merged pull requests:**
+
+- Updated to remove the deprecated .count [\#250](https://github.com/feathersjs-ecosystem/feathers-mongoose/pull/250) ([Mattchewone](https://github.com/Mattchewone))
+- Update sinon to the latest version 🚀 [\#243](https://github.com/feathersjs-ecosystem/feathers-mongoose/pull/243) ([greenkeeper[bot]](https://github.com/apps/greenkeeper))
+
 ## [v6.1.2](https://github.com/feathersjs-ecosystem/feathers-mongoose/tree/v6.1.2) (2018-06-03)
 [Full Changelog](https://github.com/feathersjs-ecosystem/feathers-mongoose/compare/v6.1.1...v6.1.2)
 
