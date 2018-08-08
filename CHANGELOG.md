@@ -1,12 +1,15 @@
 # Change Log
 
-## [Unreleased](https://github.com/feathersjs-ecosystem/feathers-mongoose/tree/HEAD)
-
-[Full Changelog](https://github.com/feathersjs-ecosystem/feathers-mongoose/compare/v6.1.3...HEAD)
+## [v6.1.4](https://github.com/feathersjs-ecosystem/feathers-mongoose/tree/v6.1.4) (2018-08-08)
+[Full Changelog](https://github.com/feathersjs-ecosystem/feathers-mongoose/compare/v6.1.3...v6.1.4)
 
 **Closed issues:**
 
 - DeprecationWarning: collection.count is deprecated, and will be removed in a future version [\#246](https://github.com/feathersjs-ecosystem/feathers-mongoose/issues/246)
+
+**Merged pull requests:**
+
+- `estimatedDocumentCount` to `countDocuments` [\#252](https://github.com/feathersjs-ecosystem/feathers-mongoose/pull/252) ([giovannilobitos](https://github.com/giovannilobitos))
 
 ## [v6.1.3](https://github.com/feathersjs-ecosystem/feathers-mongoose/tree/v6.1.3) (2018-08-06)
 [Full Changelog](https://github.com/feathersjs-ecosystem/feathers-mongoose/compare/v6.1.2...v6.1.3)
