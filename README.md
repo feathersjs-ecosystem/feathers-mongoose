@@ -68,7 +68,7 @@ app.service('messages').hooks({
   before: {
     patch(context) {
       // Set some additional Mongoose options
-      // The adapter tries to use sane defaults
+      // The adapter tries to use these settings by defaults
       // but they can always be changed here
       context.params.mongoose = {
         runValidators: true,
