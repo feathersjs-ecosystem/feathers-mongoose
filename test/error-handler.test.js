@@ -82,7 +82,7 @@ describe('Feathers Mongoose Error Handler', () => {
   });
 
   it('wraps a VersionError as a BadRequest', done => {
-    let e = new mongoose.Error.VersionError({ _id: 'testing' });
+    let e = new mongoose.Error.VersionError({ _id: 'testing' }, null, []);
     errorHandler(e).catch(error => {
       expect(error).to.be.an.instanceof(errors.BadRequest);
       done();
