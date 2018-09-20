@@ -226,20 +226,19 @@ describe('Feathers Mongoose Service', () => {
     });
 
     it('can upsert with patch & receive writeResult', function (done) {
-      var data = { name: 'Henry', age: 300 };
+      var data = { name: 'John', age: 200 };
       var params = {
         mongoose: { upsert: true, writeResult: true },
-        query: { name: 'Henry' }
+        query: { name: 'John' }
       };
 
       people.patch(null, data, params).then(data => {
-        expect(Array.isArray(data)).to.equal(true);
+        expect(data).to.be.instanceOf(Object);
+        expect(data).to.have.property('n', 1);
+        expect(data).to.have.property('ok', 1);
+        expect(data).to.have.property('nModified', 0);
+        expect(data).to.have.property('upserted').instanceOf(Array).with.length(1);
 
-        var henry = data[0];
-
-        expect(henry).property('_writeResult');
-        expect(henry._writeResult).instanceOf(Object);
-        expect(henry.name).to.equal('Henry');
         done();
       }).catch(done);
     });
