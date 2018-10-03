@@ -1,5 +1,27 @@
 # Change Log
 
+## [v6.2.0](https://github.com/feathersjs-ecosystem/feathers-mongoose/tree/v6.2.0) (2018-10-03)
+[Full Changelog](https://github.com/feathersjs-ecosystem/feathers-mongoose/compare/v6.1.4...v6.2.0)
+
+**Fixed bugs:**
+
+- Inconsistent discriminator API [\#247](https://github.com/feathersjs-ecosystem/feathers-mongoose/issues/247)
+
+**Closed issues:**
+
+- Error: You must provide a Mongoose Model \(at new Service\) on Model variable name change [\#265](https://github.com/feathersjs-ecosystem/feathers-mongoose/issues/265)
+- An in-range update of @feathersjs/errors is breaking the build 🚨 [\#262](https://github.com/feathersjs-ecosystem/feathers-mongoose/issues/262)
+- patch model with a discriminator [\#259](https://github.com/feathersjs-ecosystem/feathers-mongoose/issues/259)
+- \[question\]\[Documents\] RunValidators is set by default? [\#255](https://github.com/feathersjs-ecosystem/feathers-mongoose/issues/255)
+- There is total but no data [\#254](https://github.com/feathersjs-ecosystem/feathers-mongoose/issues/254)
+
+**Merged pull requests:**
+
+- Handled collation param for case insensitive indexes [\#263](https://github.com/feathersjs-ecosystem/feathers-mongoose/pull/263) ([superbarne](https://github.com/superbarne))
+- fix test because mongoose broke it [\#260](https://github.com/feathersjs-ecosystem/feathers-mongoose/pull/260) ([superbarne](https://github.com/superbarne))
+- Update default settings in docs [\#256](https://github.com/feathersjs-ecosystem/feathers-mongoose/pull/256) ([dungla4](https://github.com/dungla4))
+- reconcile create handler discriminatorKey [\#253](https://github.com/feathersjs-ecosystem/feathers-mongoose/pull/253) ([makslevental](https://github.com/makslevental))
+
 ## [v6.1.4](https://github.com/feathersjs-ecosystem/feathers-mongoose/tree/v6.1.4) (2018-08-08)
 [Full Changelog](https://github.com/feathersjs-ecosystem/feathers-mongoose/compare/v6.1.3...v6.1.4)
 
@@ -130,7 +152,6 @@
 
 - An in-range update of mongoose is breaking the build 🚨 [\#184](https://github.com/feathersjs-ecosystem/feathers-mongoose/issues/184)
 - Can't use mongoose plugin based on pre with patch or put [\#178](https://github.com/feathersjs-ecosystem/feathers-mongoose/issues/178)
-- virutal id plugin does not work anymore [\#175](https://github.com/feathersjs-ecosystem/feathers-mongoose/issues/175)
 - lean and populate [\#169](https://github.com/feathersjs-ecosystem/feathers-mongoose/issues/169)
 
 **Merged pull requests:**
