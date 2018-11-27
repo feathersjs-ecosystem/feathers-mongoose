@@ -47,6 +47,7 @@ __Options:__
 - `id` (*optional*, default: `'_id'`) - The name of the id field property.
 - `events` (*optional*) - A list of [custom service events](https://docs.feathersjs.com/api/events.html#custom-events) sent by this service
 - `paginate` (*optional*) - A [pagination object](https://docs.feathersjs.com/api/databases/common.html#pagination) containing a `default` and `max` page size
+- `overwrite` (*optional*, default: `true`) - Overwrite the document when update, making mongoose detect is new document and trigger default value for unspecified properties in mongoose schema.
 - `discriminators` (*optional*) - A list of mongoose models that inherit from `Model`.
 
 > **Important:** To avoid odd error handling behaviour, always set `mongoose.Promise = global.Promise`. If not available already, Feathers comes with a polyfill for native Promises.
