@@ -179,10 +179,10 @@ describe('Feathers Mongoose Service', () => {
         .patch(
           null,
           { age: 110 },
-        {
-          query: { name: { $gt: 'AAA' } },
-          collation: { locale: 'en', strength: 1 }
-        }
+          {
+            query: { name: { $gt: 'AAA' } },
+            collation: { locale: 'en', strength: 1 }
+          }
         )
         .then(r => {
           expect(r).to.have.lengthOf(1);
@@ -195,7 +195,7 @@ describe('Feathers Mongoose Service', () => {
     beforeEach(() => {
       // FIXME (EK): This is shit. We should be loading fixtures
       // using the raw driver not our system under test
-      return pets.create({type: 'dog', name: 'Rufus', gender: 'Unknown'}).then(pet => {
+      return pets.create({ type: 'dog', name: 'Rufus', gender: 'Unknown' }).then(pet => {
         _petIds.Rufus = pet._id;
 
         return people.create({
@@ -246,7 +246,7 @@ describe('Feathers Mongoose Service', () => {
       var params = {
         query: {
           name: 'Rufus',
-          $select: {'gender': true}
+          $select: { 'gender': true }
         }
       };
 
@@ -444,7 +444,7 @@ describe('Feathers Mongoose Service', () => {
     beforeEach((done) => {
       // FIXME (EK): This is shit. We should be loading fixtures
       // using the raw driver not our system under test
-      leanPets.create({type: 'dog', name: 'Rufus'}).then(pet => {
+      leanPets.create({ type: 'dog', name: 'Rufus' }).then(pet => {
         _petIds.Rufus = pet._id;
 
         return leanPeople.create({ name: 'Doug', age: 32, pets: [pet._id] }).then(user => {
