@@ -317,6 +317,24 @@ describe('Feathers Mongoose Service', () => {
       }).catch(done);
     });
 
+    it('can upsert with patch & receive writeResult', function (done) {
+      var data = { name: 'John', age: 200 };
+      var params = {
+        mongoose: { upsert: true, writeResult: true },
+        query: { name: 'John' }
+      };
+
+      people.patch(null, data, params).then(data => {
+        expect(data).to.be.instanceOf(Object);
+        expect(data).to.have.property('n', 1);
+        expect(data).to.have.property('ok', 1);
+        expect(data).to.have.property('nModified', 0);
+        expect(data).to.have.property('upserted').instanceOf(Array).with.length(1);
+
+        done();
+      }).catch(done);
+    });
+
     it('can $populate with update', function (done) {
       var params = {
         query: {
