@@ -4,6 +4,8 @@ const Peeps = require('./peeps');
 const CustomPeeps = require('./peeps-customid');
 const Post = require('./post');
 const TextPost = require('./text-post');
+const Token = require('./token');
+const Candidate = require('./candidate');
 
 module.exports = {
   Pet,
@@ -11,5 +13,7 @@ module.exports = {
   Peeps,
   CustomPeeps,
   Post,
-  TextPost
+  TextPost,
+  Token,
+  Candidate
 };

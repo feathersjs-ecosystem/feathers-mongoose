@@ -277,6 +277,71 @@ students.find({ query, collation }).then( ... );
 For more information on MongoDB's collation feature, visit the [collation reference page](https://docs.mongodb.com/manual/reference/collation/).
 
 
+## Mongo-DB Transaction
+
+This adapter includes support to enable database transaction to rollback the persisted records for any error occured for a api call. This requires  [Mongo-DB v4.x](https://docs.mongodb.com/manual/) installed and [replica-set](https://linode.com/docs/databases/mongodb/create-a-mongodb-replica-set/#start-replication-and-add-members) enabled.
+
+Start working with transactin enabled by adding the following lines in `app.hooks.js` or `<any-service>.hooks.js`.
+
+```js
+const TransactionManager = require('feathers-mongoose').TransactionManager;
+const isTransactionEnable = process.env.TRANSACTION_ENABLE || false;
+const skipPath = ['login'];
+
+let moduleExports = {
+  before: {
+    // !<DEFAULT> code: before
+    all: [],
+    find: [],
+    get: [],
+    create: [
+      when(isTransactionEnable, async hook =>
+        TransactionManager.beginTransaction(hook, skipPath)
+      )
+    ],
+    update: [
+      when(isTransactionEnable, async hook =>
+        TransactionManager.beginTransaction(hook, skipPath)
+      )
+    ],
+    patch: [],
+    remove: []
+    // !end
+  },
+
+  after: {
+    // !<DEFAULT> code: after
+    all: [],
+    find: [],
+    get: [],
+    create: [when(isTransactionEnable, TransactionManager.commitTransaction)],
+    update: [when(isTransactionEnable, TransactionManager.commitTransaction)],
+    patch: [],
+    remove: []
+    // !end
+  },
+
+  error: {
+    // !<DEFAULT> code: error
+    all: [],
+    find: [],
+    get: [],
+    create: [when(isTransactionEnable, TransactionManager.rollbackTransaction)],
+    update: [when(isTransactionEnable, TransactionManager.rollbackTransaction)],
+    patch: [],
+    remove: []
+    // !end
+  }
+  // !code: moduleExports // !end
+};
+
+// !code: exports // !end
+module.exports = moduleExports;
+
+// !code: funcs // !end
+// !code: end // !end
+```
+
 ## License
 
 [MIT](LICENSE)
