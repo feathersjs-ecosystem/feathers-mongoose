@@ -3,13 +3,16 @@ language: node_js
 node_js:
   - 'node'
   - '8'
-install: npm install
-addons:
-  apt:
-    sources:
-    - sourceline: 'deb [ arch=amd64 ] https://repo.mongodb.org/apt/ubuntu xenial/mongodb-org/3.6 multiverse'
-    packages:
-    - mongodb-org-server
+  - '6'
+env:
+  matrix:
+    - MONGODB=4.0.0
+    - MONGODB=4.1.1
+install:
+  - wget http://fastdl.mongodb.org/linux/mongodb-linux-x86_64-${MONGODB}.tgz
+  - tar xzf mongodb-linux-x86_64-${MONGODB}.tgz
+  - ${PWD}/mongodb-linux-x86_64-${MONGODB}/bin/mongod --version
+  - npm install
 before_script:
-  - mkdir db/
-  - mongod --dbpath db/ &
+  - mkdir ${PWD}/mongodb-linux-x86_64-${MONGODB}/data
+  - ${PWD}/mongodb-linux-x86_64-${MONGODB}/bin/mongod --dbpath ${PWD}/mongodb-linux-x86_64-${MONGODB}/data --logpath ${PWD}/mongodb-linux-x86_64-${MONGODB}/mongodb.log --fork
