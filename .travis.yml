@@ -7,4 +7,4 @@ node_js:
 install: npm install
 before_script:
   - npm install run-rs -g
-  - run-rs -v 4.0.0 --shell
+  - run-rs -v 4.0.0
