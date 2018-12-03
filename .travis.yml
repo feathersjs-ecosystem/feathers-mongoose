@@ -4,10 +4,6 @@ node_js:
   - 'node'
   - '8'
   - '6'
-env:
-  matrix:
-    - MONGODB=4.0.0
-    - MONGODB=4.1.1
 install: npm install
 before_script:
   - npm install run-rs -g
