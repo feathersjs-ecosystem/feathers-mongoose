@@ -8,11 +8,7 @@ env:
   matrix:
     - MONGODB=4.0.0
     - MONGODB=4.1.1
-install:
-  - wget http://fastdl.mongodb.org/linux/mongodb-linux-x86_64-${MONGODB}.tgz
-  - tar xzf mongodb-linux-x86_64-${MONGODB}.tgz
-  - ${PWD}/mongodb-linux-x86_64-${MONGODB}/bin/mongod --version
-  - npm install
+install: npm install
 before_script:
-  - mkdir ${PWD}/mongodb-linux-x86_64-${MONGODB}/data
-  - ${PWD}/mongodb-linux-x86_64-${MONGODB}/bin/mongod --dbpath ${PWD}/mongodb-linux-x86_64-${MONGODB}/data --logpath ${PWD}/mongodb-linux-x86_64-${MONGODB}/mongodb.log --fork
+  - npm install run-rs -g
+  - run-rs -v 4.0.0 --shell
