@@ -1,10 +1,11 @@
-sudo: false
+sudo: true
 language: node_js
 node_js:
   - 'node'
   - '8'
-  - '6'
+  - '7.6.0'
 install: npm install
 before_script:
   - npm install run-rs -g
   - run-rs -v 4.0.0 &
+  - sleep 30
