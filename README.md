@@ -82,11 +82,13 @@ app.service('messages').hooks({
 
 The `mongoose` property is also useful for performing upserts on a `patch` request.  "Upserts" do an update if a matching record is found, or insert a record if there's no existing match.  The following example will create a document that matches the `data`, or if there's already a record that matches the `params.query`, that record will be updated.
 
+Using the `writeResult` mongoose option will return the write result of a `patch` operation, including the _ids of all upserted or modified documents. This can be helpful alongside the `upsert` flag, for detecting whether the outcome was a find or insert operation. More on write results is available in the [Mongo documentation](https://docs.mongodb.com/manual/reference/method/db.collection.update/#writeresult)
+
 ```js
 const data = { address: '123', identifier: 'my-identifier' }
 const params = {
   query: { address: '123' },
-  mongoose: { upsert: true }
+  mongoose: { upsert: true, writeResult: true }
 }
 app.service('address-meta').patch(null, data, params)
 ```

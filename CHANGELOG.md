@@ -1,5 +1,26 @@
 # Change Log
 
+## [v6.3.0](https://github.com/feathersjs-ecosystem/feathers-mongoose/tree/v6.3.0) (2018-11-27)
+[Full Changelog](https://github.com/feathersjs-ecosystem/feathers-mongoose/compare/v6.2.0...v6.3.0)
+
+**Implemented enhancements:**
+
+- Passing through collation options for case insensitive sorting [\#211](https://github.com/feathersjs-ecosystem/feathers-mongoose/issues/211)
+
+**Closed issues:**
+
+- Populating multiple paths is not supported [\#271](https://github.com/feathersjs-ecosystem/feathers-mongoose/issues/271)
+- An in-range update of @feathersjs/socketio is breaking the build 🚨 [\#267](https://github.com/feathersjs-ecosystem/feathers-mongoose/issues/267)
+- Schema validation does not run for patch requests [\#266](https://github.com/feathersjs-ecosystem/feathers-mongoose/issues/266)
+- Bug $near on version 6.1.4 not working, 6.1.3 return wrong total \( collection total, not total found \) [\#264](https://github.com/feathersjs-ecosystem/feathers-mongoose/issues/264)
+
+**Merged pull requests:**
+
+- Fix deprecation warnings and update dependencies [\#275](https://github.com/feathersjs-ecosystem/feathers-mongoose/pull/275) ([daffl](https://github.com/daffl))
+- Add missing property option in readme [\#270](https://github.com/feathersjs-ecosystem/feathers-mongoose/pull/270) ([aliveghost04](https://github.com/aliveghost04))
+- Update semistandard to the latest version 🚀 [\#269](https://github.com/feathersjs-ecosystem/feathers-mongoose/pull/269) ([greenkeeper[bot]](https://github.com/apps/greenkeeper))
+- Feat: mongo opt to return writeResult [\#261](https://github.com/feathersjs-ecosystem/feathers-mongoose/pull/261) ([sam-varpass](https://github.com/sam-varpass))
+
 ## [v6.2.0](https://github.com/feathersjs-ecosystem/feathers-mongoose/tree/v6.2.0) (2018-10-03)
 [Full Changelog](https://github.com/feathersjs-ecosystem/feathers-mongoose/compare/v6.1.4...v6.2.0)
 

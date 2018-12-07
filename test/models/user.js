@@ -15,9 +15,9 @@ const UserSchema = new Schema({
     type: Number,
     validate: [negativeAgeValidator, 'Age couldn\'t be negative']
   },
-  created: {type: Boolean, 'default': false},
-  time: {type: Number},
-  pets: [{type: Schema.ObjectId, ref: 'Pet'}]
+  created: { type: Boolean, 'default': false },
+  time: { type: Number },
+  pets: [{ type: Schema.ObjectId, ref: 'Pet' }]
 });
 
 const UserModel = mongoose.model('User', UserSchema);

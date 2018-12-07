@@ -10,8 +10,8 @@ const PeepsSchema = new Schema({
   },
   name: { type: String, required: true },
   age: { type: Number },
-  created: {type: Boolean, 'default': false},
-  time: {type: Number}
+  created: { type: Boolean, 'default': false },
+  time: { type: Number }
 });
 
 module.exports = mongoose.model('PeepsCustomid', PeepsSchema);
