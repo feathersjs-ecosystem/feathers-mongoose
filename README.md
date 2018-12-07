@@ -99,7 +99,7 @@ app.service('address-meta').patch(null, data, params)
 Here's a complete example of a Feathers server with a `messages` Mongoose service.
 
 ```
-$ npm install @feathersjs/feathers @feathersjs/errors @feathersjs/express mongoose feathers-mongoose
+$ npm install @feathersjs/feathers @feathersjs/errors @feathersjs/express @feathersjs/socketio mongoose feathers-mongoose
 ```
 
 In `message-model.js`:
