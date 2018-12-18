@@ -75,18 +75,4 @@ describe('transaction-manager', () => {
       });
     });
   });
-  it('Create transaction and commit session for remove', async () => {
-    return candidate.remove(null, {}).then(() => {
-      return candidate.find().then(result => {
-        expect(result.length).to.equal(0);
-      });
-    });
-  });
-  it('Create transaction and rollback session for remove', async () => {
-    return token.remove(null, {}).then(() => {
-      return token.find().then(result => {
-        expect(result.length).to.not.equal(0);
-      });
-    });
-  });
 });

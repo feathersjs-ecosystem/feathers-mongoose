@@ -1,11 +1,9 @@
-sudo: true
+sudo: false
 language: node_js
 node_js:
   - 'node'
   - '8'
-  - '7.6.0'
 install: npm install
 before_script:
-  - npm install run-rs -g
-  - run-rs -v 4.0.0 &
+  - npm run mongodb >/dev/null 2>&1 &
   - sleep 30
