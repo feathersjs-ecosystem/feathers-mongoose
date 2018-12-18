@@ -1,5 +1,29 @@
 # Change Log
 
+## [v7.0.0](https://github.com/feathersjs-ecosystem/feathers-mongoose/tree/v7.0.0) (2018-12-18)
+[Full Changelog](https://github.com/feathersjs-ecosystem/feathers-mongoose/compare/v6.3.0...v7.0.0)
+
+**Implemented enhancements:**
+
+- params.query is ignored for returned data when removing a record [\#244](https://github.com/feathersjs-ecosystem/feathers-mongoose/issues/244)
+
+**Closed issues:**
+
+- An in-range update of @feathersjs/express is breaking the build 🚨 [\#284](https://github.com/feathersjs-ecosystem/feathers-mongoose/issues/284)
+- An in-range update of @feathersjs/errors is breaking the build 🚨 [\#283](https://github.com/feathersjs-ecosystem/feathers-mongoose/issues/283)
+- An in-range update of mongoose is breaking the build 🚨 [\#282](https://github.com/feathersjs-ecosystem/feathers-mongoose/issues/282)
+- An in-range update of mongoose is breaking the build 🚨 [\#278](https://github.com/feathersjs-ecosystem/feathers-mongoose/issues/278)
+- how to disable a hook in call a method? [\#277](https://github.com/feathersjs-ecosystem/feathers-mongoose/issues/277)
+- An in-range update of mongoose is breaking the build 🚨 [\#272](https://github.com/feathersjs-ecosystem/feathers-mongoose/issues/272)
+- $populate security risk [\#207](https://github.com/feathersjs-ecosystem/feathers-mongoose/issues/207)
+
+**Merged pull requests:**
+
+- Upgrade to @feathersjs/adapter-commons and latest common service features [\#286](https://github.com/feathersjs-ecosystem/feathers-mongoose/pull/286) ([daffl](https://github.com/daffl))
+- Update run-rs setup [\#285](https://github.com/feathersjs-ecosystem/feathers-mongoose/pull/285) ([daffl](https://github.com/daffl))
+- feat: add query filters additionally to id in the get hook [\#280](https://github.com/feathersjs-ecosystem/feathers-mongoose/pull/280) ([aliveghost04](https://github.com/aliveghost04))
+- Update README.md [\#279](https://github.com/feathersjs-ecosystem/feathers-mongoose/pull/279) ([einstenj](https://github.com/einstenj))
+
 ## [v6.3.0](https://github.com/feathersjs-ecosystem/feathers-mongoose/tree/v6.3.0) (2018-11-27)
 [Full Changelog](https://github.com/feathersjs-ecosystem/feathers-mongoose/compare/v6.2.0...v6.3.0)
 
