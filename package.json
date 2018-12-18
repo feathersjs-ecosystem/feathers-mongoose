@@ -42,7 +42,7 @@
     "release:patch": "npm version patch && npm publish",
     "release:minor": "npm version minor && npm publish",
     "release:major": "npm version major && npm publish",
-    "start": "node example/app",
+    "mongodb": "run-rs -v 4.0.0",
     "lint": "semistandard --fix",
     "mocha": "mocha --opts mocha.opts",
     "coverage": "istanbul cover node_modules/mocha/bin/_mocha -- --opts mocha.opts",
@@ -75,8 +75,9 @@
     "istanbul": "^1.1.0-alpha.1",
     "mocha": "^5.2.0",
     "mongoose": "^5.3.0",
+    "run-rs": "^0.4.0",
     "semistandard": "^13.0.1",
-    "sinon-chai": "^3.3.0",
-    "sinon": "^7.1.1"
+    "sinon": "^7.1.1",
+    "sinon-chai": "^3.3.0"
   }
 }
