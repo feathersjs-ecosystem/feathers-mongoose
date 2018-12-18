@@ -47,6 +47,8 @@ __Options:__
 - `id` (*optional*, default: `'_id'`) - The name of the id field property.
 - `events` (*optional*) - A list of [custom service events](https://docs.feathersjs.com/api/events.html#custom-events) sent by this service
 - `paginate` (*optional*) - A [pagination object](https://docs.feathersjs.com/api/databases/common.html#pagination) containing a `default` and `max` page size
+- `whitelist` (*optional*) - A list of additional query parameters to allow (e..g `[ '$regex', '$populate' ]`)
+- `multi` (*optional*) - Allow `create` with arrays and `update` and `remove` with `id` `null` to change multiple items. Can be `true` for all methods or an array of allowed methods (e.g. `[ 'remove', 'create' ]`)
 - `overwrite` (*optional*, default: `true`) - Overwrite the document when update, making mongoose detect is new document and trigger default value for unspecified properties in mongoose schema.
 - `discriminators` (*optional*) - A list of mongoose models that inherit from `Model`.
 
