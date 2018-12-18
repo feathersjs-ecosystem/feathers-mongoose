@@ -52,7 +52,12 @@ __Options:__
 - `overwrite` (*optional*, default: `true`) - Overwrite the document when update, making mongoose detect is new document and trigger default value for unspecified properties in mongoose schema.
 - `discriminators` (*optional*) - A list of mongoose models that inherit from `Model`.
 
+
 > **Important:** To avoid odd error handling behaviour, always set `mongoose.Promise = global.Promise`. If not available already, Feathers comes with a polyfill for native Promises.
+
+<!-- -->
+
+> **Important:** Whitelisting `$populate` can expose protected fields in sub-documents (like the user password) and have to be removed manually. Avoid whitelisting generic operators like `$where` that could allow querying for sensitive information.
 
 <!-- -->
 
