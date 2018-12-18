@@ -57,10 +57,6 @@ __Options:__
 
 <!-- -->
 
-> **Important:** Whitelisting `$populate` can expose protected fields in sub-documents (like the user password) and have to be removed manually. Avoid whitelisting generic operators like `$where` that could allow querying for sensitive information.
-
-<!-- -->
-
 > **Important:** When setting `lean` to `false`, Mongoose models will be returned which can not be modified unless they are converted to a regular JavaScript object via `toObject`.
 
 <!-- -->
@@ -191,7 +187,16 @@ For more information on querying and validation refer to the [Mongoose documenta
 
 For Mongoose, the special `$populate` query parameter can be used to allow [Mongoose query population](http://mongoosejs.com/docs/populate.html).
 
+> **Important:** `$populate` has to be whitelisted explicitly since it can expose protected fields in sub-documents (like the user password) which have to be removed manually.
+
 ```js
+const service = require('feathers-mongoose');
+
+app.use('/posts', mongoose({
+  Model,
+  whitelist: [ '$populate' ]
+});
+
 app.service('posts').find({
   query: { $populate: 'user' }
 });
