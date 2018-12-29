@@ -290,7 +290,6 @@ const skipPath = ['login'];
 
 let moduleExports = {
   before: {
-    // !<DEFAULT> code: before
     all: [],
     find: [],
     get: [],
@@ -306,11 +305,9 @@ let moduleExports = {
     ],
     patch: [],
     remove: []
-    // !end
   },
 
   after: {
-    // !<DEFAULT> code: after
     all: [],
     find: [],
     get: [],
@@ -318,11 +315,9 @@ let moduleExports = {
     update: [when(isTransactionEnable, TransactionManager.commitTransaction)],
     patch: [],
     remove: []
-    // !end
   },
 
   error: {
-    // !<DEFAULT> code: error
     all: [],
     find: [],
     get: [],
@@ -330,16 +325,10 @@ let moduleExports = {
     update: [when(isTransactionEnable, TransactionManager.rollbackTransaction)],
     patch: [],
     remove: []
-    // !end
   }
-  // !code: moduleExports // !end
 };
 
-// !code: exports // !end
 module.exports = moduleExports;
-
-// !code: funcs // !end
-// !code: end // !end
 ```
 
 ## License
