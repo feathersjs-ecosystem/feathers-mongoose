@@ -1,5 +1,12 @@
 # Change Log
 
+## [v7.1.1](https://github.com/feathersjs-ecosystem/feathers-mongoose/tree/v7.1.1) (2018-12-29)
+[Full Changelog](https://github.com/feathersjs-ecosystem/feathers-mongoose/compare/v7.1.0...v7.1.1)
+
+**Merged pull requests:**
+
+- Add default params to hook-less methods [\#288](https://github.com/feathersjs-ecosystem/feathers-mongoose/pull/288) ([daffl](https://github.com/daffl))
+
 ## [v7.1.0](https://github.com/feathersjs-ecosystem/feathers-mongoose/tree/v7.1.0) (2018-12-29)
 [Full Changelog](https://github.com/feathersjs-ecosystem/feathers-mongoose/compare/v7.0.0...v7.1.0)
 
