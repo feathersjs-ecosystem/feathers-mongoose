@@ -1,5 +1,16 @@
 # Change Log
 
+## [v7.1.0](https://github.com/feathersjs-ecosystem/feathers-mongoose/tree/v7.1.0) (2018-12-29)
+[Full Changelog](https://github.com/feathersjs-ecosystem/feathers-mongoose/compare/v7.0.0...v7.1.0)
+
+**Closed issues:**
+
+- feathers update service cleans document [\#274](https://github.com/feathersjs-ecosystem/feathers-mongoose/issues/274)
+
+**Merged pull requests:**
+
+- Added hooks to support mongo-db transaction [\#276](https://github.com/feathersjs-ecosystem/feathers-mongoose/pull/276) ([jaiyashree](https://github.com/jaiyashree))
+
 ## [v7.0.0](https://github.com/feathersjs-ecosystem/feathers-mongoose/tree/v7.0.0) (2018-12-18)
 [Full Changelog](https://github.com/feathersjs-ecosystem/feathers-mongoose/compare/v6.3.0...v7.0.0)
 
