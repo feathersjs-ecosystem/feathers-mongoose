@@ -5,6 +5,7 @@
 .babelrc
 .idea/
 .vscode/
-test/
-coverage/
 .github/
+coverage/
+data/
+test/
