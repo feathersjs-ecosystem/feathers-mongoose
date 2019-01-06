@@ -1,5 +1,16 @@
 # Change Log
 
+## [v7.1.3](https://github.com/feathersjs-ecosystem/feathers-mongoose/tree/v7.1.3) (2019-01-06)
+[Full Changelog](https://github.com/feathersjs-ecosystem/feathers-mongoose/compare/v7.1.2...v7.1.3)
+
+**Closed issues:**
+
+- Failed to patch with null, error: TypeError: data.map is not a function at mapIds [\#289](https://github.com/feathersjs-ecosystem/feathers-mongoose/issues/289)
+
+**Merged pull requests:**
+
+- Make sure data is never paginated [\#292](https://github.com/feathersjs-ecosystem/feathers-mongoose/pull/292) ([daffl](https://github.com/daffl))
+
 ## [v7.1.2](https://github.com/feathersjs-ecosystem/feathers-mongoose/tree/v7.1.2) (2019-01-06)
 [Full Changelog](https://github.com/feathersjs-ecosystem/feathers-mongoose/compare/v7.1.1...v7.1.2)
 
