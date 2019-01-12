@@ -408,6 +408,20 @@ describe('Feathers Mongoose Service', () => {
       expect(data.pets[0].name).to.equal('Rufus');
     });
 
+    it('can $populate with .create (#268)', async () => {
+      const params = {
+        query: {
+          $populate: ['pets']
+        }
+      };
+
+      const user = await people.create({ name: 'Dougler', age: 3, pets: [ _petIds.Rufus ] }, params);
+
+      expect(user.pets[0].name).to.equal('Rufus');
+
+      await people.remove(user._id);
+    });
+
     it('can $push an item onto an array with update', async () => {
       const margeaux = await pets.create({ type: 'cat', name: 'Margeaux' });
 
