@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 
 const errors = require('@feathersjs/errors');
 const feathers = require('@feathersjs/feathers');
-const adaptersTests = require('@feathersjs/adapter-commons/tests');
+const adaptersTests = require('@feathersjs/adapter-tests');
 
 const adapter = require('../lib');
 const testSuite = adaptersTests([
@@ -65,7 +65,11 @@ const testSuite = adaptersTests([
   '.find + paginate',
   '.find + paginate + $limit + $skip',
   '.find + paginate + $limit 0',
-  '.find + paginate + params'
+  '.find + paginate + params',
+  '.get + id + query id',
+  '.remove + id + query id',
+  '.update + id + query id',
+  '.patch + id + query id'
 ]);
 
 const {
