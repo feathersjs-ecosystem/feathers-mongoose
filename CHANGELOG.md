@@ -1,5 +1,21 @@
 # Change Log
 
+## [v7.2.0](https://github.com/feathersjs-ecosystem/feathers-mongoose/tree/v7.2.0) (2019-01-13)
+[Full Changelog](https://github.com/feathersjs-ecosystem/feathers-mongoose/compare/v7.1.3...v7.2.0)
+
+**Fixed bugs:**
+
+- unknown top level operator: $populate [\#293](https://github.com/feathersjs-ecosystem/feathers-mongoose/issues/293)
+
+**Closed issues:**
+
+- $populate as query param for create not working [\#268](https://github.com/feathersjs-ecosystem/feathers-mongoose/issues/268)
+
+**Merged pull requests:**
+
+- Fix populate usage and enable for .create [\#295](https://github.com/feathersjs-ecosystem/feathers-mongoose/pull/295) ([daffl](https://github.com/daffl))
+- Make sure ids in queries are respected [\#294](https://github.com/feathersjs-ecosystem/feathers-mongoose/pull/294) ([greenkeeper[bot]](https://github.com/apps/greenkeeper))
+
 ## [v7.1.3](https://github.com/feathersjs-ecosystem/feathers-mongoose/tree/v7.1.3) (2019-01-06)
 [Full Changelog](https://github.com/feathersjs-ecosystem/feathers-mongoose/compare/v7.1.2...v7.1.3)
 
