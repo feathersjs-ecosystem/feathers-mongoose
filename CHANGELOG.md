@@ -1,5 +1,16 @@
 # Change Log
 
+## [v7.3.0](https://github.com/feathersjs-ecosystem/feathers-mongoose/tree/v7.3.0) (2019-01-17)
+[Full Changelog](https://github.com/feathersjs-ecosystem/feathers-mongoose/compare/v7.2.0...v7.3.0)
+
+**Closed issues:**
+
+- Conflict error for compound indexes is not correct [\#258](https://github.com/feathersjs-ecosystem/feathers-mongoose/issues/258)
+
+**Merged pull requests:**
+
+- Expose original MongoDB error following feathers-sequelize methodology [\#296](https://github.com/feathersjs-ecosystem/feathers-mongoose/pull/296) ([cdimitroulas](https://github.com/cdimitroulas))
+
 ## [v7.2.0](https://github.com/feathersjs-ecosystem/feathers-mongoose/tree/v7.2.0) (2019-01-13)
 [Full Changelog](https://github.com/feathersjs-ecosystem/feathers-mongoose/compare/v7.1.3...v7.2.0)
 
