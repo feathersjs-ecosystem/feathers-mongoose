@@ -331,6 +331,27 @@ let moduleExports = {
 module.exports = moduleExports;
 ```
 
+## Contributing
+
+This module is community maintained and open for pull requests. Features and bug fixes should contain
+
+- The bug fix / feature code
+- Tests to reproduce the bug or test the feature
+- Documentation updates (if necessary)
+
+To contribute, fork and clone the repository. To run the tests, a MongoDB v4.0.0 server is required. If you do not have a MongoDB server running you can start one with:
+
+```
+npm run mongodb
+```
+
+The command needs to stay open while running the tests with
+
+
+```
+npm test
+```
+
 ## License
 
 [MIT](LICENSE)
