@@ -3,7 +3,7 @@ const { expect } = require('chai');
 const mongoose = require('mongoose');
 const errors = require('@feathersjs/errors');
 
-const errorHandler = require('../lib/error-handler');
+const { ERROR, errorHandler } = require('../lib/error-handler');
 
 describe('Feathers Mongoose Error Handler', () => {
   it('throws a feathers error', async () => {
@@ -202,6 +202,19 @@ describe('Feathers Mongoose Error Handler', () => {
         throw new Error('Should never get here');
       } catch (error) {
         expect(error.errors).to.deep.equal({ name: 'Kate' });
+      }
+    });
+
+    it('returns the original error', async () => {
+      let e = new Error('E11000 duplicate key error collection: db.users index: name_1 dup key: { : "Kate" }');
+      e.name = 'MongoError';
+      e.code = 11000;
+
+      try {
+        await errorHandler(e);
+        throw new Error('Should never get here');
+      } catch (error) {
+        expect(error[ERROR]).to.deep.equal(e);
       }
     });
   });
