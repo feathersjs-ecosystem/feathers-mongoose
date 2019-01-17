@@ -202,6 +202,23 @@ app.service('posts').find({
 });
 ```
 
+## Error handling
+
+As of v7.3.0, the original Mongoose error can be retrieved on the server via:
+
+```js
+const { ERROR } = require('feathers-mongoose');
+
+try {
+  await app.service('posts').create({ value: 'invalid' });
+} catch(error) {
+  // error is a FeathersError
+  // Safely retrieve the original Mongoose error
+  const mongooseError = error[ERROR];
+}
+```
+
+
 ## Discriminators (Inheritance)
 
 Instead of strict inheritance, Mongoose uses [discriminators](http://mongoosejs.com/docs/discriminators.html) as their schema inheritance model.
