@@ -1,5 +1,16 @@
 # Change Log
 
+## [v7.3.1](https://github.com/feathersjs-ecosystem/feathers-mongoose/tree/v7.3.1) (2019-01-31)
+[Full Changelog](https://github.com/feathersjs-ecosystem/feathers-mongoose/compare/v7.3.0...v7.3.1)
+
+**Closed issues:**
+
+- $and condition is not satisfied. [\#297](https://github.com/feathersjs-ecosystem/feathers-mongoose/issues/297)
+
+**Merged pull requests:**
+
+- Fix: Transaction for find and get. [\#298](https://github.com/feathersjs-ecosystem/feathers-mongoose/pull/298) ([Sharveshkumar](https://github.com/Sharveshkumar))
+
 ## [v7.3.0](https://github.com/feathersjs-ecosystem/feathers-mongoose/tree/v7.3.0) (2019-01-17)
 [Full Changelog](https://github.com/feathersjs-ecosystem/feathers-mongoose/compare/v7.2.0...v7.3.0)
 
