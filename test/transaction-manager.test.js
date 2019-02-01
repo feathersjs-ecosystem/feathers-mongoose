@@ -7,14 +7,17 @@ const errors = require('@feathersjs/errors');
 
 const {
   Candidate,
-  Token
+  Token,
+  Customer
 } = require('./models');
 const app = feathers()
   .use('/candidates', adapter({ Model: Candidate }))
-  .use('/tokens', adapter({ Model: Token }));
+  .use('/tokens', adapter({ Model: Token }))
+  .use('/customers', adapter({ Model: Customer }));
 
 const candidate = app.service('candidates');
 const token = app.service('tokens');
+const customerService = app.service('customers');
 
 const saveCandidateToken = async context => {
   const newToken = context.data.token;
@@ -74,5 +77,60 @@ describe('transaction-manager', () => {
         expect(result).to.have.lengthOf(0);
       });
     });
+  });
+});
+
+// Start a transaction in a mongoose session.
+const getTransaction = async () => {
+  try {
+    const session = app.get('mongoDbClient').startSession();
+    await session.startTransaction();
+    const params = {};
+    params.mongoose = { session };
+    return params;
+  } catch (error) {
+    throw error;
+  }
+};
+
+describe('transaction-manager for find and get', () => {
+  const data = { name: 'Customer' };
+  it('Create with transaction and find without transaction', async () => {
+    const params = await getTransaction();
+    await customerService.create(data, params);
+    const customers = await customerService.find();
+    await params.mongoose.session.commitTransaction();
+    await Customer.deleteMany();
+    expect(0).to.equal(customers.length);
+  });
+
+  it('Create and find with transaction', async () => {
+    const params = await getTransaction();
+    await customerService.create(data, params);
+    const customers = await customerService.find(params);
+    await params.mongoose.session.commitTransaction();
+    await Customer.deleteMany();
+    expect(1).to.equal(customers.length);
+  });
+
+  it('Create with transaction and get without transaction', async () => {
+    const params = await getTransaction();
+    try {
+      const newCustomer = await customerService.create(data, params);
+      await customerService.get(newCustomer._id);
+    } catch (error) {
+      expect('not-found').to.equal(error.className);
+    } finally {
+      await params.mongoose.session.abortTransaction();
+    }
+  });
+
+  it('Create and get with transaction', async () => {
+    const params = await getTransaction();
+    const newCustomer = await customerService.create(data, params);
+    const customer = await customerService.get(newCustomer._id, params);
+    await params.mongoose.session.commitTransaction();
+    await Customer.deleteMany();
+    expect(newCustomer.name).to.equal(customer.name);
   });
 });

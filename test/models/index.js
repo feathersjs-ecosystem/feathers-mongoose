@@ -6,6 +6,7 @@ const Post = require('./post');
 const TextPost = require('./text-post');
 const Token = require('./token');
 const Candidate = require('./candidate');
+const Customer = require('./customer');
 
 module.exports = {
   Pet,
@@ -15,5 +16,6 @@ module.exports = {
   Post,
   TextPost,
   Token,
-  Candidate
+  Candidate,
+  Customer
 };
