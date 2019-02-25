@@ -72,7 +72,7 @@
     "body-parser": "^1.18.3",
     "chai": "^4.2.0",
     "istanbul": "^1.1.0-alpha.1",
-    "mocha": "^6.0.0",
+    "mocha": "^6.0.2",
     "mongoose": "^5.4.0",
     "run-rs": "^0.4.0",
     "semistandard": "^13.0.1",
