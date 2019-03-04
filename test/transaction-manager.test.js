@@ -2,8 +2,7 @@ const { expect } = require('chai');
 const feathers = require('@feathersjs/feathers');
 const transactionManager = require('../lib/transaction-manager');
 const adapter = require('../lib');
-const { MongoClient } = require('mongodb');
-const errors = require('@feathersjs/errors');
+const mongoose = require('mongoose');
 
 const {
   Candidate,
@@ -25,16 +24,6 @@ const saveCandidateToken = async context => {
   context.data.token_id = tokenResult._id;
   return context;
 };
-
-const uri = 'mongodb://localhost:27017/feathers';
-let client = {};
-MongoClient.connect(uri, { useNewUrlParser: true }, (err, result) => {
-  if (err) {
-    throw new errors.GeneralError('Error while connecting to database');
-  }
-  client = result;
-  app.set('mongoDbClient', client);
-});
 
 candidate.hooks({
   before: {
@@ -83,7 +72,8 @@ describe('transaction-manager', () => {
 // Start a transaction in a mongoose session.
 const getTransaction = async () => {
   try {
-    const session = app.get('mongoDbClient').startSession();
+    const client = mongoose.connections[0];
+    const session = await client.startSession();
     await session.startTransaction();
     const params = {};
     params.mongoose = { session };
