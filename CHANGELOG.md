@@ -1,5 +1,26 @@
 # Change Log
 
+## [v7.3.2](https://github.com/feathersjs-ecosystem/feathers-mongoose/tree/v7.3.2) (2019-03-04)
+[Full Changelog](https://github.com/feathersjs-ecosystem/feathers-mongoose/compare/v7.3.1...v7.3.2)
+
+**Closed issues:**
+
+- Invalid query parameter $and [\#309](https://github.com/feathersjs-ecosystem/feathers-mongoose/issues/309)
+- An in-range update of sinon is breaking the build 🚨 [\#308](https://github.com/feathersjs-ecosystem/feathers-mongoose/issues/308)
+- An in-range update of mongoose is breaking the build 🚨 [\#307](https://github.com/feathersjs-ecosystem/feathers-mongoose/issues/307)
+- Cannot read property 'startSession' of undefined [\#304](https://github.com/feathersjs-ecosystem/feathers-mongoose/issues/304)
+- An in-range update of mocha is breaking the build 🚨 [\#303](https://github.com/feathersjs-ecosystem/feathers-mongoose/issues/303)
+- An in-range update of mongoose is breaking the build 🚨 [\#301](https://github.com/feathersjs-ecosystem/feathers-mongoose/issues/301)
+- An in-range update of mongoose is breaking the build 🚨 [\#300](https://github.com/feathersjs-ecosystem/feathers-mongoose/issues/300)
+
+**Merged pull requests:**
+
+- Whitelist  and $and and $regex [\#311](https://github.com/feathersjs-ecosystem/feathers-mongoose/pull/311) ([daffl](https://github.com/daffl))
+- Use Mongoose directly to start a session [\#310](https://github.com/feathersjs-ecosystem/feathers-mongoose/pull/310) ([daffl](https://github.com/daffl))
+- Greenkeeper/mocha 6.0.2 [\#306](https://github.com/feathersjs-ecosystem/feathers-mongoose/pull/306) ([daffl](https://github.com/daffl))
+- Update mocha to the latest version 🚀 [\#302](https://github.com/feathersjs-ecosystem/feathers-mongoose/pull/302) ([greenkeeper[bot]](https://github.com/apps/greenkeeper))
+- Fix: Added test case for find transaction [\#299](https://github.com/feathersjs-ecosystem/feathers-mongoose/pull/299) ([Sharveshkumar](https://github.com/Sharveshkumar))
+
 ## [v7.3.1](https://github.com/feathersjs-ecosystem/feathers-mongoose/tree/v7.3.1) (2019-01-31)
 [Full Changelog](https://github.com/feathersjs-ecosystem/feathers-mongoose/compare/v7.3.0...v7.3.1)
 
@@ -121,7 +142,7 @@
 - Fix deprecation warnings and update dependencies [\#275](https://github.com/feathersjs-ecosystem/feathers-mongoose/pull/275) ([daffl](https://github.com/daffl))
 - Add missing property option in readme [\#270](https://github.com/feathersjs-ecosystem/feathers-mongoose/pull/270) ([aliveghost04](https://github.com/aliveghost04))
 - Update semistandard to the latest version 🚀 [\#269](https://github.com/feathersjs-ecosystem/feathers-mongoose/pull/269) ([greenkeeper[bot]](https://github.com/apps/greenkeeper))
-- Feat: mongo opt to return writeResult [\#261](https://github.com/feathersjs-ecosystem/feathers-mongoose/pull/261) ([sam-varpass](https://github.com/sam-varpass))
+- Feat: mongo opt to return writeResult [\#261](https://github.com/feathersjs-ecosystem/feathers-mongoose/pull/261) ([54M5M17H](https://github.com/54M5M17H))
 
 ## [v6.2.0](https://github.com/feathersjs-ecosystem/feathers-mongoose/tree/v6.2.0) (2018-10-03)
 [Full Changelog](https://github.com/feathersjs-ecosystem/feathers-mongoose/compare/v6.1.4...v6.2.0)
