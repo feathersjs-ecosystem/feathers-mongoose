@@ -72,8 +72,8 @@ describe('transaction-manager', () => {
 // Start a transaction in a mongoose session.
 const getTransaction = async () => {
   try {
-    const client = mongoose.connections[0].startSession;
-    const session = client.startSession();
+    const client = mongoose.connections[0];
+    const session = await client.startSession();
     await session.startTransaction();
     const params = {};
     params.mongoose = { session };
