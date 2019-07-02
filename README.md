@@ -190,7 +190,7 @@ For Mongoose, the special `$populate` query parameter can be used to allow [Mong
 > **Important:** `$populate` has to be whitelisted explicitly since it can expose protected fields in sub-documents (like the user password) which have to be removed manually.
 
 ```js
-const service = require('feathers-mongoose');
+const mongoose = require('feathers-mongoose');
 
 app.use('/posts', mongoose({
   Model,
