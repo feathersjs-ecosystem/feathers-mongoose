@@ -490,6 +490,13 @@ describe('Feathers Mongoose Service', () => {
         expect(error.name).to.equal('Conflict');
       }
     });
+
+    it('Returns correct result when queried properties ar patched', async () => {
+      const data = await pets.patch(null, { name: 'Spot' }, { query: { name: 'Rufus' } });
+      expect(data).to.be.an('array');
+      expect(data.length).to.equal(1);
+      expect(data[0].name).to.equal('Spot');
+    });
   });
 
   describe('Lean Services', () => {
