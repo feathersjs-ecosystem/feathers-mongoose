@@ -1,5 +1,28 @@
 # Change Log
 
+## [v8.0.0](https://github.com/feathersjs-ecosystem/feathers-mongoose/tree/v8.0.0) (2019-07-07)
+[Full Changelog](https://github.com/feathersjs-ecosystem/feathers-mongoose/compare/v7.3.2...v8.0.0)
+
+**Closed issues:**
+
+- Change \_Id to id [\#325](https://github.com/feathersjs-ecosystem/feathers-mongoose/issues/325)
+- How to pass collation from client? [\#322](https://github.com/feathersjs-ecosystem/feathers-mongoose/issues/322)
+- Populate 2 levels deep  [\#320](https://github.com/feathersjs-ecosystem/feathers-mongoose/issues/320)
+- $populate example in docs has a typo [\#319](https://github.com/feathersjs-ecosystem/feathers-mongoose/issues/319)
+- Why is $text not whitelisted when querying? [\#318](https://github.com/feathersjs-ecosystem/feathers-mongoose/issues/318)
+- An in-range update of mongoose is breaking the build 🚨 [\#317](https://github.com/feathersjs-ecosystem/feathers-mongoose/issues/317)
+- Help with inserting subdocuments [\#316](https://github.com/feathersjs-ecosystem/feathers-mongoose/issues/316)
+- gridfs support? [\#315](https://github.com/feathersjs-ecosystem/feathers-mongoose/issues/315)
+- get object through the \_id reference [\#314](https://github.com/feathersjs-ecosystem/feathers-mongoose/issues/314)
+- Not able to receive the response in patch request when $push is used in feathersjs. [\#313](https://github.com/feathersjs-ecosystem/feathers-mongoose/issues/313)
+
+**Merged pull requests:**
+
+- Fix query merging on patch [\#330](https://github.com/feathersjs-ecosystem/feathers-mongoose/pull/330) ([daffl](https://github.com/daffl))
+- Add TypeScript definitions and upgrade tests to Feathers 4 [\#329](https://github.com/feathersjs-ecosystem/feathers-mongoose/pull/329) ([daffl](https://github.com/daffl))
+- Update all dependencies [\#327](https://github.com/feathersjs-ecosystem/feathers-mongoose/pull/327) ([daffl](https://github.com/daffl))
+- Update run-rs to the latest version 🚀 [\#312](https://github.com/feathersjs-ecosystem/feathers-mongoose/pull/312) ([greenkeeper[bot]](https://github.com/apps/greenkeeper))
+
 ## [v7.3.2](https://github.com/feathersjs-ecosystem/feathers-mongoose/tree/v7.3.2) (2019-03-04)
 [Full Changelog](https://github.com/feathersjs-ecosystem/feathers-mongoose/compare/v7.3.1...v7.3.2)
 
