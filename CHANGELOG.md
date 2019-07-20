@@ -1,5 +1,17 @@
 # Change Log
 
+## [v8.0.1](https://github.com/feathersjs-ecosystem/feathers-mongoose/tree/v8.0.1) (2019-07-20)
+[Full Changelog](https://github.com/feathersjs-ecosystem/feathers-mongoose/compare/v8.0.0...v8.0.1)
+
+**Closed issues:**
+
+- get query object [\#332](https://github.com/feathersjs-ecosystem/feathers-mongoose/issues/332)
+
+**Merged pull requests:**
+
+- Add missing types mapping [\#334](https://github.com/feathersjs-ecosystem/feathers-mongoose/pull/334) ([daffl](https://github.com/daffl))
+- Update dtslint to the latest version 🚀 [\#333](https://github.com/feathersjs-ecosystem/feathers-mongoose/pull/333) ([greenkeeper[bot]](https://github.com/apps/greenkeeper))
+
 ## [v8.0.0](https://github.com/feathersjs-ecosystem/feathers-mongoose/tree/v8.0.0) (2019-07-07)
 [Full Changelog](https://github.com/feathersjs-ecosystem/feathers-mongoose/compare/v7.3.2...v8.0.0)
 
