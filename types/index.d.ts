@@ -15,6 +15,9 @@ export namespace transactionManager {
 
 export interface MongooseServiceOptions extends ServiceOptions {
   Model: Model<any>;
+  lean: boolean;
+  overwrite: boolean;
+  useEstimatedDocumentCount: boolean;
 }
 
 export class Service<T = any> extends AdapterService implements InternalServiceMethods<T> {
