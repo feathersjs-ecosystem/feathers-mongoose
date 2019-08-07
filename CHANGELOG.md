@@ -1,5 +1,17 @@
 # Change Log
 
+## [v8.0.2](https://github.com/feathersjs-ecosystem/feathers-mongoose/tree/v8.0.2) (2019-08-07)
+[Full Changelog](https://github.com/feathersjs-ecosystem/feathers-mongoose/compare/v8.0.1...v8.0.2)
+
+**Closed issues:**
+
+- Returned objects not lean. Cannot set lean option. \(Typescript\) [\#335](https://github.com/feathersjs-ecosystem/feathers-mongoose/issues/335)
+- populate not working for mongoose model [\#328](https://github.com/feathersjs-ecosystem/feathers-mongoose/issues/328)
+
+**Merged pull requests:**
+
+- Add missing options to definitions [\#336](https://github.com/feathersjs-ecosystem/feathers-mongoose/pull/336) ([daffl](https://github.com/daffl))
+
 ## [v8.0.1](https://github.com/feathersjs-ecosystem/feathers-mongoose/tree/v8.0.1) (2019-07-20)
 [Full Changelog](https://github.com/feathersjs-ecosystem/feathers-mongoose/compare/v8.0.0...v8.0.1)
 
