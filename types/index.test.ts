@@ -10,7 +10,8 @@ const MessageSchema = new Schema({
 });
 const Model = model('Message', MessageSchema);
 const service = mongoose({
-  Model
+  Model,
+  lean: true
 });
 
 service.Model;
