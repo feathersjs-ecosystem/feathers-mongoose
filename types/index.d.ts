@@ -18,6 +18,7 @@ export interface MongooseServiceOptions extends ServiceOptions {
   lean: boolean;
   overwrite: boolean;
   useEstimatedDocumentCount: boolean;
+  maxTotalLimit?: number;
 }
 
 export class Service<T = any> extends AdapterService implements InternalServiceMethods<T> {
