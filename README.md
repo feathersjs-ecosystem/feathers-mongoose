@@ -53,7 +53,7 @@ __Options:__
 - `discriminators` (*optional*) - A list of mongoose models that inherit from `Model`.
 - `useEstimatedDocumentCount` (*optional*, default: `false`) - Use `estimatedDocumentCount` instead (usually not necessary). **Note:** This setting will return the document count for the entire collection even if a filter is used and not the actual number of matching results
 - `maxTotalLimit` (*optional*) - When using large collections with pagination the count aggregation to get the `total` 
-results may take a long time. **Note:** Setting `maxTotalLimit` will return this value for `total` in the pagination results if `maxTotalLimit` is exceeded or the actual result count if the result count is below `maxTotalLimit`. For example, if there was a query that returned 20000 results but `maxTotalLimit` was set to 15000 the `total` returned would be 15000.  
+results may take a long time. Setting a moderate value for `maxTotalLimit` can improve performance by limiting the amount of results that are counted. **Note:** Setting `maxTotalLimit` will return this value for `total` in the pagination results if `maxTotalLimit` is exceeded or the actual result count if the result count is below `maxTotalLimit`. For example, if there was a query that returned 20000 results but `maxTotalLimit` was set to 15000 the `total` returned would be 15000.  
 
 > **Important:** To avoid odd error handling behaviour, always set `mongoose.Promise = global.Promise`. If not available already, Feathers comes with a polyfill for native Promises.
 
