@@ -86,40 +86,40 @@ const _petIds = {};
 const app = feathers()
   .use('/peeps', adapter({
     Model: Peeps,
-    events: [ 'testing' ]
+    events: ['testing']
   }))
   .use('/peeps-customid', adapter({
     id: 'customid',
     Model: CustomPeeps,
-    events: [ 'testing' ]
+    events: ['testing']
   }))
   .use('/people', adapter({
     Model: User,
     lean: false,
     multi: true,
-    whitelist: [ '$populate' ]
+    whitelist: ['$populate']
   }))
   .use('/pets', adapter({
     Model: Pet,
     lean: false,
     multi: true,
-    whitelist: [ '$populate' ]
+    whitelist: ['$populate']
   }))
   .use('/people2', adapter({
     Model: User,
     multi: true,
-    whitelist: [ '$populate' ]
+    whitelist: ['$populate']
   }))
   .use('/pets2', adapter({
     Model: Pet,
     multi: true,
-    whitelist: [ '$populate' ]
+    whitelist: ['$populate']
   }))
   .use('/posts', adapter({
     Model: Post,
     discriminators: [TextPost],
     multi: true,
-    whitelist: [ '$populate' ]
+    whitelist: ['$populate']
   }));
 const people = app.service('people');
 const pets = app.service('pets');
@@ -301,7 +301,7 @@ describe('Feathers Mongoose Service', () => {
       const params = {
         query: {
           name: 'Rufus',
-          $select: { 'gender': true }
+          $select: { gender: true }
         }
       };
 
@@ -419,7 +419,7 @@ describe('Feathers Mongoose Service', () => {
         }
       };
 
-      const user = await people.create({ name: 'Dougler', age: 3, pets: [ _petIds.Rufus ] }, params);
+      const user = await people.create({ name: 'Dougler', age: 3, pets: [_petIds.Rufus] }, params);
 
       expect(user.pets[0].name).to.equal('Rufus');
 

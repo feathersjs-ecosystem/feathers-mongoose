@@ -26,7 +26,7 @@ describe('Feathers Mongoose Hooks', () => {
       });
 
       it('supports custom options', () => {
-        let options = { feathers: 'awesome' };
+        const options = { feathers: 'awesome' };
         hooks.toObject(options)(hook);
         expect(toObject).to.be.calledWith(options);
       });
@@ -52,7 +52,7 @@ describe('Feathers Mongoose Hooks', () => {
       });
 
       it('converts paginated arrays of mongoose models', () => {
-        let hook = {
+        const hook = {
           result: { data: users }
         };
 
@@ -64,7 +64,7 @@ describe('Feathers Mongoose Hooks', () => {
       });
 
       it('converts a single mongoose model', () => {
-        let hook = {
+        const hook = {
           result: users[0]
         };
 
@@ -74,7 +74,7 @@ describe('Feathers Mongoose Hooks', () => {
       });
 
       it('converts non-paginated arrays of mongoose models', () => {
-        let hook = {
+        const hook = {
           result: users
         };
 
@@ -104,7 +104,7 @@ describe('Feathers Mongoose Hooks', () => {
       });
 
       it('does not convert paginated arrays of objects', () => {
-        let hook = {
+        const hook = {
           result: { data: users }
         };
 
@@ -114,7 +114,7 @@ describe('Feathers Mongoose Hooks', () => {
       });
 
       it('does not convert non-paginated arrays of objects', () => {
-        let hook = {
+        const hook = {
           result: users
         };
 
@@ -124,7 +124,7 @@ describe('Feathers Mongoose Hooks', () => {
       });
 
       it('does not convert a single object', () => {
-        let hook = {
+        const hook = {
           result: user1
         };
 
