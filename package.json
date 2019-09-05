@@ -78,7 +78,7 @@
     "mocha": "^6.1.4",
     "mongoose": "^5.4.0",
     "run-rs": "^0.5.2",
-    "semistandard": "^13.0.1",
+    "semistandard": "^14.0.1",
     "sinon": "^7.3.2",
     "sinon-chai": "^3.3.0"
   }
