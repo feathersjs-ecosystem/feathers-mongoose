@@ -62,24 +62,24 @@
     "mongoose": "^5.6.3"
   },
   "dependencies": {
-    "@feathersjs/adapter-commons": "^4.0.0-pre.4",
-    "@feathersjs/commons": "^4.0.0",
-    "@feathersjs/errors": "^4.0.0-pre.4"
+    "@feathersjs/adapter-commons": "^4.3.2",
+    "@feathersjs/commons": "^4.3.0",
+    "@feathersjs/errors": "^4.3.2"
   },
   "devDependencies": {
-    "@feathersjs/adapter-tests": "^4.0.0-pre.4",
-    "@feathersjs/express": "^4.0.0-pre.4",
-    "@feathersjs/feathers": "^4.0.0-pre.4",
-    "@feathersjs/socketio": "^4.0.0-pre.4",
-    "@types/mongoose": "^5.5.7",
+    "@feathersjs/adapter-tests": "^4.3.2",
+    "@feathersjs/express": "^4.3.2",
+    "@feathersjs/feathers": "^4.3.2",
+    "@feathersjs/socketio": "^4.3.2",
+    "@types/mongoose": "^5.5.17",
     "chai": "^4.2.0",
-    "dtslint": "^0.9.0",
+    "dtslint": "^0.9.8",
     "istanbul": "^1.1.0-alpha.1",
-    "mocha": "^6.1.4",
-    "mongoose": "^5.4.0",
-    "run-rs": "^0.5.2",
+    "mocha": "^6.2.0",
+    "mongoose": "^5.7.1",
+    "run-rs": "^0.5.5",
     "semistandard": "^13.0.1",
-    "sinon": "^7.3.2",
+    "sinon": "^7.4.2",
     "sinon-chai": "^3.3.0"
   }
 }
