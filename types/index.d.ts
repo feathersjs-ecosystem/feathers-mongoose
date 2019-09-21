@@ -20,7 +20,7 @@ export interface MongooseServiceOptions extends ServiceOptions {
   useEstimatedDocumentCount: boolean;
 }
 
-export class Service<T = any> extends AdapterService implements InternalServiceMethods<T> {
+export class Service<T = any> extends AdapterService<T> implements InternalServiceMethods<T> {
   Model: Model<any>;
   options: MongooseServiceOptions;
 
