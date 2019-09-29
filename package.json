@@ -71,7 +71,7 @@
     "@feathersjs/express": "^4.3.3",
     "@feathersjs/feathers": "^4.3.3",
     "@feathersjs/socketio": "^4.3.3",
-    "@types/mongoose": "^5.5.17",
+    "@types/mongoose": "^5.5.18",
     "chai": "^4.2.0",
     "dtslint": "^0.9.8",
     "istanbul": "^1.1.0-alpha.1",
@@ -79,7 +79,7 @@
     "mongoose": "^5.4.0",
     "run-rs": "^0.6.0",
     "semistandard": "^14.2.0",
-    "sinon": "^7.4.2",
+    "sinon": "^7.5.0",
     "sinon-chai": "^3.3.0"
   }
 }
