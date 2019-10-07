@@ -1,5 +1,17 @@
 # Change Log
 
+## [v8.1.0](https://github.com/feathersjs-ecosystem/feathers-mongoose/tree/v8.1.0) (2019-10-07)
+[Full Changelog](https://github.com/feathersjs-ecosystem/feathers-mongoose/compare/v8.0.3...v8.1.0)
+
+**Implemented enhancements:**
+
+- `whitelist` property should merge with mongoose defaults [\#347](https://github.com/feathersjs-ecosystem/feathers-mongoose/issues/347)
+
+**Merged pull requests:**
+
+- Update all dependencies [\#349](https://github.com/feathersjs-ecosystem/feathers-mongoose/pull/349) ([daffl](https://github.com/daffl))
+- Merge whitelist to always include $and [\#348](https://github.com/feathersjs-ecosystem/feathers-mongoose/pull/348) ([daffl](https://github.com/daffl))
+
 ## [v8.0.3](https://github.com/feathersjs-ecosystem/feathers-mongoose/tree/v8.0.3) (2019-09-29)
 [Full Changelog](https://github.com/feathersjs-ecosystem/feathers-mongoose/compare/v8.0.2...v8.0.3)
 
