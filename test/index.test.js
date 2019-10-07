@@ -162,6 +162,10 @@ describe('Feathers Mongoose Service', () => {
       expect(people.id).to.equal('_id');
     });
 
+    it('merges whitelist parameters (#347)', () => {
+      expect(people.options.whitelist).to.deep.equal(['$populate', '$and']);
+    });
+
     it('when missing the overwrite option sets the default to be true', () => {
       expect(people.overwrite).to.be.true;
     });
