@@ -62,7 +62,7 @@
     "mongoose": "^5.7.3"
   },
   "dependencies": {
-    "@feathersjs/adapter-commons": "^4.3.6",
+    "@feathersjs/adapter-commons": "^4.3.8",
     "@feathersjs/commons": "^4.3.0",
     "@feathersjs/errors": "^4.3.4"
   },
