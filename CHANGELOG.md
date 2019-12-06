@@ -1,5 +1,21 @@
 # Change Log
 
+## [v8.1.1](https://github.com/feathersjs-ecosystem/feathers-mongoose/tree/v8.1.1) (2019-12-06)
+[Full Changelog](https://github.com/feathersjs-ecosystem/feathers-mongoose/compare/v8.1.0...v8.1.1)
+
+**Closed issues:**
+
+- feathers service [\#352](https://github.com/feathersjs-ecosystem/feathers-mongoose/issues/352)
+- An in-range update of @feathersjs/adapter-commons is breaking the build 🚨 [\#350](https://github.com/feathersjs-ecosystem/feathers-mongoose/issues/350)
+
+**Merged pull requests:**
+
+- Update all dependencies [\#359](https://github.com/feathersjs-ecosystem/feathers-mongoose/pull/359) ([daffl](https://github.com/daffl))
+- fix: handling of params.mongoose in transaction [\#358](https://github.com/feathersjs-ecosystem/feathers-mongoose/pull/358) ([florianbepunkt](https://github.com/florianbepunkt))
+- Update dtslint to the latest version 🚀 [\#356](https://github.com/feathersjs-ecosystem/feathers-mongoose/pull/356) ([greenkeeper[bot]](https://github.com/apps/greenkeeper))
+- Update dtslint to version 1.0.2 [\#355](https://github.com/feathersjs-ecosystem/feathers-mongoose/pull/355) ([daffl](https://github.com/daffl))
+- Greenkeeper/@feathersjs/adapter commons 4.3.8 [\#351](https://github.com/feathersjs-ecosystem/feathers-mongoose/pull/351) ([daffl](https://github.com/daffl))
+
 ## [v8.1.0](https://github.com/feathersjs-ecosystem/feathers-mongoose/tree/v8.1.0) (2019-10-07)
 [Full Changelog](https://github.com/feathersjs-ecosystem/feathers-mongoose/compare/v8.0.3...v8.1.0)
 
