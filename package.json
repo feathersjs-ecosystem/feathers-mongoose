@@ -59,25 +59,25 @@
     "lib": "lib"
   },
   "peerDependencies": {
-    "mongoose": "^5.7.3"
+    "mongoose": "^5.7.13"
   },
   "dependencies": {
-    "@feathersjs/adapter-commons": "^4.3.8",
-    "@feathersjs/commons": "^4.3.0",
-    "@feathersjs/errors": "^4.3.4"
+    "@feathersjs/adapter-commons": "^4.4.1",
+    "@feathersjs/commons": "^4.4.1",
+    "@feathersjs/errors": "^4.4.1"
   },
   "devDependencies": {
-    "@feathersjs/adapter-tests": "^4.3.4",
-    "@feathersjs/express": "^4.3.5",
-    "@feathersjs/feathers": "^4.3.4",
-    "@feathersjs/socketio": "^4.3.5",
-    "@types/mongoose": "^5.5.19",
+    "@feathersjs/adapter-tests": "^4.4.1",
+    "@feathersjs/express": "^4.4.1",
+    "@feathersjs/feathers": "^4.4.1",
+    "@feathersjs/socketio": "^4.4.1",
+    "@types/mongoose": "^5.5.32",
     "chai": "^4.2.0",
-    "dtslint": "^2.0.0",
+    "dtslint": "^2.0.2",
     "istanbul": "^1.1.0-alpha.1",
-    "mocha": "^6.2.1",
+    "mocha": "^6.2.2",
     "mongoose": "^5.4.0",
-    "run-rs": "^0.6.1",
+    "run-rs": "^0.6.2",
     "semistandard": "^14.2.0",
     "sinon": "^7.5.0",
     "sinon-chai": "^3.3.0"
