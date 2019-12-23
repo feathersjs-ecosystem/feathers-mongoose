@@ -298,7 +298,7 @@ For more information on MongoDB's collation feature, visit the [collation refere
 
 This adapter includes support to enable database transaction to rollback the persisted records for any error occured for a api call. This requires  [Mongo-DB v4.x](https://docs.mongodb.com/manual/) installed and [replica-set](https://linode.com/docs/databases/mongodb/create-a-mongodb-replica-set/#start-replication-and-add-members) enabled.
 
-Start working with transactin enabled by adding the following lines in `app.hooks.js` or `<any-service>.hooks.js`.
+Start working with transaction enabled by adding the following lines in `app.hooks.js` or `<any-service>.hooks.js`.
 
 ```js
 const TransactionManager = require('feathers-mongoose').TransactionManager;
