@@ -73,7 +73,7 @@
     "@feathersjs/socketio": "^4.4.1",
     "@types/mongoose": "^5.5.32",
     "chai": "^4.2.0",
-    "dtslint": "^2.0.2",
+    "dtslint": "^2.0.3",
     "istanbul": "^1.1.0-alpha.1",
     "mocha": "^6.2.2",
     "mongoose": "^5.4.0",
