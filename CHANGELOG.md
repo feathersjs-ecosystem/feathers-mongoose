@@ -1,5 +1,29 @@
 # Change Log
 
+## [v8.3.0](https://github.com/feathersjs-ecosystem/feathers-mongoose/tree/v8.3.0) (2020-01-08)
+[Full Changelog](https://github.com/feathersjs-ecosystem/feathers-mongoose/compare/8.3.0...v8.3.0)
+
+## [8.3.0](https://github.com/feathersjs-ecosystem/feathers-mongoose/tree/8.3.0) (2020-01-08)
+[Full Changelog](https://github.com/feathersjs-ecosystem/feathers-mongoose/compare/v8.2.0...8.3.0)
+
+**Fixed bugs:**
+
+- service.patch leads to 404 if query contains the patched field [\#345](https://github.com/feathersjs-ecosystem/feathers-mongoose/issues/345)
+- patch is incorrectly applying the entire query when re-fetching [\#321](https://github.com/feathersjs-ecosystem/feathers-mongoose/issues/321)
+
+**Merged pull requests:**
+
+- update '\_remove' method [\#364](https://github.com/feathersjs-ecosystem/feathers-mongoose/pull/364) ([sarkistlt](https://github.com/sarkistlt))
+
+## [v8.2.0](https://github.com/feathersjs-ecosystem/feathers-mongoose/tree/v8.2.0) (2020-01-05)
+[Full Changelog](https://github.com/feathersjs-ecosystem/feathers-mongoose/compare/v8.1.1...v8.2.0)
+
+**Merged pull requests:**
+
+- Add launch.json for mocha tests & fix typescript error. [\#365](https://github.com/feathersjs-ecosystem/feathers-mongoose/pull/365) ([marshallswain](https://github.com/marshallswain))
+- Update sinon to the latest version 🚀 [\#363](https://github.com/feathersjs-ecosystem/feathers-mongoose/pull/363) ([greenkeeper[bot]](https://github.com/apps/greenkeeper))
+- :bug: fix 404 on patch call [\#362](https://github.com/feathersjs-ecosystem/feathers-mongoose/pull/362) ([arfanliaqat](https://github.com/arfanliaqat))
+
 ## [v8.1.1](https://github.com/feathersjs-ecosystem/feathers-mongoose/tree/v8.1.1) (2019-12-06)
 [Full Changelog](https://github.com/feathersjs-ecosystem/feathers-mongoose/compare/v8.1.0...v8.1.1)
 
