@@ -76,7 +76,7 @@
     "dtslint": "^3.0.0",
     "istanbul": "^1.1.0-alpha.1",
     "mocha": "^7.0.0",
-    "mongoose": "^5.4.0",
+    "mongoose": "5.9.11",
     "run-rs": "^0.6.2",
     "semistandard": "^14.2.0",
     "sinon": "^9.0.0",
