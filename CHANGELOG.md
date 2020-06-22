@@ -1,10 +1,36 @@
 # Change Log
 
-## [v8.3.0](https://github.com/feathersjs-ecosystem/feathers-mongoose/tree/v8.3.0) (2020-01-08)
-[Full Changelog](https://github.com/feathersjs-ecosystem/feathers-mongoose/compare/8.3.0...v8.3.0)
+## [v8.3.1](https://github.com/feathersjs-ecosystem/feathers-mongoose/tree/v8.3.1) (2020-06-22)
+[Full Changelog](https://github.com/feathersjs-ecosystem/feathers-mongoose/compare/8.3.0...v8.3.1)
+
+**Closed issues:**
+
+- post working even when not passing in multi array [\#387](https://github.com/feathersjs-ecosystem/feathers-mongoose/issues/387)
+- Invalid query parameter $elemMatch [\#384](https://github.com/feathersjs-ecosystem/feathers-mongoose/issues/384)
+- bug in custom route hooks \( authentication \) [\#381](https://github.com/feathersjs-ecosystem/feathers-mongoose/issues/381)
+- Data has been write to test database [\#380](https://github.com/feathersjs-ecosystem/feathers-mongoose/issues/380)
+- No record found for id... when authenticating [\#378](https://github.com/feathersjs-ecosystem/feathers-mongoose/issues/378)
+- Is this compatible with Amazon's DocumentDB? [\#374](https://github.com/feathersjs-ecosystem/feathers-mongoose/issues/374)
+- Support arrayFilter in patch [\#373](https://github.com/feathersjs-ecosystem/feathers-mongoose/issues/373)
+- \_get and \_patch "No record found for id" [\#369](https://github.com/feathersjs-ecosystem/feathers-mongoose/issues/369)
+- Can't get softDelete2 working properly!! [\#367](https://github.com/feathersjs-ecosystem/feathers-mongoose/issues/367)
+- An in-range update of dtslint is breaking the build 🚨 [\#366](https://github.com/feathersjs-ecosystem/feathers-mongoose/issues/366)
+- Incorrect behavior in a shard cluster [\#361](https://github.com/feathersjs-ecosystem/feathers-mongoose/issues/361)
+- An in-range update of @feathersjs/adapter-commons is breaking the build 🚨 [\#360](https://github.com/feathersjs-ecosystem/feathers-mongoose/issues/360)
+- Typescipt definitions do not include service.setup\(\) method [\#357](https://github.com/feathersjs-ecosystem/feathers-mongoose/issues/357)
+
+**Merged pull requests:**
+
+- Fix params.transactionOpen reset in rollback [\#386](https://github.com/feathersjs-ecosystem/feathers-mongoose/pull/386) ([wcheung26](https://github.com/wcheung26))
+- Update sinon to the latest version 🚀 [\#372](https://github.com/feathersjs-ecosystem/feathers-mongoose/pull/372) ([greenkeeper[bot]](https://github.com/apps/greenkeeper))
+- Update dtslint to the latest version 🚀 [\#371](https://github.com/feathersjs-ecosystem/feathers-mongoose/pull/371) ([greenkeeper[bot]](https://github.com/apps/greenkeeper))
+- Update all dependencies and Types version [\#368](https://github.com/feathersjs-ecosystem/feathers-mongoose/pull/368) ([daffl](https://github.com/daffl))
 
 ## [8.3.0](https://github.com/feathersjs-ecosystem/feathers-mongoose/tree/8.3.0) (2020-01-08)
-[Full Changelog](https://github.com/feathersjs-ecosystem/feathers-mongoose/compare/v8.2.0...8.3.0)
+[Full Changelog](https://github.com/feathersjs-ecosystem/feathers-mongoose/compare/v8.3.0...8.3.0)
+
+## [v8.3.0](https://github.com/feathersjs-ecosystem/feathers-mongoose/tree/v8.3.0) (2020-01-08)
+[Full Changelog](https://github.com/feathersjs-ecosystem/feathers-mongoose/compare/v8.2.0...v8.3.0)
 
 **Fixed bugs:**
 
@@ -279,7 +305,7 @@
 
 - Handled collation param for case insensitive indexes [\#263](https://github.com/feathersjs-ecosystem/feathers-mongoose/pull/263) ([superbarne](https://github.com/superbarne))
 - fix test because mongoose broke it [\#260](https://github.com/feathersjs-ecosystem/feathers-mongoose/pull/260) ([superbarne](https://github.com/superbarne))
-- Update default settings in docs [\#256](https://github.com/feathersjs-ecosystem/feathers-mongoose/pull/256) ([dungla4](https://github.com/dungla4))
+- Update default settings in docs [\#256](https://github.com/feathersjs-ecosystem/feathers-mongoose/pull/256) ([ghost](https://github.com/ghost))
 - reconcile create handler discriminatorKey [\#253](https://github.com/feathersjs-ecosystem/feathers-mongoose/pull/253) ([makslevental](https://github.com/makslevental))
 
 ## [v6.1.4](https://github.com/feathersjs-ecosystem/feathers-mongoose/tree/v6.1.4) (2018-08-08)
@@ -814,7 +840,7 @@
 
 - Update to ES6 [\#33](https://github.com/feathersjs-ecosystem/feathers-mongoose/pull/33) ([ekryski](https://github.com/ekryski))
 - Add toObject hook for documents. [\#32](https://github.com/feathersjs-ecosystem/feathers-mongoose/pull/32) ([marshallswain](https://github.com/marshallswain))
-- delete app.configure\(feathers.errors\(\)\) [\#30](https://github.com/feathersjs-ecosystem/feathers-mongoose/pull/30) ([verdeairo](https://github.com/verdeairo))
+- delete app.configure\(feathers.errors\(\)\) [\#30](https://github.com/feathersjs-ecosystem/feathers-mongoose/pull/30) ([AminBK](https://github.com/AminBK))
 - Add feathers-hooks compatibility. [\#22](https://github.com/feathersjs-ecosystem/feathers-mongoose/pull/22) ([marshallswain](https://github.com/marshallswain))
 
 ## [v2.0.0](https://github.com/feathersjs-ecosystem/feathers-mongoose/tree/v2.0.0) (2015-08-05)
