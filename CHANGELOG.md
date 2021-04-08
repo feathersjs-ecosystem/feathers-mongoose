@@ -2,11 +2,15 @@
 
 ## [Unreleased](https://github.com/feathersjs-ecosystem/feathers-mongoose/tree/HEAD)
 
-[Full Changelog](https://github.com/feathersjs-ecosystem/feathers-mongoose/compare/v8.3.2...HEAD)
+[Full Changelog](https://github.com/feathersjs-ecosystem/feathers-mongoose/compare/v8.3.3...HEAD)
 
 **Merged pull requests:**
 
-- Only allow $populate when listed [\#401](https://github.com/feathersjs-ecosystem/feathers-mongoose/pull/401) ([daffl](https://github.com/daffl))
+- Only $populate if it's whitelisted [\#402](https://github.com/feathersjs-ecosystem/feathers-mongoose/pull/402) ([GautierT](https://github.com/GautierT))
+
+## [v8.3.3](https://github.com/feathersjs-ecosystem/feathers-mongoose/tree/v8.3.3) (2021-04-08)
+
+[Full Changelog](https://github.com/feathersjs-ecosystem/feathers-mongoose/compare/v8.3.2...v8.3.3)
 
 ## [v8.3.2](https://github.com/feathersjs-ecosystem/feathers-mongoose/tree/v8.3.2) (2021-04-08)
 
@@ -25,9 +29,13 @@
 - "command insert requires authentication", db adapter not production-ready? [\#389](https://github.com/feathersjs-ecosystem/feathers-mongoose/issues/389)
 - An in-range update of mongoose is breaking the build 🚨 [\#376](https://github.com/feathersjs-ecosystem/feathers-mongoose/issues/376)
 
+**Merged pull requests:**
+
+- Only allow $populate when listed [\#401](https://github.com/feathersjs-ecosystem/feathers-mongoose/pull/401) ([daffl](https://github.com/daffl))
+
 ## [v8.3.1](https://github.com/feathersjs-ecosystem/feathers-mongoose/tree/v8.3.1) (2020-06-22)
 
-[Full Changelog](https://github.com/feathersjs-ecosystem/feathers-mongoose/compare/8.3.0...v8.3.1)
+[Full Changelog](https://github.com/feathersjs-ecosystem/feathers-mongoose/compare/v8.3.0...v8.3.1)
 
 **Closed issues:**
 
@@ -52,13 +60,13 @@
 - Update dtslint to the latest version 🚀 [\#371](https://github.com/feathersjs-ecosystem/feathers-mongoose/pull/371) ([greenkeeper[bot]](https://github.com/apps/greenkeeper))
 - Update all dependencies and Types version [\#368](https://github.com/feathersjs-ecosystem/feathers-mongoose/pull/368) ([daffl](https://github.com/daffl))
 
-## [8.3.0](https://github.com/feathersjs-ecosystem/feathers-mongoose/tree/8.3.0) (2020-01-08)
-
-[Full Changelog](https://github.com/feathersjs-ecosystem/feathers-mongoose/compare/v8.3.0...8.3.0)
-
 ## [v8.3.0](https://github.com/feathersjs-ecosystem/feathers-mongoose/tree/v8.3.0) (2020-01-08)
 
-[Full Changelog](https://github.com/feathersjs-ecosystem/feathers-mongoose/compare/v8.2.0...v8.3.0)
+[Full Changelog](https://github.com/feathersjs-ecosystem/feathers-mongoose/compare/8.3.0...v8.3.0)
+
+## [8.3.0](https://github.com/feathersjs-ecosystem/feathers-mongoose/tree/8.3.0) (2020-01-08)
+
+[Full Changelog](https://github.com/feathersjs-ecosystem/feathers-mongoose/compare/v8.2.0...8.3.0)
 
 **Fixed bugs:**
 
