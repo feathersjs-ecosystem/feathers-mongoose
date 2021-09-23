@@ -115,6 +115,13 @@ const app = feathers()
     multi: true,
     whitelist: ['$populate']
   }))
+  .use('/pets3', adapter({
+    Model: Pet,
+    multi: true,
+    queryModifier: (query) => {
+      query.where('type', 'cat');
+    }
+  }))
   .use('/posts', adapter({
     Model: Post,
     discriminators: [TextPost],
@@ -125,6 +132,7 @@ const people = app.service('people');
 const pets = app.service('pets');
 const leanPeople = app.service('people2');
 const leanPets = app.service('pets2');
+const QMPets = app.service('pets3');
 const posts = app.service('posts');
 
 // Tell mongoose to use native promises
@@ -634,6 +642,92 @@ describe('Feathers Mongoose Service', () => {
       const result = await posts.remove(post._id, { query: { _type: 'text' } });
 
       expect(result._type).to.equal('text');
+    });
+  });
+
+  describe('Query Modifiers', () => {
+    beforeEach(async () => {
+      const rufus = await QMPets.create({ type: 'dog', name: 'Rufus' });
+      const margeaux = await QMPets.create({ type: 'cat', name: 'Margeaux' });
+      const bob = await QMPets.create({ type: 'cat', name: 'Bob' });
+
+      _petIds.Rufus = rufus._id;
+      _petIds.Margeaux = margeaux._id;
+      _petIds.Bob = bob._id;
+    });
+
+    afterEach(async () => {
+      await QMPets.remove(null, { query: {} });
+    });
+
+    it('can apply a global query modifier with find', async () => {
+      const params = {
+        query: {}
+      };
+
+      const data = await QMPets.find(params);
+
+      expect(data.length).to.equal(2);
+      expect(data[0].type).to.equal('cat');
+      expect(data[1].type).to.equal('cat');
+    });
+
+    it('can apply a global query modifier with get', async () => {
+      const margeaux = await QMPets.get(_petIds.Margeaux);
+
+      expect(margeaux.name).to.equal('Margeaux');
+
+      try {
+        await QMPets.get(_petIds.Rufus);
+        throw new Error('Should never get here');
+      } catch (error) {
+        expect(error.name).to.equal('NotFound');
+      }
+    });
+
+    it('can apply a local query modifier with find', async () => {
+      const params = {
+        query: {},
+        queryModifier: (query) => {
+          query.where('type', 'dog');
+        }
+      };
+
+      const data = await QMPets.find(params);
+
+      expect(data.length).to.equal(1);
+      expect(data[0].type).to.equal('dog');
+    });
+
+    it('can apply a local query modifier with get', async () => {
+      const params = {
+        query: {},
+        queryModifier: (query) => {
+          query.where('type', 'dog');
+        }
+      };
+
+      const result = await QMPets.get(_petIds.Rufus, params);
+
+      expect(result.name).to.equal('Rufus');
+
+      try {
+        await QMPets.get(_petIds.Margeaux, params);
+        throw new Error('Should never get here');
+      } catch (error) {
+        expect(error.name).to.equal('NotFound');
+      }
+    });
+
+    it('can disable the global query modifier', async () => {
+      const params = {
+        query: {},
+        queryModifier: false
+      };
+
+      const data = await QMPets.find(params);
+
+      expect(data.length).to.equal(3);
     });
   });
 

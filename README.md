@@ -52,6 +52,8 @@ __Options:__
 - `overwrite` (*optional*, default: `true`) - Overwrite the document when update, making mongoose detect is new document and trigger default value for unspecified properties in mongoose schema.
 - `discriminators` (*optional*) - A list of mongoose models that inherit from `Model`.
 - `useEstimatedDocumentCount` (*optional*, default: `false`) - Use `estimatedDocumentCount` instead (usuall not necessary)
+- `queryModifier` (*optional*) - A function that takes in the raw mongoose Query object and params, which modifies all find and get requests unless overridden. (see Query Modifiers below)
+- `queryModifierKey` (*optional*, default: `'queryModifier'`) - The key to use to get the override query modifier function from the params. (see Query Modifiers below)
 
 > **Important:** To avoid odd error handling behaviour, always set `mongoose.Promise = global.Promise`. If not available already, Feathers comes with a polyfill for native Promises.
 
@@ -347,6 +349,49 @@ let moduleExports = {
 
 module.exports = moduleExports;
 ```
+
+## Query Modifiers
+
+Sometimes it's important to use an unusual Mongoose Query method, like [specifying whether to read from a primary or secondary node,](https://mongoosejs.com/docs/api.html#query_Query-read) but maybe only for certain requests.
+
+You can access the internal Mongoose Query object used for a find/get request by specifying the queryModifier function. It is also possible to override that global function by specifying the function in a requests params.
+
+```js
+// Specify a global query modifier when creating the service
+app.use('/messages', service({
+  Model,
+  queryModifier: (query, params) => {
+    query.read('secondaryPreferred');
+  },
+  queryModifierKey: '__queryModifier__' // default is 'queryModifier'
+}));
+
+app.service('messages').find({
+  query: { ... },
+}).then((result) => {
+  console.log('Result from secondary:', result)
+});
+
+// Override the modifier on a per-request basis
+app.service('messages').find({
+  query: { ... },
+  __queryModifier__: (query, params) => {
+    query.read('primaryPreferred');
+  }
+}).then((result) => {
+  console.log('Result from primary:', result)
+});
+
+// Disable the global modifier on a per-request basis
+app.service('messages').find({
+  query: { ... },
+  __queryModifier__: false
+}).then((result) => {
+  console.log('Result from default option:', result)
+});
+```
+
+**Note:** Due to replication lag, a secondary node can have "stale" data. You should ensure that this "staleness" will not be an issue for you use case before reading from the secondary set.
 
 ## Contributing
 
