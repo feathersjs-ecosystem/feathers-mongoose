@@ -1,8 +1,6 @@
 # feathers-mongoose
 
-[![Greenkeeper badge](https://badges.greenkeeper.io/feathersjs-ecosystem/feathers-mongoose.svg)](https://greenkeeper.io/)
-
-[![Build Status](https://travis-ci.org/feathersjs-ecosystem/feathers-mongoose.png?branch=master)](https://travis-ci.org/feathersjs-ecosystem/feathers-mongoose)
+[![CI](https://github.com/feathersjs-ecosystem/feathers-mongoose/workflows/CI/badge.svg)](https://github.com/feathersjs-ecosystem/feathers-mongoose/actions?query=workflow%3ACI)
 [![Dependency Status](https://img.shields.io/david/feathersjs-ecosystem/feathers-mongoose.svg?style=flat-square)](https://david-dm.org/feathersjs-ecosystem/feathers-mongoose)
 [![Download Status](https://img.shields.io/npm/dm/feathers-mongoose.svg?style=flat-square)](https://www.npmjs.com/package/feathers-mongoose)
 
