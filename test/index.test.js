@@ -127,16 +127,12 @@ const leanPeople = app.service('people2');
 const leanPets = app.service('pets2');
 const posts = app.service('posts');
 
-// Tell mongoose to use native promises
-// See http://mongoosejs.com/docs/promises.html
-mongoose.Promise = global.Promise;
-
-// Connect to your MongoDB instance(s)
-mongoose.connect('mongodb://localhost:27017/feathers', {
-  useNewUrlParser: true
-});
-
 describe('Feathers Mongoose Service', () => {
+  // Connect to your MongoDB instance(s)
+  before(() => mongoose.connect('mongodb://localhost:27017/feathers', {
+    useNewUrlParser: true
+  }));
+
   describe('Requiring', () => {
     const lib = require('../lib');
 
