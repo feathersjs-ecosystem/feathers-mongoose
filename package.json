@@ -1,7 +1,7 @@
 {
   "name": "feathers-mongoose",
   "description": "A Feathers service adapter for the Mongoose ORM",
-  "version": "8.3.3",
+  "version": "8.4.0",
   "homepage": "https://github.com/feathersjs-ecosystem/feathers-mongoose",
   "main": "lib/",
   "types": "types",
