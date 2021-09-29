@@ -1,7 +1,41 @@
-# Change Log
+# Changelog
+
+## [Unreleased](https://github.com/feathersjs-ecosystem/feathers-mongoose/tree/HEAD)
+
+[Full Changelog](https://github.com/feathersjs-ecosystem/feathers-mongoose/compare/v8.3.3...HEAD)
+
+**Merged pull requests:**
+
+- Only $populate if it's whitelisted [\#402](https://github.com/feathersjs-ecosystem/feathers-mongoose/pull/402) ([GautierT](https://github.com/GautierT))
+
+## [v8.3.3](https://github.com/feathersjs-ecosystem/feathers-mongoose/tree/v8.3.3) (2021-04-08)
+
+[Full Changelog](https://github.com/feathersjs-ecosystem/feathers-mongoose/compare/v8.3.2...v8.3.3)
+
+## [v8.3.2](https://github.com/feathersjs-ecosystem/feathers-mongoose/tree/v8.3.2) (2021-04-08)
+
+[Full Changelog](https://github.com/feathersjs-ecosystem/feathers-mongoose/compare/v8.3.1...v8.3.2)
+
+**Fixed bugs:**
+
+- Patch changed queries [\#377](https://github.com/feathersjs-ecosystem/feathers-mongoose/issues/377)
+
+**Closed issues:**
+
+- Security Issue - whitelist doesn't remove $populate [\#400](https://github.com/feathersjs-ecosystem/feathers-mongoose/issues/400)
+- Sort outer collection by populated inner collections [\#399](https://github.com/feathersjs-ecosystem/feathers-mongoose/issues/399)
+- Compatibility issues with mongoose \< 5.2.0 [\#393](https://github.com/feathersjs-ecosystem/feathers-mongoose/issues/393)
+- Crear vistas en feathers-mongoose [\#392](https://github.com/feathersjs-ecosystem/feathers-mongoose/issues/392)
+- "command insert requires authentication", db adapter not production-ready? [\#389](https://github.com/feathersjs-ecosystem/feathers-mongoose/issues/389)
+- An in-range update of mongoose is breaking the build 🚨 [\#376](https://github.com/feathersjs-ecosystem/feathers-mongoose/issues/376)
+
+**Merged pull requests:**
+
+- Only allow $populate when listed [\#401](https://github.com/feathersjs-ecosystem/feathers-mongoose/pull/401) ([daffl](https://github.com/daffl))
 
 ## [v8.3.1](https://github.com/feathersjs-ecosystem/feathers-mongoose/tree/v8.3.1) (2020-06-22)
-[Full Changelog](https://github.com/feathersjs-ecosystem/feathers-mongoose/compare/8.3.0...v8.3.1)
+
+[Full Changelog](https://github.com/feathersjs-ecosystem/feathers-mongoose/compare/v8.3.0...v8.3.1)
 
 **Closed issues:**
 
@@ -26,11 +60,13 @@
 - Update dtslint to the latest version 🚀 [\#371](https://github.com/feathersjs-ecosystem/feathers-mongoose/pull/371) ([greenkeeper[bot]](https://github.com/apps/greenkeeper))
 - Update all dependencies and Types version [\#368](https://github.com/feathersjs-ecosystem/feathers-mongoose/pull/368) ([daffl](https://github.com/daffl))
 
-## [8.3.0](https://github.com/feathersjs-ecosystem/feathers-mongoose/tree/8.3.0) (2020-01-08)
-[Full Changelog](https://github.com/feathersjs-ecosystem/feathers-mongoose/compare/v8.3.0...8.3.0)
-
 ## [v8.3.0](https://github.com/feathersjs-ecosystem/feathers-mongoose/tree/v8.3.0) (2020-01-08)
-[Full Changelog](https://github.com/feathersjs-ecosystem/feathers-mongoose/compare/v8.2.0...v8.3.0)
+
+[Full Changelog](https://github.com/feathersjs-ecosystem/feathers-mongoose/compare/8.3.0...v8.3.0)
+
+## [8.3.0](https://github.com/feathersjs-ecosystem/feathers-mongoose/tree/8.3.0) (2020-01-08)
+
+[Full Changelog](https://github.com/feathersjs-ecosystem/feathers-mongoose/compare/v8.2.0...8.3.0)
 
 **Fixed bugs:**
 
@@ -42,6 +78,7 @@
 - update '\_remove' method [\#364](https://github.com/feathersjs-ecosystem/feathers-mongoose/pull/364) ([sarkistlt](https://github.com/sarkistlt))
 
 ## [v8.2.0](https://github.com/feathersjs-ecosystem/feathers-mongoose/tree/v8.2.0) (2020-01-05)
+
 [Full Changelog](https://github.com/feathersjs-ecosystem/feathers-mongoose/compare/v8.1.1...v8.2.0)
 
 **Merged pull requests:**
@@ -51,6 +88,7 @@
 - :bug: fix 404 on patch call [\#362](https://github.com/feathersjs-ecosystem/feathers-mongoose/pull/362) ([arfanliaqat](https://github.com/arfanliaqat))
 
 ## [v8.1.1](https://github.com/feathersjs-ecosystem/feathers-mongoose/tree/v8.1.1) (2019-12-06)
+
 [Full Changelog](https://github.com/feathersjs-ecosystem/feathers-mongoose/compare/v8.1.0...v8.1.1)
 
 **Closed issues:**
@@ -67,6 +105,7 @@
 - Greenkeeper/@feathersjs/adapter commons 4.3.8 [\#351](https://github.com/feathersjs-ecosystem/feathers-mongoose/pull/351) ([daffl](https://github.com/daffl))
 
 ## [v8.1.0](https://github.com/feathersjs-ecosystem/feathers-mongoose/tree/v8.1.0) (2019-10-07)
+
 [Full Changelog](https://github.com/feathersjs-ecosystem/feathers-mongoose/compare/v8.0.3...v8.1.0)
 
 **Implemented enhancements:**
@@ -79,6 +118,7 @@
 - Merge whitelist to always include $and [\#348](https://github.com/feathersjs-ecosystem/feathers-mongoose/pull/348) ([daffl](https://github.com/daffl))
 
 ## [v8.0.3](https://github.com/feathersjs-ecosystem/feathers-mongoose/tree/v8.0.3) (2019-09-29)
+
 [Full Changelog](https://github.com/feathersjs-ecosystem/feathers-mongoose/compare/v8.0.2...v8.0.3)
 
 **Closed issues:**
@@ -96,6 +136,7 @@
 - Update semistandard to the latest version 🚀 [\#338](https://github.com/feathersjs-ecosystem/feathers-mongoose/pull/338) ([greenkeeper[bot]](https://github.com/apps/greenkeeper))
 
 ## [v8.0.2](https://github.com/feathersjs-ecosystem/feathers-mongoose/tree/v8.0.2) (2019-08-07)
+
 [Full Changelog](https://github.com/feathersjs-ecosystem/feathers-mongoose/compare/v8.0.1...v8.0.2)
 
 **Closed issues:**
@@ -108,6 +149,7 @@
 - Add missing options to definitions [\#336](https://github.com/feathersjs-ecosystem/feathers-mongoose/pull/336) ([daffl](https://github.com/daffl))
 
 ## [v8.0.1](https://github.com/feathersjs-ecosystem/feathers-mongoose/tree/v8.0.1) (2019-07-20)
+
 [Full Changelog](https://github.com/feathersjs-ecosystem/feathers-mongoose/compare/v8.0.0...v8.0.1)
 
 **Closed issues:**
@@ -120,6 +162,7 @@
 - Update dtslint to the latest version 🚀 [\#333](https://github.com/feathersjs-ecosystem/feathers-mongoose/pull/333) ([greenkeeper[bot]](https://github.com/apps/greenkeeper))
 
 ## [v8.0.0](https://github.com/feathersjs-ecosystem/feathers-mongoose/tree/v8.0.0) (2019-07-07)
+
 [Full Changelog](https://github.com/feathersjs-ecosystem/feathers-mongoose/compare/v7.3.2...v8.0.0)
 
 **Closed issues:**
@@ -143,6 +186,7 @@
 - Update run-rs to the latest version 🚀 [\#312](https://github.com/feathersjs-ecosystem/feathers-mongoose/pull/312) ([greenkeeper[bot]](https://github.com/apps/greenkeeper))
 
 ## [v7.3.2](https://github.com/feathersjs-ecosystem/feathers-mongoose/tree/v7.3.2) (2019-03-04)
+
 [Full Changelog](https://github.com/feathersjs-ecosystem/feathers-mongoose/compare/v7.3.1...v7.3.2)
 
 **Closed issues:**
@@ -164,6 +208,7 @@
 - Fix: Added test case for find transaction [\#299](https://github.com/feathersjs-ecosystem/feathers-mongoose/pull/299) ([Sharveshkumar](https://github.com/Sharveshkumar))
 
 ## [v7.3.1](https://github.com/feathersjs-ecosystem/feathers-mongoose/tree/v7.3.1) (2019-01-31)
+
 [Full Changelog](https://github.com/feathersjs-ecosystem/feathers-mongoose/compare/v7.3.0...v7.3.1)
 
 **Closed issues:**
@@ -175,6 +220,7 @@
 - Fix: Transaction for find and get. [\#298](https://github.com/feathersjs-ecosystem/feathers-mongoose/pull/298) ([Sharveshkumar](https://github.com/Sharveshkumar))
 
 ## [v7.3.0](https://github.com/feathersjs-ecosystem/feathers-mongoose/tree/v7.3.0) (2019-01-17)
+
 [Full Changelog](https://github.com/feathersjs-ecosystem/feathers-mongoose/compare/v7.2.0...v7.3.0)
 
 **Closed issues:**
@@ -186,6 +232,7 @@
 - Expose original MongoDB error following feathers-sequelize methodology [\#296](https://github.com/feathersjs-ecosystem/feathers-mongoose/pull/296) ([cdimitroulas](https://github.com/cdimitroulas))
 
 ## [v7.2.0](https://github.com/feathersjs-ecosystem/feathers-mongoose/tree/v7.2.0) (2019-01-13)
+
 [Full Changelog](https://github.com/feathersjs-ecosystem/feathers-mongoose/compare/v7.1.3...v7.2.0)
 
 **Fixed bugs:**
@@ -202,6 +249,7 @@
 - Make sure ids in queries are respected [\#294](https://github.com/feathersjs-ecosystem/feathers-mongoose/pull/294) ([greenkeeper[bot]](https://github.com/apps/greenkeeper))
 
 ## [v7.1.3](https://github.com/feathersjs-ecosystem/feathers-mongoose/tree/v7.1.3) (2019-01-06)
+
 [Full Changelog](https://github.com/feathersjs-ecosystem/feathers-mongoose/compare/v7.1.2...v7.1.3)
 
 **Closed issues:**
@@ -213,6 +261,7 @@
 - Make sure data is never paginated [\#292](https://github.com/feathersjs-ecosystem/feathers-mongoose/pull/292) ([daffl](https://github.com/daffl))
 
 ## [v7.1.2](https://github.com/feathersjs-ecosystem/feathers-mongoose/tree/v7.1.2) (2019-01-06)
+
 [Full Changelog](https://github.com/feathersjs-ecosystem/feathers-mongoose/compare/v7.1.1...v7.1.2)
 
 **Closed issues:**
@@ -224,6 +273,7 @@
 - Do not publish data directory [\#291](https://github.com/feathersjs-ecosystem/feathers-mongoose/pull/291) ([daffl](https://github.com/daffl))
 
 ## [v7.1.1](https://github.com/feathersjs-ecosystem/feathers-mongoose/tree/v7.1.1) (2018-12-29)
+
 [Full Changelog](https://github.com/feathersjs-ecosystem/feathers-mongoose/compare/v7.1.0...v7.1.1)
 
 **Merged pull requests:**
@@ -231,6 +281,7 @@
 - Add default params to hook-less methods [\#288](https://github.com/feathersjs-ecosystem/feathers-mongoose/pull/288) ([daffl](https://github.com/daffl))
 
 ## [v7.1.0](https://github.com/feathersjs-ecosystem/feathers-mongoose/tree/v7.1.0) (2018-12-29)
+
 [Full Changelog](https://github.com/feathersjs-ecosystem/feathers-mongoose/compare/v7.0.0...v7.1.0)
 
 **Closed issues:**
@@ -242,11 +293,16 @@
 - Added hooks to support mongo-db transaction [\#276](https://github.com/feathersjs-ecosystem/feathers-mongoose/pull/276) ([jaiyashree](https://github.com/jaiyashree))
 
 ## [v7.0.0](https://github.com/feathersjs-ecosystem/feathers-mongoose/tree/v7.0.0) (2018-12-18)
+
 [Full Changelog](https://github.com/feathersjs-ecosystem/feathers-mongoose/compare/v6.3.0...v7.0.0)
 
 **Implemented enhancements:**
 
 - params.query is ignored for returned data when removing a record [\#244](https://github.com/feathersjs-ecosystem/feathers-mongoose/issues/244)
+
+**Security fixes:**
+
+- $populate security risk [\#207](https://github.com/feathersjs-ecosystem/feathers-mongoose/issues/207)
 
 **Closed issues:**
 
@@ -256,7 +312,6 @@
 - An in-range update of mongoose is breaking the build 🚨 [\#278](https://github.com/feathersjs-ecosystem/feathers-mongoose/issues/278)
 - how to disable a hook in call a method? [\#277](https://github.com/feathersjs-ecosystem/feathers-mongoose/issues/277)
 - An in-range update of mongoose is breaking the build 🚨 [\#272](https://github.com/feathersjs-ecosystem/feathers-mongoose/issues/272)
-- $populate security risk [\#207](https://github.com/feathersjs-ecosystem/feathers-mongoose/issues/207)
 
 **Merged pull requests:**
 
@@ -266,6 +321,7 @@
 - Update README.md [\#279](https://github.com/feathersjs-ecosystem/feathers-mongoose/pull/279) ([einstenj](https://github.com/einstenj))
 
 ## [v6.3.0](https://github.com/feathersjs-ecosystem/feathers-mongoose/tree/v6.3.0) (2018-11-27)
+
 [Full Changelog](https://github.com/feathersjs-ecosystem/feathers-mongoose/compare/v6.2.0...v6.3.0)
 
 **Implemented enhancements:**
@@ -287,6 +343,7 @@
 - Feat: mongo opt to return writeResult [\#261](https://github.com/feathersjs-ecosystem/feathers-mongoose/pull/261) ([54M5M17H](https://github.com/54M5M17H))
 
 ## [v6.2.0](https://github.com/feathersjs-ecosystem/feathers-mongoose/tree/v6.2.0) (2018-10-03)
+
 [Full Changelog](https://github.com/feathersjs-ecosystem/feathers-mongoose/compare/v6.1.4...v6.2.0)
 
 **Fixed bugs:**
@@ -309,6 +366,7 @@
 - reconcile create handler discriminatorKey [\#253](https://github.com/feathersjs-ecosystem/feathers-mongoose/pull/253) ([makslevental](https://github.com/makslevental))
 
 ## [v6.1.4](https://github.com/feathersjs-ecosystem/feathers-mongoose/tree/v6.1.4) (2018-08-08)
+
 [Full Changelog](https://github.com/feathersjs-ecosystem/feathers-mongoose/compare/v6.1.3...v6.1.4)
 
 **Closed issues:**
@@ -320,6 +378,7 @@
 - `estimatedDocumentCount` to `countDocuments` [\#252](https://github.com/feathersjs-ecosystem/feathers-mongoose/pull/252) ([giovannilobitos](https://github.com/giovannilobitos))
 
 ## [v6.1.3](https://github.com/feathersjs-ecosystem/feathers-mongoose/tree/v6.1.3) (2018-08-06)
+
 [Full Changelog](https://github.com/feathersjs-ecosystem/feathers-mongoose/compare/v6.1.2...v6.1.3)
 
 **Merged pull requests:**
@@ -328,6 +387,7 @@
 - Update sinon to the latest version 🚀 [\#243](https://github.com/feathersjs-ecosystem/feathers-mongoose/pull/243) ([greenkeeper[bot]](https://github.com/apps/greenkeeper))
 
 ## [v6.1.2](https://github.com/feathersjs-ecosystem/feathers-mongoose/tree/v6.1.2) (2018-06-03)
+
 [Full Changelog](https://github.com/feathersjs-ecosystem/feathers-mongoose/compare/v6.1.1...v6.1.2)
 
 **Closed issues:**
@@ -341,6 +401,7 @@
 - Update uberproto to the latest version 🚀 [\#242](https://github.com/feathersjs-ecosystem/feathers-mongoose/pull/242) ([greenkeeper[bot]](https://github.com/apps/greenkeeper))
 
 ## [v6.1.1](https://github.com/feathersjs-ecosystem/feathers-mongoose/tree/v6.1.1) (2018-04-19)
+
 [Full Changelog](https://github.com/feathersjs-ecosystem/feathers-mongoose/compare/v6.1.0...v6.1.1)
 
 **Closed issues:**
@@ -356,6 +417,7 @@
 - Update sinon-chai to the latest version 🚀 [\#234](https://github.com/feathersjs-ecosystem/feathers-mongoose/pull/234) ([greenkeeper[bot]](https://github.com/apps/greenkeeper))
 
 ## [v6.1.0](https://github.com/feathersjs-ecosystem/feathers-mongoose/tree/v6.1.0) (2018-01-20)
+
 [Full Changelog](https://github.com/feathersjs-ecosystem/feathers-mongoose/compare/v6.0.0...v6.1.0)
 
 **Merged pull requests:**
@@ -365,6 +427,7 @@
 - Update semistandard to the latest version 🚀 [\#227](https://github.com/feathersjs-ecosystem/feathers-mongoose/pull/227) ([greenkeeper[bot]](https://github.com/apps/greenkeeper))
 
 ## [v6.0.0](https://github.com/feathersjs-ecosystem/feathers-mongoose/tree/v6.0.0) (2017-12-03)
+
 [Full Changelog](https://github.com/feathersjs-ecosystem/feathers-mongoose/compare/v5.1.2...v6.0.0)
 
 **Implemented enhancements:**
@@ -394,6 +457,7 @@
 - Update sinon to the latest version 🚀 [\#215](https://github.com/feathersjs-ecosystem/feathers-mongoose/pull/215) ([greenkeeper[bot]](https://github.com/apps/greenkeeper))
 
 ## [v5.1.2](https://github.com/feathersjs-ecosystem/feathers-mongoose/tree/v5.1.2) (2017-08-14)
+
 [Full Changelog](https://github.com/feathersjs-ecosystem/feathers-mongoose/compare/v5.1.1...v5.1.2)
 
 **Closed issues:**
@@ -413,6 +477,7 @@
 - Ensure bulk create returns plain objects when lean is 'true' [\#186](https://github.com/feathersjs-ecosystem/feathers-mongoose/pull/186) ([DesignByOnyx](https://github.com/DesignByOnyx))
 
 ## [v5.1.1](https://github.com/feathersjs-ecosystem/feathers-mongoose/tree/v5.1.1) (2017-07-07)
+
 [Full Changelog](https://github.com/feathersjs-ecosystem/feathers-mongoose/compare/v5.1.0...v5.1.1)
 
 **Closed issues:**
@@ -432,6 +497,7 @@
 - Update feathers-service-tests to the latest version 🚀 [\#187](https://github.com/feathersjs-ecosystem/feathers-mongoose/pull/187) ([greenkeeper[bot]](https://github.com/apps/greenkeeper))
 
 ## [v5.1.0](https://github.com/feathersjs-ecosystem/feathers-mongoose/tree/v5.1.0) (2017-04-29)
+
 [Full Changelog](https://github.com/feathersjs-ecosystem/feathers-mongoose/compare/v5.0.3...v5.1.0)
 
 **Closed issues:**
@@ -449,12 +515,15 @@
 - Update sinon to version 2.0.0 🚀 [\#176](https://github.com/feathersjs-ecosystem/feathers-mongoose/pull/176) ([greenkeeperio-bot](https://github.com/greenkeeperio-bot))
 
 ## [v5.0.3](https://github.com/feathersjs-ecosystem/feathers-mongoose/tree/v5.0.3) (2017-03-02)
+
 [Full Changelog](https://github.com/feathersjs-ecosystem/feathers-mongoose/compare/v5.0.2...v5.0.3)
 
 ## [v5.0.2](https://github.com/feathersjs-ecosystem/feathers-mongoose/tree/v5.0.2) (2017-03-01)
+
 [Full Changelog](https://github.com/feathersjs-ecosystem/feathers-mongoose/compare/v5.0.1...v5.0.2)
 
 ## [v5.0.1](https://github.com/feathersjs-ecosystem/feathers-mongoose/tree/v5.0.1) (2017-03-01)
+
 [Full Changelog](https://github.com/feathersjs-ecosystem/feathers-mongoose/compare/v5.0.0...v5.0.1)
 
 **Closed issues:**
@@ -467,6 +536,7 @@
 - Parsing fix [\#170](https://github.com/feathersjs-ecosystem/feathers-mongoose/pull/170) ([ekryski](https://github.com/ekryski))
 
 ## [v5.0.0](https://github.com/feathersjs-ecosystem/feathers-mongoose/tree/v5.0.0) (2017-02-27)
+
 [Full Changelog](https://github.com/feathersjs-ecosystem/feathers-mongoose/compare/v4.0.1...v5.0.0)
 
 **Closed issues:**
@@ -480,6 +550,7 @@
 - adding better mongoose conflict error handling [\#168](https://github.com/feathersjs-ecosystem/feathers-mongoose/pull/168) ([ekryski](https://github.com/ekryski))
 
 ## [v4.0.1](https://github.com/feathersjs-ecosystem/feathers-mongoose/tree/v4.0.1) (2017-02-03)
+
 [Full Changelog](https://github.com/feathersjs-ecosystem/feathers-mongoose/compare/v4.0.0...v4.0.1)
 
 **Merged pull requests:**
@@ -487,6 +558,7 @@
 - Use toObject for create when lean is true [\#160](https://github.com/feathersjs-ecosystem/feathers-mongoose/pull/160) ([daffl](https://github.com/daffl))
 
 ## [v4.0.0](https://github.com/feathersjs-ecosystem/feathers-mongoose/tree/v4.0.0) (2017-01-29)
+
 [Full Changelog](https://github.com/feathersjs-ecosystem/feathers-mongoose/compare/v3.6.2...v4.0.0)
 
 **Closed issues:**
@@ -498,6 +570,7 @@
 - Make lean true by default [\#159](https://github.com/feathersjs-ecosystem/feathers-mongoose/pull/159) ([daffl](https://github.com/daffl))
 
 ## [v3.6.2](https://github.com/feathersjs-ecosystem/feathers-mongoose/tree/v3.6.2) (2017-01-13)
+
 [Full Changelog](https://github.com/feathersjs-ecosystem/feathers-mongoose/compare/v3.6.1...v3.6.2)
 
 **Closed issues:**
@@ -511,6 +584,7 @@
 - Added warning msg when options.lean is falsey [\#155](https://github.com/feathersjs-ecosystem/feathers-mongoose/pull/155) ([eddyystop](https://github.com/eddyystop))
 
 ## [v3.6.1](https://github.com/feathersjs-ecosystem/feathers-mongoose/tree/v3.6.1) (2016-11-15)
+
 [Full Changelog](https://github.com/feathersjs-ecosystem/feathers-mongoose/compare/v3.6.0...v3.6.1)
 
 **Closed issues:**
@@ -523,6 +597,7 @@
 - Do not delete model ids [\#152](https://github.com/feathersjs-ecosystem/feathers-mongoose/pull/152) ([daffl](https://github.com/daffl))
 
 ## [v3.6.0](https://github.com/feathersjs-ecosystem/feathers-mongoose/tree/v3.6.0) (2016-11-12)
+
 [Full Changelog](https://github.com/feathersjs-ecosystem/feathers-mongoose/compare/v3.5.3...v3.6.0)
 
 **Fixed bugs:**
@@ -548,6 +623,7 @@
 - Update feathers-service-tests to version 0.8.1 🚀 [\#124](https://github.com/feathersjs-ecosystem/feathers-mongoose/pull/124) ([greenkeeperio-bot](https://github.com/greenkeeperio-bot))
 
 ## [v3.5.3](https://github.com/feathersjs-ecosystem/feathers-mongoose/tree/v3.5.3) (2016-10-14)
+
 [Full Changelog](https://github.com/feathersjs-ecosystem/feathers-mongoose/compare/v3.5.2...v3.5.3)
 
 **Closed issues:**
@@ -564,6 +640,7 @@
 - Adds the posibility to send an object to the $select [\#129](https://github.com/feathersjs-ecosystem/feathers-mongoose/pull/129) ([stalinb87](https://github.com/stalinb87))
 
 ## [v3.5.2](https://github.com/feathersjs-ecosystem/feathers-mongoose/tree/v3.5.2) (2016-08-23)
+
 [Full Changelog](https://github.com/feathersjs-ecosystem/feathers-mongoose/compare/v3.5.1...v3.5.2)
 
 **Fixed bugs:**
@@ -583,6 +660,7 @@
 - Update mocha to version 3.0.0 🚀 [\#107](https://github.com/feathersjs-ecosystem/feathers-mongoose/pull/107) ([greenkeeperio-bot](https://github.com/greenkeeperio-bot))
 
 ## [v3.5.1](https://github.com/feathersjs-ecosystem/feathers-mongoose/tree/v3.5.1) (2016-07-17)
+
 [Full Changelog](https://github.com/feathersjs-ecosystem/feathers-mongoose/compare/v3.5.0...v3.5.1)
 
 **Fixed bugs:**
@@ -595,6 +673,7 @@
 - Update feathers-query-filters to version 2.0.0 🚀 [\#101](https://github.com/feathersjs-ecosystem/feathers-mongoose/pull/101) ([greenkeeperio-bot](https://github.com/greenkeeperio-bot))
 
 ## [v3.5.0](https://github.com/feathersjs-ecosystem/feathers-mongoose/tree/v3.5.0) (2016-07-09)
+
 [Full Changelog](https://github.com/feathersjs-ecosystem/feathers-mongoose/compare/v3.4.2...v3.5.0)
 
 **Fixed bugs:**
@@ -606,6 +685,7 @@
 - feathers-service-tests@0.6.2 breaks build 🚨 [\#100](https://github.com/feathersjs-ecosystem/feathers-mongoose/pull/100) ([greenkeeperio-bot](https://github.com/greenkeeperio-bot))
 
 ## [v3.4.2](https://github.com/feathersjs-ecosystem/feathers-mongoose/tree/v3.4.2) (2016-07-07)
+
 [Full Changelog](https://github.com/feathersjs-ecosystem/feathers-mongoose/compare/v3.4.1...v3.4.2)
 
 **Closed issues:**
@@ -621,6 +701,7 @@
 - mongoose@4.5.2 breaks build 🚨 [\#93](https://github.com/feathersjs-ecosystem/feathers-mongoose/pull/93) ([greenkeeperio-bot](https://github.com/greenkeeperio-bot))
 
 ## [v3.4.1](https://github.com/feathersjs-ecosystem/feathers-mongoose/tree/v3.4.1) (2016-06-21)
+
 [Full Changelog](https://github.com/feathersjs-ecosystem/feathers-mongoose/compare/v3.4.0...v3.4.1)
 
 **Closed issues:**
@@ -635,6 +716,7 @@
 - Adding support to be able to do $push, $set, etc. on patch [\#91](https://github.com/feathersjs-ecosystem/feathers-mongoose/pull/91) ([ekryski](https://github.com/ekryski))
 
 ## [v3.4.0](https://github.com/feathersjs-ecosystem/feathers-mongoose/tree/v3.4.0) (2016-06-17)
+
 [Full Changelog](https://github.com/feathersjs-ecosystem/feathers-mongoose/compare/v3.3.7...v3.4.0)
 
 **Closed issues:**
@@ -655,6 +737,7 @@
 - Update babel-plugin-add-module-exports to version 0.2.0 🚀 [\#84](https://github.com/feathersjs-ecosystem/feathers-mongoose/pull/84) ([greenkeeperio-bot](https://github.com/greenkeeperio-bot))
 
 ## [v3.3.7](https://github.com/feathersjs-ecosystem/feathers-mongoose/tree/v3.3.7) (2016-04-21)
+
 [Full Changelog](https://github.com/feathersjs-ecosystem/feathers-mongoose/compare/v3.3.6...v3.3.7)
 
 **Fixed bugs:**
@@ -673,6 +756,7 @@
 - Fixed overwrite option: was always true [\#72](https://github.com/feathersjs-ecosystem/feathers-mongoose/pull/72) ([leo-nard](https://github.com/leo-nard))
 
 ## [v3.3.6](https://github.com/feathersjs-ecosystem/feathers-mongoose/tree/v3.3.6) (2016-02-24)
+
 [Full Changelog](https://github.com/feathersjs-ecosystem/feathers-mongoose/compare/v3.3.5...v3.3.6)
 
 **Merged pull requests:**
@@ -680,6 +764,7 @@
 - bumping feathers-errors version [\#66](https://github.com/feathersjs-ecosystem/feathers-mongoose/pull/66) ([ekryski](https://github.com/ekryski))
 
 ## [v3.3.5](https://github.com/feathersjs-ecosystem/feathers-mongoose/tree/v3.3.5) (2016-02-23)
+
 [Full Changelog](https://github.com/feathersjs-ecosystem/feathers-mongoose/compare/v3.3.4...v3.3.5)
 
 **Merged pull requests:**
@@ -687,6 +772,7 @@
 - enforcing that you shouldn't be able to change ids [\#65](https://github.com/feathersjs-ecosystem/feathers-mongoose/pull/65) ([ekryski](https://github.com/ekryski))
 
 ## [v3.3.4](https://github.com/feathersjs-ecosystem/feathers-mongoose/tree/v3.3.4) (2016-02-23)
+
 [Full Changelog](https://github.com/feathersjs-ecosystem/feathers-mongoose/compare/v3.3.3...v3.3.4)
 
 **Closed issues:**
@@ -698,6 +784,7 @@
 - custom ids no longer get deleted on patch and update. Closes \#63 [\#64](https://github.com/feathersjs-ecosystem/feathers-mongoose/pull/64) ([ekryski](https://github.com/ekryski))
 
 ## [v3.3.3](https://github.com/feathersjs-ecosystem/feathers-mongoose/tree/v3.3.3) (2016-02-23)
+
 [Full Changelog](https://github.com/feathersjs-ecosystem/feathers-mongoose/compare/v3.3.2...v3.3.3)
 
 **Closed issues:**
@@ -709,6 +796,7 @@
 - Convert errorHandler to return a rejected promise instead of throwing [\#62](https://github.com/feathersjs-ecosystem/feathers-mongoose/pull/62) ([daffl](https://github.com/daffl))
 
 ## [v3.3.2](https://github.com/feathersjs-ecosystem/feathers-mongoose/tree/v3.3.2) (2016-02-22)
+
 [Full Changelog](https://github.com/feathersjs-ecosystem/feathers-mongoose/compare/v3.3.1...v3.3.2)
 
 **Merged pull requests:**
@@ -716,6 +804,7 @@
 - Example update [\#60](https://github.com/feathersjs-ecosystem/feathers-mongoose/pull/60) ([ekryski](https://github.com/ekryski))
 
 ## [v3.3.1](https://github.com/feathersjs-ecosystem/feathers-mongoose/tree/v3.3.1) (2016-02-20)
+
 [Full Changelog](https://github.com/feathersjs-ecosystem/feathers-mongoose/compare/v3.3.0...v3.3.1)
 
 **Closed issues:**
@@ -731,6 +820,7 @@
 - get should use the options.id attribute. Closes \#58 [\#59](https://github.com/feathersjs-ecosystem/feathers-mongoose/pull/59) ([ekryski](https://github.com/ekryski))
 
 ## [v3.3.0](https://github.com/feathersjs-ecosystem/feathers-mongoose/tree/v3.3.0) (2016-02-12)
+
 [Full Changelog](https://github.com/feathersjs-ecosystem/feathers-mongoose/compare/v3.2.0...v3.3.0)
 
 **Closed issues:**
@@ -742,6 +832,7 @@
 - Implement $populate option in params.query on get\(\) [\#54](https://github.com/feathersjs-ecosystem/feathers-mongoose/pull/54) ([BigAB](https://github.com/BigAB))
 
 ## [v3.2.0](https://github.com/feathersjs-ecosystem/feathers-mongoose/tree/v3.2.0) (2016-02-09)
+
 [Full Changelog](https://github.com/feathersjs-ecosystem/feathers-mongoose/compare/v3.1.1...v3.2.0)
 
 **Closed issues:**
@@ -757,6 +848,7 @@
 - Running lean [\#52](https://github.com/feathersjs-ecosystem/feathers-mongoose/pull/52) ([ekryski](https://github.com/ekryski))
 
 ## [v3.1.1](https://github.com/feathersjs-ecosystem/feathers-mongoose/tree/v3.1.1) (2016-01-30)
+
 [Full Changelog](https://github.com/feathersjs-ecosystem/feathers-mongoose/compare/v3.1.0...v3.1.1)
 
 **Merged pull requests:**
@@ -764,6 +856,7 @@
 - Make result counting optional and enable only for pagination [\#47](https://github.com/feathersjs-ecosystem/feathers-mongoose/pull/47) ([daffl](https://github.com/daffl))
 
 ## [v3.1.0](https://github.com/feathersjs-ecosystem/feathers-mongoose/tree/v3.1.0) (2016-01-30)
+
 [Full Changelog](https://github.com/feathersjs-ecosystem/feathers-mongoose/compare/v3.0.4...v3.1.0)
 
 **Merged pull requests:**
@@ -772,6 +865,7 @@
 - Remove array check in create. [\#45](https://github.com/feathersjs-ecosystem/feathers-mongoose/pull/45) ([marshallswain](https://github.com/marshallswain))
 
 ## [v3.0.4](https://github.com/feathersjs-ecosystem/feathers-mongoose/tree/v3.0.4) (2016-01-08)
+
 [Full Changelog](https://github.com/feathersjs-ecosystem/feathers-mongoose/compare/v3.0.3...v3.0.4)
 
 **Implemented enhancements:**
@@ -784,6 +878,7 @@
 - Documenting the toObject hook. [\#41](https://github.com/feathersjs-ecosystem/feathers-mongoose/pull/41) ([marshallswain](https://github.com/marshallswain))
 
 ## [v3.0.3](https://github.com/feathersjs-ecosystem/feathers-mongoose/tree/v3.0.3) (2016-01-08)
+
 [Full Changelog](https://github.com/feathersjs-ecosystem/feathers-mongoose/compare/v3.0.2...v3.0.3)
 
 **Closed issues:**
@@ -791,6 +886,7 @@
 - $populate is broken [\#40](https://github.com/feathersjs-ecosystem/feathers-mongoose/issues/40)
 
 ## [v3.0.2](https://github.com/feathersjs-ecosystem/feathers-mongoose/tree/v3.0.2) (2016-01-08)
+
 [Full Changelog](https://github.com/feathersjs-ecosystem/feathers-mongoose/compare/v3.0.1...v3.0.2)
 
 **Implemented enhancements:**
@@ -805,6 +901,7 @@
 - Add documentation for use with feathers-hooks [\#25](https://github.com/feathersjs-ecosystem/feathers-mongoose/issues/25)
 
 ## [v3.0.1](https://github.com/feathersjs-ecosystem/feathers-mongoose/tree/v3.0.1) (2016-01-08)
+
 [Full Changelog](https://github.com/feathersjs-ecosystem/feathers-mongoose/compare/v3.0.0...v3.0.1)
 
 **Closed issues:**
@@ -816,15 +913,12 @@
 - Fix default module export for ES5 environments [\#36](https://github.com/feathersjs-ecosystem/feathers-mongoose/pull/36) ([daffl](https://github.com/daffl))
 
 ## [v3.0.0](https://github.com/feathersjs-ecosystem/feathers-mongoose/tree/v3.0.0) (2016-01-04)
+
 [Full Changelog](https://github.com/feathersjs-ecosystem/feathers-mongoose/compare/v2.0.0...v3.0.0)
 
 **Implemented enhancements:**
 
 - Auto-generate documentation from schema [\#9](https://github.com/feathersjs-ecosystem/feathers-mongoose/issues/9)
-- Validation error should be returned as JSON [\#6](https://github.com/feathersjs-ecosystem/feathers-mongoose/issues/6)
-
-**Fixed bugs:**
-
 - Validation error should be returned as JSON [\#6](https://github.com/feathersjs-ecosystem/feathers-mongoose/issues/6)
 
 **Closed issues:**
@@ -844,6 +938,7 @@
 - Add feathers-hooks compatibility. [\#22](https://github.com/feathersjs-ecosystem/feathers-mongoose/pull/22) ([marshallswain](https://github.com/marshallswain))
 
 ## [v2.0.0](https://github.com/feathersjs-ecosystem/feathers-mongoose/tree/v2.0.0) (2015-08-05)
+
 [Full Changelog](https://github.com/feathersjs-ecosystem/feathers-mongoose/compare/2.0.0-pre.1...v2.0.0)
 
 **Implemented enhancements:**
@@ -861,6 +956,7 @@
 - Release 2.0.0 [\#18](https://github.com/feathersjs-ecosystem/feathers-mongoose/pull/18) ([ekryski](https://github.com/ekryski))
 
 ## [2.0.0-pre.1](https://github.com/feathersjs-ecosystem/feathers-mongoose/tree/2.0.0-pre.1) (2014-07-19)
+
 [Full Changelog](https://github.com/feathersjs-ecosystem/feathers-mongoose/compare/v1.2.0...2.0.0-pre.1)
 
 **Implemented enhancements:**
@@ -872,9 +968,13 @@
 - Allow overriding default CRUD methods [\#12](https://github.com/feathersjs-ecosystem/feathers-mongoose/issues/12)
 
 ## [v1.2.0](https://github.com/feathersjs-ecosystem/feathers-mongoose/tree/v1.2.0) (2014-06-06)
+
 [Full Changelog](https://github.com/feathersjs-ecosystem/feathers-mongoose/compare/v1.1.0...v1.2.0)
 
 ## [v1.1.0](https://github.com/feathersjs-ecosystem/feathers-mongoose/tree/v1.1.0) (2014-04-23)
+
+[Full Changelog](https://github.com/feathersjs-ecosystem/feathers-mongoose/compare/2ee46bc05956ddcc7754cb015d85b7bc4a10b337...v1.1.0)
+
 **Implemented enhancements:**
 
 - Getter methods for Mongoose schema and model [\#10](https://github.com/feathersjs-ecosystem/feathers-mongoose/issues/10)
@@ -885,7 +985,6 @@
 
 **Fixed bugs:**
 
-- Limited peerDependencies versions [\#7](https://github.com/feathersjs-ecosystem/feathers-mongoose/issues/7)
 - Mongoose TypeError when creating Schema [\#5](https://github.com/feathersjs-ecosystem/feathers-mongoose/issues/5)
 
 **Merged pull requests:**
@@ -895,4 +994,4 @@
 
 
 
-\* *This Change Log was automatically generated by [github_changelog_generator](https://github.com/skywinder/Github-Changelog-Generator)*
+\* *This Changelog was automatically generated by [github_changelog_generator](https://github.com/github-changelog-generator/github-changelog-generator)*
