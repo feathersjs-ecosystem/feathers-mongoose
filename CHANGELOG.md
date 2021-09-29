@@ -1,15 +1,5 @@
 # Changelog
 
-## [Unreleased](https://github.com/feathersjs-ecosystem/feathers-mongoose/tree/HEAD)
-
-[Full Changelog](https://github.com/feathersjs-ecosystem/feathers-mongoose/compare/v8.4.0...HEAD)
-
-**Merged pull requests:**
-
-- Update to Mongoose 6 and upgrade project infrastructure [\#410](https://github.com/feathersjs-ecosystem/feathers-mongoose/pull/410) ([daffl](https://github.com/daffl))
-- fix: create returns undefined if data is empty array \(for multi\) [\#394](https://github.com/feathersjs-ecosystem/feathers-mongoose/pull/394) ([bwgjoseph](https://github.com/bwgjoseph))
-- Improved typing of Model property [\#390](https://github.com/feathersjs-ecosystem/feathers-mongoose/pull/390) ([rnbrady](https://github.com/rnbrady))
-
 ## [v8.4.0](https://github.com/feathersjs-ecosystem/feathers-mongoose/tree/v8.4.0) (2021-09-29)
 
 [Full Changelog](https://github.com/feathersjs-ecosystem/feathers-mongoose/compare/v8.3.3...v8.4.0)
@@ -22,6 +12,12 @@
 - `upsert: true` does not support `multi: 'patch'` [\#404](https://github.com/feathersjs-ecosystem/feathers-mongoose/issues/404)
 - `upsert: true` skips schema validation  [\#403](https://github.com/feathersjs-ecosystem/feathers-mongoose/issues/403)
 - Mongoose service not returning Map attribute [\#398](https://github.com/feathersjs-ecosystem/feathers-mongoose/issues/398)
+
+**Merged pull requests:**
+
+- Update to Mongoose 6 and upgrade project infrastructure [\#410](https://github.com/feathersjs-ecosystem/feathers-mongoose/pull/410) ([daffl](https://github.com/daffl))
+- fix: create returns undefined if data is empty array \(for multi\) [\#394](https://github.com/feathersjs-ecosystem/feathers-mongoose/pull/394) ([bwgjoseph](https://github.com/bwgjoseph))
+- Improved typing of Model property [\#390](https://github.com/feathersjs-ecosystem/feathers-mongoose/pull/390) ([rnbrady](https://github.com/rnbrady))
 
 ## [v8.3.3](https://github.com/feathersjs-ecosystem/feathers-mongoose/tree/v8.3.3) (2021-04-08)
 
