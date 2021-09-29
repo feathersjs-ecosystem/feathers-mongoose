@@ -13,13 +13,15 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
+    - name: Start MongoDB
+      uses: supercharge/mongodb-github-action@1.6.0
+      with:
+        mongodb-version: 4.4
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
     - run: npm install
-    - run: npm run mongodb >/dev/null 2>&1 &
-    - run: sleep 30
     - run: npm test
       env:
         CI: true
