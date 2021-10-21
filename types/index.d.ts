@@ -21,7 +21,7 @@ export interface MongooseServiceOptions<T extends Document = any> extends Servic
 }
 
 export class Service<T = any> extends AdapterService<T> implements InternalServiceMethods<T> {
-  Model: Model<T & Document>;
+  Model: Model<Document<any, any, any>>;
   options: MongooseServiceOptions<T & Document>;
 
   constructor(config?: Partial<MongooseServiceOptions>);
