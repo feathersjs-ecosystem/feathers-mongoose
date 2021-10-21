@@ -1,4 +1,4 @@
-// TypeScript Version: 3.7
+// TypeScript Version: 4.0
 import { Params, Paginated, Id, NullableId, Hook } from '@feathersjs/feathers';
 import { AdapterService, ServiceOptions, InternalServiceMethods } from '@feathersjs/adapter-commons';
 import { Model, Document } from 'mongoose';
@@ -21,7 +21,7 @@ export interface MongooseServiceOptions<T extends Document = any> extends Servic
 }
 
 export class Service<T = any> extends AdapterService<T> implements InternalServiceMethods<T> {
-  Model: Model<Document<any, any, any>>;
+  Model: Model<Document>;
   options: MongooseServiceOptions<T & Document>;
 
   constructor(config?: Partial<MongooseServiceOptions>);
