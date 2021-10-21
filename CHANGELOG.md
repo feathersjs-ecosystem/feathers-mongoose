@@ -1,5 +1,22 @@
 # Changelog
 
+## [Unreleased](https://github.com/feathersjs-ecosystem/feathers-mongoose/tree/HEAD)
+
+[Full Changelog](https://github.com/feathersjs-ecosystem/feathers-mongoose/compare/v8.4.1...HEAD)
+
+**Merged pull requests:**
+
+- Fix TypeScript linting [\#414](https://github.com/feathersjs-ecosystem/feathers-mongoose/pull/414) ([daffl](https://github.com/daffl))
+- Update index.d.ts [\#413](https://github.com/feathersjs-ecosystem/feathers-mongoose/pull/413) ([bartduisters](https://github.com/bartduisters))
+
+## [v8.4.1](https://github.com/feathersjs-ecosystem/feathers-mongoose/tree/v8.4.1) (2021-10-21)
+
+[Full Changelog](https://github.com/feathersjs-ecosystem/feathers-mongoose/compare/v8.4.0...v8.4.1)
+
+**Closed issues:**
+
+- Fix TSLint errors after upgrade [\#411](https://github.com/feathersjs-ecosystem/feathers-mongoose/issues/411)
+
 ## [v8.4.0](https://github.com/feathersjs-ecosystem/feathers-mongoose/tree/v8.4.0) (2021-09-29)
 
 [Full Changelog](https://github.com/feathersjs-ecosystem/feathers-mongoose/compare/v8.3.3...v8.4.0)
