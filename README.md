@@ -49,7 +49,7 @@ __Options:__
 - `multi` (*optional*) - Allow `create` with arrays and `update` and `remove` with `id` `null` to change multiple items. Can be `true` for all methods or an array of allowed methods (e.g. `[ 'remove', 'create' ]`)
 - `overwrite` (*optional*, default: `true`) - Overwrite the document when update, making mongoose detect is new document and trigger default value for unspecified properties in mongoose schema.
 - `discriminators` (*optional*) - A list of mongoose models that inherit from `Model`.
-- `useEstimatedDocumentCount` (*optional*, default: `false`) - Use `estimatedDocumentCount` instead (usuall not necessary)
+- `useEstimatedDocumentCount` (*optional*, default: `false`) - Use `estimatedDocumentCount` instead (usually not necessary)
 
 > **Important:** To avoid odd error handling behaviour, always set `mongoose.Promise = global.Promise`. If not available already, Feathers comes with a polyfill for native Promises.
 
