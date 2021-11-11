@@ -2,12 +2,21 @@
 
 ## [Unreleased](https://github.com/feathersjs-ecosystem/feathers-mongoose/tree/HEAD)
 
-[Full Changelog](https://github.com/feathersjs-ecosystem/feathers-mongoose/compare/v8.4.1...HEAD)
+[Full Changelog](https://github.com/feathersjs-ecosystem/feathers-mongoose/compare/v8.4.2...HEAD)
 
 **Merged pull requests:**
 
-- Fix TypeScript linting [\#414](https://github.com/feathersjs-ecosystem/feathers-mongoose/pull/414) ([daffl](https://github.com/daffl))
-- Update index.d.ts [\#413](https://github.com/feathersjs-ecosystem/feathers-mongoose/pull/413) ([bartduisters](https://github.com/bartduisters))
+- Fix typing [\#418](https://github.com/feathersjs-ecosystem/feathers-mongoose/pull/418) ([bartduisters](https://github.com/bartduisters))
+- Fix typo in README [\#416](https://github.com/feathersjs-ecosystem/feathers-mongoose/pull/416) ([ericirish](https://github.com/ericirish))
+- chore\(dependencies\): Update all dependencies [\#415](https://github.com/feathersjs-ecosystem/feathers-mongoose/pull/415) ([daffl](https://github.com/daffl))
+
+## [v8.4.2](https://github.com/feathersjs-ecosystem/feathers-mongoose/tree/v8.4.2) (2021-11-11)
+
+[Full Changelog](https://github.com/feathersjs-ecosystem/feathers-mongoose/compare/v8.4.1...v8.4.2)
+
+**Closed issues:**
+
+- type definition error on MongooseServiceOptions\<T & Document\> [\#412](https://github.com/feathersjs-ecosystem/feathers-mongoose/issues/412)
 
 ## [v8.4.1](https://github.com/feathersjs-ecosystem/feathers-mongoose/tree/v8.4.1) (2021-10-21)
 
@@ -16,6 +25,11 @@
 **Closed issues:**
 
 - Fix TSLint errors after upgrade [\#411](https://github.com/feathersjs-ecosystem/feathers-mongoose/issues/411)
+
+**Merged pull requests:**
+
+- Fix TypeScript linting [\#414](https://github.com/feathersjs-ecosystem/feathers-mongoose/pull/414) ([daffl](https://github.com/daffl))
+- Update index.d.ts [\#413](https://github.com/feathersjs-ecosystem/feathers-mongoose/pull/413) ([bartduisters](https://github.com/bartduisters))
 
 ## [v8.4.0](https://github.com/feathersjs-ecosystem/feathers-mongoose/tree/v8.4.0) (2021-09-29)
 
@@ -67,7 +81,7 @@
 
 ## [v8.3.1](https://github.com/feathersjs-ecosystem/feathers-mongoose/tree/v8.3.1) (2020-06-22)
 
-[Full Changelog](https://github.com/feathersjs-ecosystem/feathers-mongoose/compare/v8.3.0...v8.3.1)
+[Full Changelog](https://github.com/feathersjs-ecosystem/feathers-mongoose/compare/8.3.0...v8.3.1)
 
 **Closed issues:**
 
@@ -92,13 +106,13 @@
 - Update dtslint to the latest version 🚀 [\#371](https://github.com/feathersjs-ecosystem/feathers-mongoose/pull/371) ([greenkeeper[bot]](https://github.com/apps/greenkeeper))
 - Update all dependencies and Types version [\#368](https://github.com/feathersjs-ecosystem/feathers-mongoose/pull/368) ([daffl](https://github.com/daffl))
 
-## [v8.3.0](https://github.com/feathersjs-ecosystem/feathers-mongoose/tree/v8.3.0) (2020-01-08)
-
-[Full Changelog](https://github.com/feathersjs-ecosystem/feathers-mongoose/compare/8.3.0...v8.3.0)
-
 ## [8.3.0](https://github.com/feathersjs-ecosystem/feathers-mongoose/tree/8.3.0) (2020-01-08)
 
-[Full Changelog](https://github.com/feathersjs-ecosystem/feathers-mongoose/compare/v8.2.0...8.3.0)
+[Full Changelog](https://github.com/feathersjs-ecosystem/feathers-mongoose/compare/v8.3.0...8.3.0)
+
+## [v8.3.0](https://github.com/feathersjs-ecosystem/feathers-mongoose/tree/v8.3.0) (2020-01-08)
+
+[Full Changelog](https://github.com/feathersjs-ecosystem/feathers-mongoose/compare/v8.2.0...v8.3.0)
 
 **Fixed bugs:**
 
