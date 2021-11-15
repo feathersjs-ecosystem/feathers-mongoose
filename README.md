@@ -1,8 +1,6 @@
 # feathers-mongoose
 
-[![Greenkeeper badge](https://badges.greenkeeper.io/feathersjs-ecosystem/feathers-mongoose.svg)](https://greenkeeper.io/)
-
-[![Build Status](https://travis-ci.org/feathersjs-ecosystem/feathers-mongoose.png?branch=master)](https://travis-ci.org/feathersjs-ecosystem/feathers-mongoose)
+[![CI](https://github.com/feathersjs-ecosystem/feathers-mongoose/workflows/CI/badge.svg)](https://github.com/feathersjs-ecosystem/feathers-mongoose/actions?query=workflow%3ACI)
 [![Dependency Status](https://img.shields.io/david/feathersjs-ecosystem/feathers-mongoose.svg?style=flat-square)](https://david-dm.org/feathersjs-ecosystem/feathers-mongoose)
 [![Download Status](https://img.shields.io/npm/dm/feathers-mongoose.svg?style=flat-square)](https://www.npmjs.com/package/feathers-mongoose)
 
@@ -51,7 +49,7 @@ __Options:__
 - `multi` (*optional*) - Allow `create` with arrays and `update` and `remove` with `id` `null` to change multiple items. Can be `true` for all methods or an array of allowed methods (e.g. `[ 'remove', 'create' ]`)
 - `overwrite` (*optional*, default: `true`) - Overwrite the document when update, making mongoose detect is new document and trigger default value for unspecified properties in mongoose schema.
 - `discriminators` (*optional*) - A list of mongoose models that inherit from `Model`.
-- `useEstimatedDocumentCount` (*optional*, default: `false`) - Use `estimatedDocumentCount` instead (usuall not necessary)
+- `useEstimatedDocumentCount` (*optional*, default: `false`) - Use `estimatedDocumentCount` instead (usually not necessary)
 - `queryModifier` (*optional*) - A function that takes in the raw mongoose Query object and params, which modifies all find and get requests unless overridden. (see Query Modifiers below)
 - `queryModifierKey` (*optional*, default: `'queryModifier'`) - The key to use to get the override query modifier function from the params. (see Query Modifiers below)
 
@@ -391,7 +389,7 @@ app.service('messages').find({
 });
 ```
 
-**Note:** Due to replication lag, a secondary node can have "stale" data. You should ensure that this "staleness" will not be an issue for you use case before reading from the secondary set.
+> **Note:** Due to replication lag, a secondary node can have "stale" data. You should ensure that this "staleness" will not be an issue for your application before reading from the secondary set.
 
 ## Contributing
 

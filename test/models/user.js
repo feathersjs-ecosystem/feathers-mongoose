@@ -5,7 +5,7 @@ const negativeAgeValidator = function () {
   // With option "context: 'query'", mongoose pass a Query object to validators when update or findAndModify a mongoose object
   // Plus findAndModify mongoose method put document in a $set object when update mongoose method don't
   // So you're forced to test these cases to retrieve your properties
-  var age = (this.constructor.name === 'Query' ? (this.getUpdate().$set ? this.getUpdate().$set.age : this.getUpdate().age) : this.age);
+  const age = (this.constructor.name === 'Query' ? (this.getUpdate().$set ? this.getUpdate().$set.age : this.getUpdate().age) : this.age);
   return (age > 0);
 };
 

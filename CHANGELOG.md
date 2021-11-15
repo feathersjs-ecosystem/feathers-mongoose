@@ -2,15 +2,61 @@
 
 ## [Unreleased](https://github.com/feathersjs-ecosystem/feathers-mongoose/tree/HEAD)
 
-[Full Changelog](https://github.com/feathersjs-ecosystem/feathers-mongoose/compare/v8.3.3...HEAD)
+[Full Changelog](https://github.com/feathersjs-ecosystem/feathers-mongoose/compare/v8.4.2...HEAD)
 
 **Merged pull requests:**
 
-- Only $populate if it's whitelisted [\#402](https://github.com/feathersjs-ecosystem/feathers-mongoose/pull/402) ([GautierT](https://github.com/GautierT))
+- Fix typing [\#418](https://github.com/feathersjs-ecosystem/feathers-mongoose/pull/418) ([bartduisters](https://github.com/bartduisters))
+- Fix typo in README [\#416](https://github.com/feathersjs-ecosystem/feathers-mongoose/pull/416) ([ericirish](https://github.com/ericirish))
+- chore\(dependencies\): Update all dependencies [\#415](https://github.com/feathersjs-ecosystem/feathers-mongoose/pull/415) ([daffl](https://github.com/daffl))
+
+## [v8.4.2](https://github.com/feathersjs-ecosystem/feathers-mongoose/tree/v8.4.2) (2021-11-11)
+
+[Full Changelog](https://github.com/feathersjs-ecosystem/feathers-mongoose/compare/v8.4.1...v8.4.2)
+
+**Closed issues:**
+
+- type definition error on MongooseServiceOptions\<T & Document\> [\#412](https://github.com/feathersjs-ecosystem/feathers-mongoose/issues/412)
+
+## [v8.4.1](https://github.com/feathersjs-ecosystem/feathers-mongoose/tree/v8.4.1) (2021-10-21)
+
+[Full Changelog](https://github.com/feathersjs-ecosystem/feathers-mongoose/compare/v8.4.0...v8.4.1)
+
+**Closed issues:**
+
+- Fix TSLint errors after upgrade [\#411](https://github.com/feathersjs-ecosystem/feathers-mongoose/issues/411)
+
+**Merged pull requests:**
+
+- Fix TypeScript linting [\#414](https://github.com/feathersjs-ecosystem/feathers-mongoose/pull/414) ([daffl](https://github.com/daffl))
+- Update index.d.ts [\#413](https://github.com/feathersjs-ecosystem/feathers-mongoose/pull/413) ([bartduisters](https://github.com/bartduisters))
+
+## [v8.4.0](https://github.com/feathersjs-ecosystem/feathers-mongoose/tree/v8.4.0) (2021-09-29)
+
+[Full Changelog](https://github.com/feathersjs-ecosystem/feathers-mongoose/compare/v8.3.3...v8.4.0)
+
+**Closed issues:**
+
+- mongodump doesn't support collections with a slash in their name [\#408](https://github.com/feathersjs-ecosystem/feathers-mongoose/issues/408)
+- whitelist $and operator problems [\#406](https://github.com/feathersjs-ecosystem/feathers-mongoose/issues/406)
+- how release some function look intro [\#405](https://github.com/feathersjs-ecosystem/feathers-mongoose/issues/405)
+- `upsert: true` does not support `multi: 'patch'` [\#404](https://github.com/feathersjs-ecosystem/feathers-mongoose/issues/404)
+- `upsert: true` skips schema validation  [\#403](https://github.com/feathersjs-ecosystem/feathers-mongoose/issues/403)
+- Mongoose service not returning Map attribute [\#398](https://github.com/feathersjs-ecosystem/feathers-mongoose/issues/398)
+
+**Merged pull requests:**
+
+- Update to Mongoose 6 and upgrade project infrastructure [\#410](https://github.com/feathersjs-ecosystem/feathers-mongoose/pull/410) ([daffl](https://github.com/daffl))
+- fix: create returns undefined if data is empty array \(for multi\) [\#394](https://github.com/feathersjs-ecosystem/feathers-mongoose/pull/394) ([bwgjoseph](https://github.com/bwgjoseph))
+- Improved typing of Model property [\#390](https://github.com/feathersjs-ecosystem/feathers-mongoose/pull/390) ([rnbrady](https://github.com/rnbrady))
 
 ## [v8.3.3](https://github.com/feathersjs-ecosystem/feathers-mongoose/tree/v8.3.3) (2021-04-08)
 
 [Full Changelog](https://github.com/feathersjs-ecosystem/feathers-mongoose/compare/v8.3.2...v8.3.3)
+
+**Merged pull requests:**
+
+- Only $populate if it's whitelisted [\#402](https://github.com/feathersjs-ecosystem/feathers-mongoose/pull/402) ([GautierT](https://github.com/GautierT))
 
 ## [v8.3.2](https://github.com/feathersjs-ecosystem/feathers-mongoose/tree/v8.3.2) (2021-04-08)
 
@@ -35,7 +81,7 @@
 
 ## [v8.3.1](https://github.com/feathersjs-ecosystem/feathers-mongoose/tree/v8.3.1) (2020-06-22)
 
-[Full Changelog](https://github.com/feathersjs-ecosystem/feathers-mongoose/compare/v8.3.0...v8.3.1)
+[Full Changelog](https://github.com/feathersjs-ecosystem/feathers-mongoose/compare/8.3.0...v8.3.1)
 
 **Closed issues:**
 
@@ -60,13 +106,13 @@
 - Update dtslint to the latest version 🚀 [\#371](https://github.com/feathersjs-ecosystem/feathers-mongoose/pull/371) ([greenkeeper[bot]](https://github.com/apps/greenkeeper))
 - Update all dependencies and Types version [\#368](https://github.com/feathersjs-ecosystem/feathers-mongoose/pull/368) ([daffl](https://github.com/daffl))
 
-## [v8.3.0](https://github.com/feathersjs-ecosystem/feathers-mongoose/tree/v8.3.0) (2020-01-08)
-
-[Full Changelog](https://github.com/feathersjs-ecosystem/feathers-mongoose/compare/8.3.0...v8.3.0)
-
 ## [8.3.0](https://github.com/feathersjs-ecosystem/feathers-mongoose/tree/8.3.0) (2020-01-08)
 
-[Full Changelog](https://github.com/feathersjs-ecosystem/feathers-mongoose/compare/v8.2.0...8.3.0)
+[Full Changelog](https://github.com/feathersjs-ecosystem/feathers-mongoose/compare/v8.3.0...8.3.0)
+
+## [v8.3.0](https://github.com/feathersjs-ecosystem/feathers-mongoose/tree/v8.3.0) (2020-01-08)
+
+[Full Changelog](https://github.com/feathersjs-ecosystem/feathers-mongoose/compare/v8.2.0...v8.3.0)
 
 **Fixed bugs:**
 
@@ -511,7 +557,7 @@
 - Update semistandard to the latest version 🚀 [\#183](https://github.com/feathersjs-ecosystem/feathers-mongoose/pull/183) ([greenkeeper[bot]](https://github.com/apps/greenkeeper))
 - Update feathers-hooks to the latest version 🚀 [\#182](https://github.com/feathersjs-ecosystem/feathers-mongoose/pull/182) ([greenkeeper[bot]](https://github.com/apps/greenkeeper))
 - Update dependencies to enable Greenkeeper 🌴 [\#181](https://github.com/feathersjs-ecosystem/feathers-mongoose/pull/181) ([greenkeeper[bot]](https://github.com/apps/greenkeeper))
-- Discriminated Model Support [\#180](https://github.com/feathersjs-ecosystem/feathers-mongoose/pull/180) ([startupthekid](https://github.com/startupthekid))
+- Discriminated Model Support [\#180](https://github.com/feathersjs-ecosystem/feathers-mongoose/pull/180) ([thebarndog](https://github.com/thebarndog))
 - Update sinon to version 2.0.0 🚀 [\#176](https://github.com/feathersjs-ecosystem/feathers-mongoose/pull/176) ([greenkeeperio-bot](https://github.com/greenkeeperio-bot))
 
 ## [v5.0.3](https://github.com/feathersjs-ecosystem/feathers-mongoose/tree/v5.0.3) (2017-03-02)
