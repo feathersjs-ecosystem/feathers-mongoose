@@ -2,13 +2,19 @@
 
 ## [Unreleased](https://github.com/feathersjs-ecosystem/feathers-mongoose/tree/HEAD)
 
-[Full Changelog](https://github.com/feathersjs-ecosystem/feathers-mongoose/compare/v8.4.2...HEAD)
+[Full Changelog](https://github.com/feathersjs-ecosystem/feathers-mongoose/compare/v8.5.0...HEAD)
 
 **Merged pull requests:**
 
-- Fix typing [\#418](https://github.com/feathersjs-ecosystem/feathers-mongoose/pull/418) ([bartduisters](https://github.com/bartduisters))
-- Fix typo in README [\#416](https://github.com/feathersjs-ecosystem/feathers-mongoose/pull/416) ([ericirish](https://github.com/ericirish))
-- chore\(dependencies\): Update all dependencies [\#415](https://github.com/feathersjs-ecosystem/feathers-mongoose/pull/415) ([daffl](https://github.com/daffl))
+- add query modifier function support. [\#409](https://github.com/feathersjs-ecosystem/feathers-mongoose/pull/409) ([mrfrase3](https://github.com/mrfrase3))
+
+## [v8.5.0](https://github.com/feathersjs-ecosystem/feathers-mongoose/tree/v8.5.0) (2021-11-16)
+
+[Full Changelog](https://github.com/feathersjs-ecosystem/feathers-mongoose/compare/v8.4.2...v8.5.0)
+
+**Closed issues:**
+
+- Support specifying which replica set to read from [\#407](https://github.com/feathersjs-ecosystem/feathers-mongoose/issues/407)
 
 ## [v8.4.2](https://github.com/feathersjs-ecosystem/feathers-mongoose/tree/v8.4.2) (2021-11-11)
 
@@ -17,6 +23,12 @@
 **Closed issues:**
 
 - type definition error on MongooseServiceOptions\<T & Document\> [\#412](https://github.com/feathersjs-ecosystem/feathers-mongoose/issues/412)
+
+**Merged pull requests:**
+
+- Fix typing [\#418](https://github.com/feathersjs-ecosystem/feathers-mongoose/pull/418) ([bartduisters](https://github.com/bartduisters))
+- Fix typo in README [\#416](https://github.com/feathersjs-ecosystem/feathers-mongoose/pull/416) ([ericirish](https://github.com/ericirish))
+- chore\(dependencies\): Update all dependencies [\#415](https://github.com/feathersjs-ecosystem/feathers-mongoose/pull/415) ([daffl](https://github.com/daffl))
 
 ## [v8.4.1](https://github.com/feathersjs-ecosystem/feathers-mongoose/tree/v8.4.1) (2021-10-21)
 
