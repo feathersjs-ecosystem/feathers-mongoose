@@ -360,8 +360,7 @@ app.use('/messages', service({
   Model,
   queryModifier: (query, params) => {
     query.read('secondaryPreferred');
-  },
-  queryModifierKey: '__queryModifier__' // default is 'queryModifier'
+  }
 }));
 
 app.service('messages').find({
@@ -373,7 +372,7 @@ app.service('messages').find({
 // Override the modifier on a per-request basis
 app.service('messages').find({
   query: { ... },
-  __queryModifier__: (query, params) => {
+  queryModifier: (query, params) => {
     query.read('primaryPreferred');
   }
 }).then((result) => {
@@ -383,7 +382,7 @@ app.service('messages').find({
 // Disable the global modifier on a per-request basis
 app.service('messages').find({
   query: { ... },
-  __queryModifier__: false
+  queryModifier: false
 }).then((result) => {
   console.log('Result from default option:', result)
 });
