@@ -1,7 +1,7 @@
 // TypeScript Version: 4.0
 import { Params, Paginated, Id, NullableId, Hook } from '@feathersjs/feathers';
 import { AdapterService, ServiceOptions, InternalServiceMethods } from '@feathersjs/adapter-commons';
-import { Model, Document } from 'mongoose';
+import { Model, Document, Query } from 'mongoose';
 
 export namespace hooks {
   function toObject(options?: any, dataField?: string): Hook;
@@ -18,6 +18,8 @@ export interface MongooseServiceOptions<T extends Document = any> extends Servic
   lean: boolean;
   overwrite: boolean;
   useEstimatedDocumentCount: boolean;
+  queryModifier?: (query: Query, params: Params) => void;
+  queryModifierKey?: string;
 }
 
 export class Service<T = any> extends AdapterService<T> implements InternalServiceMethods<T> {
