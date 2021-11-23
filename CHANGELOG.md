@@ -2,11 +2,15 @@
 
 ## [Unreleased](https://github.com/feathersjs-ecosystem/feathers-mongoose/tree/HEAD)
 
-[Full Changelog](https://github.com/feathersjs-ecosystem/feathers-mongoose/compare/v8.5.0...HEAD)
+[Full Changelog](https://github.com/feathersjs-ecosystem/feathers-mongoose/compare/v8.5.1...HEAD)
 
 **Merged pull requests:**
 
-- add query modifier function support. [\#409](https://github.com/feathersjs-ecosystem/feathers-mongoose/pull/409) ([mrfrase3](https://github.com/mrfrase3))
+- Fixing compile error on Query in TS [\#419](https://github.com/feathersjs-ecosystem/feathers-mongoose/pull/419) ([asadoll](https://github.com/asadoll))
+
+## [v8.5.1](https://github.com/feathersjs-ecosystem/feathers-mongoose/tree/v8.5.1) (2021-11-23)
+
+[Full Changelog](https://github.com/feathersjs-ecosystem/feathers-mongoose/compare/v8.5.0...v8.5.1)
 
 ## [v8.5.0](https://github.com/feathersjs-ecosystem/feathers-mongoose/tree/v8.5.0) (2021-11-16)
 
@@ -15,6 +19,10 @@
 **Closed issues:**
 
 - Support specifying which replica set to read from [\#407](https://github.com/feathersjs-ecosystem/feathers-mongoose/issues/407)
+
+**Merged pull requests:**
+
+- add query modifier function support. [\#409](https://github.com/feathersjs-ecosystem/feathers-mongoose/pull/409) ([mrfrase3](https://github.com/mrfrase3))
 
 ## [v8.4.2](https://github.com/feathersjs-ecosystem/feathers-mongoose/tree/v8.4.2) (2021-11-11)
 
