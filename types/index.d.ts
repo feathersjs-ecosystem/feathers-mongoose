@@ -18,7 +18,7 @@ export interface MongooseServiceOptions<T extends Document = any> extends Servic
   lean: boolean;
   overwrite: boolean;
   useEstimatedDocumentCount: boolean;
-  queryModifier?: (query: Query, params: Params) => void;
+  queryModifier?: (query: Query<any, any>, params: Params) => void;
   queryModifierKey?: string;
 }
 
