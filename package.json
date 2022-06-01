@@ -72,25 +72,25 @@
     "mongoose": ">=6.0.14"
   },
   "dependencies": {
-    "@feathersjs/adapter-commons": "^4.5.12",
-    "@feathersjs/commons": "^4.5.12",
-    "@feathersjs/errors": "^4.5.12"
+    "@feathersjs/adapter-commons": "^4.5.15",
+    "@feathersjs/commons": "^4.5.15",
+    "@feathersjs/errors": "^4.5.15"
   },
   "devDependencies": {
-    "@feathersjs/adapter-tests": "^4.5.12",
-    "@feathersjs/express": "^4.5.12",
-    "@feathersjs/feathers": "^4.5.12",
-    "@feathersjs/socketio": "^4.5.13",
+    "@feathersjs/adapter-tests": "^4.5.15",
+    "@feathersjs/express": "^4.5.15",
+    "@feathersjs/feathers": "^4.5.15",
+    "@feathersjs/socketio": "^4.5.15",
     "chai": "^4.3.6",
     "dtslint": "^4.2.1",
-    "mocha": "^9.2.0",
-    "mongoose": "^6.1.9",
-    "npm-check-updates": "^12.2.1",
+    "mocha": "^10.0.0",
+    "mongoose": "^6.3.5",
+    "npm-check-updates": "^13.0.3",
     "nyc": "^15.1.0",
     "run-rs": "^0.7.6",
     "semistandard": "^16.0.1",
-    "sinon": "^13.0.0",
+    "sinon": "^14.0.0",
     "sinon-chai": "^3.7.0",
-    "typescript": "^4.5.5"
+    "typescript": "^4.7.2"
   }
 }
