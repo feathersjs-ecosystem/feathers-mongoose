@@ -83,14 +83,14 @@
     "@feathersjs/socketio": "^4.5.15",
     "chai": "^4.3.6",
     "dtslint": "^4.2.1",
-    "mocha": "^10.0.0",
-    "mongoose": "^6.5.4",
-    "npm-check-updates": "^16.0.6",
+    "mocha": "^10.1.0",
+    "mongoose": "^6.7.0",
+    "npm-check-updates": "^16.3.16",
     "nyc": "^15.1.0",
     "run-rs": "^0.7.7",
     "semistandard": "^16.0.1",
-    "sinon": "^14.0.0",
+    "sinon": "^14.0.1",
     "sinon-chai": "^3.7.0",
-    "typescript": "^4.8.2"
+    "typescript": "^4.8.4"
   }
 }
