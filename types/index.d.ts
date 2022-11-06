@@ -20,6 +20,7 @@ export interface MongooseServiceOptions<T extends Document = any> extends Servic
   useEstimatedDocumentCount: boolean;
   queryModifier?: (query: Query<any, any>, params: Params) => void;
   queryModifierKey?: string;
+  discriminators?: Model<T>[];
 }
 
 export class Service<T = any> extends AdapterService<T> implements InternalServiceMethods<T> {
