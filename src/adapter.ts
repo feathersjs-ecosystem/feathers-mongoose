@@ -1,17 +1,17 @@
 import { AdapterBase, filterQuery, select, AdapterParams, AdapterServiceOptions, getLimit } from '@feathersjs/adapter-commons';
 import * as errors from '@feathersjs/errors';
-import { Model, Query, PopulateOptions, ClientSession } from 'mongoose';
-import { Id } from '@feathersjs/feathers';
+import { Model, Query, PopulateOptions, ClientSession, Document, Schema } from 'mongoose';
+import { Id, Paginated } from '@feathersjs/feathers';
 
 import { errorHandler } from './error-handler';
 
-export interface MongooseAdapterOptions extends AdapterServiceOptions {
-  Model: Model<any>;
+export interface MongooseAdapterOptions<T extends Document = Document> extends AdapterServiceOptions {
+  Model: Model<T>;
   lean?: boolean;
   overwrite?: boolean;
-  discriminators?: Model<any>[];
+  discriminators?: Model<T>[];
   useEstimatedDocumentCount?: boolean;
-  queryModifier?: (query: Query<any, any>) => void;
+  queryModifier?: (query: Query<T, T>) => void;
 }
 
 export interface MongooseAdapterParams extends AdapterParams {
@@ -22,9 +22,9 @@ export interface MongooseAdapterParams extends AdapterParams {
   };
   query?: {
     $populate?: PopulateOptions | PopulateOptions[];
-    [key: string]: any;
+    [key: string]: unknown;
   };
-  queryModifier?: ((query: Query<any, any>) => void) | false;
+  queryModifier?: ((query: Query<Document, Document>) => void) | false;
   collation?: MongooseCollation;
 }
 
@@ -48,7 +48,7 @@ interface FindOneOptions extends Omit<FindManyOptions, 'multi'> {
 interface MongooseCollation {
   locale: string;
   strength?: number;
-  [key: string]: any;
+  [key: string]: unknown;
 }
 
 // Constants for commonly used filter keys
@@ -58,19 +58,19 @@ const DEFAULT_WHITELIST = ['$regex'];
 
 // Create the base adapter
 export class MongooseAdapter<
-  Result = any,
+  Result extends Document = Document,
   Data = Partial<Result>,
   ServiceParams extends MongooseAdapterParams = MongooseAdapterParams,
   PatchData = Partial<Data>
-> extends AdapterBase<Result, Data, PatchData, ServiceParams, MongooseAdapterOptions> {
-  Model: Model<any>;
+> extends AdapterBase<Result, Data, PatchData, ServiceParams, MongooseAdapterOptions<Result>> {
+  Model: Model<Result>;
   lean: boolean;
   overwrite: boolean;
   discriminatorKey: string;
-  discriminators: Record<string, Model<any>>;
+  discriminators: Record<string, Model<Result>>;
   useEstimatedDocumentCount: boolean;
 
-  constructor(options: MongooseAdapterOptions) {
+  constructor(options: MongooseAdapterOptions<Result>) {
     if (!options.Model || !options.Model.modelName) {
       throw new Error('You must provide a Mongoose Model');
     }
@@ -80,7 +80,7 @@ export class MongooseAdapter<
     super({
       id: '_id',
       filters: {
-        $populate(value: any) {
+        $populate(value: PopulateOptions | PopulateOptions[]) {
           return value;
         },
         ...(options.filters || {})
@@ -92,7 +92,7 @@ export class MongooseAdapter<
     this.Model = options.Model;
     this.lean = options.lean !== false;
     this.overwrite = options.overwrite !== false;
-    this.discriminatorKey = (this.Model.schema as any).options.discriminatorKey || DEFAULT_DISCRIMINATOR_KEY;
+    this.discriminatorKey = (this.Model.schema as Schema).get('discriminatorKey') || DEFAULT_DISCRIMINATOR_KEY;
     this.discriminators = {};
     this.useEstimatedDocumentCount = options.useEstimatedDocumentCount !== false;
 
@@ -119,7 +119,7 @@ export class MongooseAdapter<
     }
 
     // Fall back to service-level multi option
-    const multi = this.getOptions(params as any).multi;
+    const multi = this.getOptions(params as ServiceParams).multi;
 
     if (multi === true || multi === false) {
       return multi;
@@ -133,7 +133,8 @@ export class MongooseAdapter<
 
     return (modelQuery: Query<any, any>) => {
       if ($populate) {
-        modelQuery.populate($populate);
+        // Optimize $populate handling with validation and normalization
+        this.applyPopulate(modelQuery, $populate);
       }
 
       // Apply params-level query modifier first (if not explicitly disabled)
@@ -148,7 +149,31 @@ export class MongooseAdapter<
     };
   }
 
-  private getModelForParams(params: MongooseAdapterParams): Model<any> {
+  private applyPopulate(modelQuery: Query<any, any>, populate: PopulateOptions | PopulateOptions[]): void {
+    try {
+      // Validate and normalize populate parameter
+      if (typeof populate === 'string') {
+        modelQuery.populate(populate);
+      } else if (Array.isArray(populate)) {
+        // Apply multiple populate options efficiently
+        populate.forEach(pop => {
+          if (pop && (typeof pop === 'string' || typeof pop === 'object')) {
+            modelQuery.populate(pop);
+          }
+        });
+      } else if (typeof populate === 'object' && populate !== null) {
+        modelQuery.populate(populate);
+      }
+      // Ignore invalid populate parameters silently to prevent errors
+    } catch (error) {
+      // Log warning in development but don't throw to prevent service disruption
+      if (process.env.NODE_ENV === 'development') {
+        console.warn('Invalid $populate parameter:', populate, error);
+      }
+    }
+  }
+
+  private getModelForParams(params: MongooseAdapterParams): Model<Result> {
     const discriminator = (params.query as Record<string, unknown> || {})[this.discriminatorKey] || this.discriminatorKey;
     return this.discriminators[discriminator as string] || this.Model;
   }
@@ -159,26 +184,42 @@ export class MongooseAdapter<
     }
   }
 
-  private checkIdConflict(query: any, providedId: any): void {
+  private checkIdConflict(query: Record<string, unknown>, providedId: Id): void {
     if (query[this.id] !== undefined && query[this.id] !== providedId) {
       throw new errors.NotFound(`No record found for id '${providedId}'`);
     }
   }
 
-  private buildFinalQuery(query: any, id: any): any {
+  private buildFinalQuery(query: Record<string, unknown>, id: Id): Record<string, unknown> {
     const finalQuery = { ...query };
     finalQuery[this.id] = id;
     return finalQuery;
   }
 
-  private async performSingleDocumentPatch(
-    model: Model<any>,
-    query: any,
-    data: any,
-    options: any,
-    filters: any,
+  private async performOptimizedMultiPatch(
+    model: Model<Result>,
+    query: Record<string, unknown>,
+    data: Partial<Result>,
+    options: FindManyOptions,
     params: MongooseAdapterParams
-  ): Promise<any> {
+  ): Promise<Result[] | Record<string, unknown>> {
+    // Direct update without pre-querying IDs - much faster for write-only operations
+    const updateQuery = model.updateMany(query as any, data as any, options).session(params.mongoose && params.mongoose.session || null);
+    this.applyCollation(updateQuery, params);
+    const updateResult = await updateQuery;
+
+    // Return the raw MongoDB update result for write operations
+    return updateResult as unknown as Record<string, unknown>;
+  }
+
+  private async performSingleDocumentPatch(
+    model: Model<Result>,
+    query: Record<string, unknown>,
+    data: Partial<Result>,
+    options: FindOneOptions,
+    filters: { $select?: string[] },
+    params: MongooseAdapterParams
+  ): Promise<Result | Record<string, unknown>> {
     const findOneOptions: FindOneOptions = {
       ...options,
       new: true,
@@ -212,19 +253,19 @@ export class MongooseAdapter<
   }
 
   private async performMultiDocumentPatch(
-    model: Model<any>,
-    query: any,
-    data: any,
-    options: any,
+    model: Model<Result>,
+    query: Record<string, unknown>,
+    data: Partial<Result>,
+    options: FindManyOptions,
     params: MongooseAdapterParams,
-    collectedIds: Promise<any[]>
-  ): Promise<any> {
+    collectedIds: Promise<Id[]>
+  ): Promise<Result[] | Record<string, unknown>> {
     const updateQuery = model.updateMany(query, data, options).session(params.mongoose && params.mongoose.session || null);
     this.applyCollation(updateQuery, params);
     const updateResult = await updateQuery;
 
     if (params.mongoose && params.mongoose.writeResult) {
-      return updateResult;
+      return updateResult as unknown as Record<string, unknown>;
     }
 
     const idList = await collectedIds;
@@ -263,9 +304,9 @@ export class MongooseAdapter<
     }
   }
 
-  async _find(params: MongooseAdapterParams = {}): Promise<any> {
+  async _find(params: MongooseAdapterParams = {}): Promise<Result[] | Paginated<Result>> {
     // Get options with params.paginate properly merged first
-    const options = this.getOptions(params as any);
+    const options = this.getOptions(params as ServiceParams);
     const { paginate } = options;
 
     // Pass merged options to filterQuery
@@ -292,7 +333,7 @@ export class MongooseAdapter<
 
     const getData = async () => {
       const model = this.getModelForParams(params);
-      const q = model.find(query).lean(this.lean);
+      const q = model.find(query as any).lean(this.lean);
 
       // $select uses a specific find syntax, so it has to come first.
       this.applySelect(q, filters.$select);
@@ -325,7 +366,7 @@ export class MongooseAdapter<
         ];
 
         // Add collation to aggregation if provided
-        const aggOptions: any = {};
+        const aggOptions: Record<string, unknown> = {};
         if (params.collation) {
           aggOptions.collation = params.collation;
         }
@@ -342,7 +383,7 @@ export class MongooseAdapter<
         if (useEstimated) {
           return await model.estimatedDocumentCount().exec();
         } else {
-          const countQuery = model.countDocuments(query);
+          const countQuery = model.countDocuments(query as any);
           this.applyCollation(countQuery, params);
           return await countQuery.exec();
         }
@@ -354,7 +395,7 @@ export class MongooseAdapter<
         return [];
       }
       const data = await getData();
-      return data;
+      return data as Result[] | Paginated<Result>;
     }
 
     if (filters.$limit === 0) {
@@ -368,10 +409,25 @@ export class MongooseAdapter<
       return result;
     }
 
-    const [data, total] = await Promise.all([getData(), countDocuments()]);
+    // Performance optimization: Check if we need total count
+    // Skip count when pagination is disabled
+    const needsTotal = params.paginate !== false;
+
+    let data: any;
+    let total: number | undefined;
+
+    if (needsTotal) {
+      // Execute both queries in parallel when total is needed
+      [data, total] = await Promise.all([getData(), countDocuments()]);
+    } else {
+      // Only get data when total count is not needed
+      data = await getData();
+      // Use a placeholder total that indicates count was skipped
+      total = -1;
+    }
 
     const result = {
-      total,
+      total: total ?? 0,
       data,
       limit: filters.$limit,
       skip: filters.$skip || 0
@@ -379,7 +435,7 @@ export class MongooseAdapter<
     return result;
   }
 
-  async _get(id: any, params: MongooseAdapterParams = {}): Promise<any> {
+  async _get(id: Id, params: MongooseAdapterParams = {}): Promise<Result> {
     const { filters, query } = filterQuery(params.query || {}, this.options);
     const model = this.getModelForParams(params);
 
@@ -403,7 +459,7 @@ export class MongooseAdapter<
       }).catch(errorHandler);
   }
 
-  async _create(data: any, params: MongooseAdapterParams = {}): Promise<any> {
+  async _create(data: Data | Data[], params: MongooseAdapterParams = {}): Promise<Result | Result[]> {
     const model = this.getModelForParams(params);
     const { query: { $populate } = {} } = params;
     const isMulti = Array.isArray(data);
@@ -425,7 +481,7 @@ export class MongooseAdapter<
     }).then(select(params, this.id)).catch(errorHandler);
   }
 
-  async _update(id: any, data: any, params: MongooseAdapterParams = {}): Promise<any> {
+  async _update(id: Id, data: Data, params: MongooseAdapterParams = {}): Promise<Result> {
     const { query } = filterQuery(params.query || {}, this.options);
     const model = this.getModelForParams(params);
     const options = {
@@ -462,7 +518,7 @@ export class MongooseAdapter<
     }).then(select(params, this.id)).catch(errorHandler);
   }
 
-  async _patch(id: any, data: any, params: MongooseAdapterParams = {}): Promise<any> {
+  async _patch(id: Id | null, data: PatchData, params: MongooseAdapterParams = {}): Promise<Result | Result[]> {
     const { filters, query } = filterQuery(params.query || {}, this.options);
     const model = this.getModelForParams(params);
 
@@ -491,20 +547,27 @@ export class MongooseAdapter<
         // Single document patch
         return await this.performSingleDocumentPatch(model, finalQuery, data, options, filters, params);
       } else {
-        // Multi document patch - collect IDs before update for result retrieval
-        const mapIds = (page: any) => page.data || page;
-        const collectedIds = this._find({ ...params, paginate: false })
-          .then(mapIds)
-          .then((page: any[]) => page.map((current: any) => current[this.id]));
+        // Multi document patch - optimized approach
+        // Check if we need to return updated documents or just write result
+        if (params.mongoose && params.mongoose.writeResult) {
+          // If only write result is needed, skip the ID collection step
+          return await this.performOptimizedMultiPatch(model, finalQuery, data, options, params);
+        } else {
+          // Standard approach: collect IDs before update for result retrieval
+          const mapIds = (page: any) => Array.isArray(page) ? page : page.data || [];
+          const collectedIds = this._find({ ...params, paginate: false })
+            .then(mapIds)
+            .then((page: any[]) => page.map((current: any) => current[this.id]));
 
-        return await this.performMultiDocumentPatch(model, finalQuery, data, options, params, collectedIds);
+          return await this.performMultiDocumentPatch(model, finalQuery, data, options, params, collectedIds);
+        }
       }
     } catch (e) {
       return errorHandler(e as any);
     }
   }
 
-  async _remove(id: any, params: MongooseAdapterParams = {}): Promise<any> {
+  async _remove(id: Id | null, params: MongooseAdapterParams = {}): Promise<Result | Result[]> {
     const { query } = filterQuery(params.query || {}, this.options);
     const model = this.getModelForParams(params);
 

@@ -1,12 +1,13 @@
 import { PaginationOptions } from '@feathersjs/adapter-commons';
 import { MethodNotAllowed } from '@feathersjs/errors';
 import { Paginated, Params } from '@feathersjs/feathers';
+import { Document } from 'mongoose';
 import { MongooseAdapter, MongooseAdapterOptions, MongooseAdapterParams, AdapterId, NullableAdapterId } from './adapter';
 
 export class MongooseService<
-  Result = any,
+  Result extends Document = Document,
   Data = Partial<Result>,
-  ServiceParams extends Params<any> = MongooseAdapterParams,
+  ServiceParams extends Params = MongooseAdapterParams,
   PatchData = Partial<Data>
 > extends MongooseAdapter<Result, Data, ServiceParams, PatchData> {
   async find(params?: ServiceParams & { paginate?: PaginationOptions }): Promise<Paginated<Result>>
@@ -50,7 +51,7 @@ export class MongooseService<
   }
 }
 
-export default function init(options: MongooseAdapterOptions): MongooseService {
+export default function init<T extends Document = Document>(options: MongooseAdapterOptions<T>): MongooseService<T> {
   return new MongooseService(options);
 }
 
