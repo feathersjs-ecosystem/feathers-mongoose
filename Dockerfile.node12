@@ -17,8 +17,8 @@ RUN echo "deb http://archive.debian.org/debian stretch main" > /etc/apt/sources.
 # Copy package files first for better caching
 COPY package*.json ./
 
-# Install dependencies
-RUN npm install --no-optional
+# Install only runtime dependencies for Node 12 compatibility
+RUN npm install --production --no-optional
 
 # Copy the rest of the application (including pre-built lib files)
 COPY . .
@@ -29,5 +29,5 @@ RUN chmod +x node_modules/.bin/mocha
 # Set environment variables
 ENV NODE_ENV=test
 
-# Command to run tests
-CMD ["npm", "run", "mocha"]
+# Command to run Node 12 compatible tests
+CMD ["npm", "run", "test:node12"]
