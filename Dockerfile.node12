@@ -51,8 +51,8 @@ COPY --chown=node:node .eslintrc.js ./
 # Copy built files from builder stage
 COPY --from=builder /app/lib ./lib
 
-# Verify lib directory exists in runtime stage
-RUN ls -la lib/
+# Debug: Check current working directory and paths
+RUN pwd && ls -la && echo "Contents of lib:" && ls -la lib/
 
 # Fix mocha permissions
 RUN chmod +x node_modules/.bin/mocha
