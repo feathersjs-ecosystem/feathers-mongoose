@@ -2,7 +2,6 @@ version: '3.8'
 
 services:
   app-node12:
-    platform: linux/arm64
     build:
       context: .
       dockerfile: Dockerfile.node12
@@ -20,7 +19,6 @@ services:
     command: npm run mocha
 
   mongo:
-    platform: linux/arm64
     image: mongo:7.0
     ports:
       - "27017:27017"

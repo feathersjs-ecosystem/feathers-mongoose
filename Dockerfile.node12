@@ -1,5 +1,5 @@
 # Build stage with newer Node
-FROM --platform=linux/arm64 node:18-slim AS builder
+FROM node:18-slim AS builder
 
 WORKDIR /app
 
@@ -16,7 +16,7 @@ COPY . .
 RUN npm run build
 
 # Runtime stage with Node 12
-FROM --platform=linux/arm64 node:12-slim
+FROM node:12-slim
 
 WORKDIR /app
 
