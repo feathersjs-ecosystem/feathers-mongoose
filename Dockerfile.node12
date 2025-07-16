@@ -1,3 +1,21 @@
+# Build stage with newer Node
+FROM --platform=linux/arm64 node:18-slim AS builder
+
+WORKDIR /app
+
+# Copy package files first for better caching
+COPY package*.json ./
+
+# Install dependencies
+RUN npm install --no-optional
+
+# Copy the rest of the application
+COPY . .
+
+# Build the project
+RUN npm run build
+
+# Runtime stage with Node 12
 FROM --platform=linux/arm64 node:12-slim
 
 WORKDIR /app
@@ -19,8 +37,9 @@ COPY package*.json ./
 # Install dependencies
 RUN npm install --no-optional
 
-# Copy the rest of the application
+# Copy the rest of the application and built files
 COPY . .
+COPY --from=builder /app/lib ./lib
 
 # Fix mocha permissions
 RUN chmod +x node_modules/.bin/mocha
@@ -28,5 +47,5 @@ RUN chmod +x node_modules/.bin/mocha
 # Set environment variables
 ENV NODE_ENV=test
 
-# Command to run build and tests (skip linting for Node 12 compatibility)
-CMD ["sh", "-c", "npm run build && npm run mocha"]
+# Command to run tests only (build already done in previous stage)
+CMD ["npm", "run", "mocha"]
