@@ -32,4 +32,4 @@ node_modules
 data/
 
 # Compiled TypeScript output
-lib/
+# lib/ - temporarily checked in for Node 12 compatibility testing
