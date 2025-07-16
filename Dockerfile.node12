@@ -40,19 +40,17 @@ COPY package*.json ./
 # Install dependencies
 RUN npm install --no-optional
 
-# Copy package files and source files (but not lib directory)
-COPY --chown=node:node package*.json ./
-COPY --chown=node:node src ./src
-COPY --chown=node:node test ./test
-COPY --chown=node:node types ./types
-COPY --chown=node:node tsconfig.json ./
-COPY --chown=node:node .eslintrc.js ./
+# Copy all files except lib directory first
+COPY --chown=node:node . .
+
+# Remove any existing lib directory to ensure clean copy
+RUN rm -rf lib
 
 # Copy built files from builder stage
 COPY --from=builder /app/lib ./lib
 
 # Debug: Check current working directory and paths
-RUN pwd && ls -la && echo "Contents of lib:" && ls -la lib/
+RUN pwd && ls -la && echo "Contents of lib:" && ls -la lib/ && echo "Testing require path:" && node -e "console.log(require.resolve('./lib/error-handler'))"
 
 # Fix mocha permissions
 RUN chmod +x node_modules/.bin/mocha
