@@ -50,6 +50,43 @@ token.hooks({
 });
 
 describe('transaction-manager', () => {
+  // Connect to MongoDB before running tests
+  before(async function() {
+    this.timeout(30000); // Increase timeout for MongoDB connection
+    
+    // Use environment variable or default to localhost
+    const uri = process.env.MONGODB_URI || 'mongodb://localhost:27017/feathers-mongoose-test?replicaSet=rs0';
+    console.log('Connecting to MongoDB at:', uri);
+    
+    // Set strictQuery to false to suppress deprecation warning
+    mongoose.set('strictQuery', false);
+    
+    try {
+      // Connect with simple configuration
+      await mongoose.connect(uri, {
+        serverSelectionTimeoutMS: 30000,
+        socketTimeoutMS: 45000
+      });
+      
+      console.log('MongoDB connected successfully');
+      
+      // Verify connection by performing a simple operation
+      await mongoose.connection.db.admin().ping();
+      console.log('MongoDB ping successful');
+      
+      // Check if we're connected to a replica set (required for transactions)
+      try {
+        const status = await mongoose.connection.db.admin().command({ replSetGetStatus: 1 });
+        console.log('Connected to MongoDB replica set:', status.set);
+      } catch (err) {
+        console.warn('Not connected to a MongoDB replica set. Transactions will not work:', err.message);
+      }
+    } catch (error) {
+      console.error('MongoDB connection error:', error);
+      throw error;
+    }
+  });
+  
   const newCandidate = { name: 'abcd', token: '123' };
   it('Create transaction and commit session', async () => {
     await Candidate.deleteMany();

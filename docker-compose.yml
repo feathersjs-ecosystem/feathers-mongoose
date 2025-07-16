@@ -1,0 +1,45 @@
+version: '3.8'
+
+services:
+  app:
+    platform: linux/arm64
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - .:/app:delegated
+      - node_modules:/app/node_modules:delegated
+    environment:
+      - NODE_ENV=test
+      - MONGODB_URI=mongodb://mongo:27017/feathers-mongoose-test?replicaSet=rs0
+    depends_on:
+      mongo:
+        condition: service_healthy
+    networks:
+      - test-network
+    command: npm test
+
+  mongo:
+    platform: linux/arm64
+    image: mongo:7.0
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
+    networks:
+      - test-network
+    command: --replSet rs0 --bind_ip_all
+    healthcheck:
+      test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+
+volumes:
+  node_modules:
+  mongodb_data:
+
+networks:
+  test-network:
+    driver: bridge

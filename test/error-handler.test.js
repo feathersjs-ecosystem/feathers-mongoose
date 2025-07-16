@@ -18,10 +18,7 @@ describe('Feathers Mongoose Error Handler', () => {
   });
 
   it('wraps a ValidationError as a BadRequest', async () => {
-    const e = new errors.GeneralError();
-
-    e.name = 'ValidationError';
-    e.errors = {};
+    const e = new mongoose.Error.ValidationError();
 
     try {
       await errorHandler(e);
@@ -70,10 +67,7 @@ describe('Feathers Mongoose Error Handler', () => {
   });
 
   it('wraps a ValidatorError as a BadRequest', async () => {
-    const e = new errors.GeneralError();
-
-    e.name = 'ValidationError';
-    e.errors = {};
+    const e = new mongoose.Error.ValidatorError({ message: 'Test validator error' });
 
     try {
       await errorHandler(e);

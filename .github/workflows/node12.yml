@@ -1,0 +1,20 @@
+name: Node 12 CI
+
+on: [push, pull_request]
+
+jobs:
+  test-node12:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Run Node 12 tests with Docker Compose
+      run: |
+        # Build and run tests using docker compose
+        docker compose -f docker-compose.node12.yml up --build --abort-on-container-exit --exit-code-from app-node12
+        
+    - name: Clean up Docker containers
+      if: always()
+      run: |
+        docker compose -f docker-compose.node12.yml down -v

@@ -1,7 +1,7 @@
 # feathers-mongoose
 
-[![CI](https://github.com/feathersjs-ecosystem/feathers-mongoose/workflows/CI/badge.svg)](https://github.com/feathersjs-ecosystem/feathers-mongoose/actions?query=workflow%3ACI)
-[![Dependency Status](https://img.shields.io/david/feathersjs-ecosystem/feathers-mongoose.svg?style=flat-square)](https://david-dm.org/feathersjs-ecosystem/feathers-mongoose)
+[![CI](https://github.com/feathersjs-ecosystem/feathers-mongoose/actions/workflows/nodejs.yml/badge.svg)](https://github.com/feathersjs-ecosystem/feathers-mongoose/actions/workflows/nodejs.yml)
+[![npm version](https://img.shields.io/npm/v/feathers-mongoose.svg?style=flat-square)](https://www.npmjs.com/package/feathers-mongoose)
 [![Download Status](https://img.shields.io/npm/dm/feathers-mongoose.svg?style=flat-square)](https://www.npmjs.com/package/feathers-mongoose)
 
 A [Feathers](https://feathersjs.com) database adapter for [Mongoose](http://mongoosejs.com/), an object modeling tool for [MongoDB](https://www.mongodb.org/).
@@ -10,9 +10,32 @@ A [Feathers](https://feathersjs.com) database adapter for [Mongoose](http://mong
 $ npm install --save mongoose feathers-mongoose
 ```
 
+> **Note:** This adapter is currently tested against Mongoose 6. Mongoose 8 support is planned for a later date.
+
 > __Important:__ `feathers-mongoose` implements the [Feathers Common database adapter API](https://docs.feathersjs.com/api/databases/common.html) and [querying syntax](https://docs.feathersjs.com/api/databases/querying.html).
 
 > This adapter also requires a [running MongoDB](https://docs.mongodb.com/getting-started/shell/#) database server.
+
+### TypeScript Support
+
+This adapter includes TypeScript definitions. When using TypeScript, you can import and use it as follows:
+
+```typescript
+import mongoose from 'mongoose';
+import service from 'feathers-mongoose';
+
+interface Message {
+  text: string;
+  createdAt: Date;
+}
+
+const Model = mongoose.model<Message>('Message', new mongoose.Schema({
+  text: { type: String, required: true },
+  createdAt: { type: Date, default: Date.now }
+}));
+
+app.use('/messages', service({ Model }));
+```
 
 
 ## API
@@ -44,7 +67,7 @@ __Options:__
 - `lean` (*optional*, default: `true`) - Runs queries faster by returning plain objects instead of Mongoose models.
 - `id` (*optional*, default: `'_id'`) - The name of the id field property.
 - `events` (*optional*) - A list of [custom service events](https://docs.feathersjs.com/api/events.html#custom-events) sent by this service
-- `paginate` (*optional*) - A [pagination object](https://docs.feathersjs.com/api/databases/common.html#pagination) containing a `default` and `max` page size
+- `paginate` (*optional*) - A [pagination object](https://docs.feathersjs.com/api/databases/common.html#pagination) containing a `default` and `max` page size. When pagination is disabled (`paginate: false`), the adapter skips the total count query for better performance
 - `whitelist` (*optional*) - A list of additional query parameters to allow (e..g `[ '$regex', '$populate' ]`)
 - `multi` (*optional*) - Allow `create` with arrays and `update` and `remove` with `id` `null` to change multiple items. Can be `true` for all methods or an array of allowed methods (e.g. `[ 'remove', 'create' ]`)
 - `overwrite` (*optional*, default: `true`) - Overwrite the document when update, making mongoose detect is new document and trigger default value for unspecified properties in mongoose schema.
@@ -86,6 +109,8 @@ app.service('messages').hooks({
 The `mongoose` property is also useful for performing upserts on a `patch` request.  "Upserts" do an update if a matching record is found, or insert a record if there's no existing match.  The following example will create a document that matches the `data`, or if there's already a record that matches the `params.query`, that record will be updated.
 
 Using the `writeResult` mongoose option will return the write result of a `patch` operation, including the _ids of all upserted or modified documents. This can be helpful alongside the `upsert` flag, for detecting whether the outcome was a find or insert operation. More on write results is available in the [Mongo documentation](https://docs.mongodb.com/manual/reference/method/db.collection.update/#writeresult)
+
+> **Performance Note:** When using `writeResult` with multi-document patch operations, the adapter uses an optimized path that performs the update directly without pre-fetching document IDs, resulting in better performance for write-only operations
 
 ```js
 const data = { address: '123', identifier: 'my-identifier' }
@@ -201,6 +226,12 @@ app.service('posts').find({
   query: { $populate: 'user' }
 });
 ```
+
+The `$populate` parameter supports various formats:
+- String: `$populate: 'user'`
+- Array of strings: `$populate: ['user', 'comments']`
+- Object with options: `$populate: { path: 'user', select: 'name email' }`
+- Array of objects: `$populate: [{ path: 'user' }, { path: 'comments', options: { limit: 5 } }]`
 
 ## Error handling
 
@@ -398,16 +429,48 @@ This module is community maintained and open for pull requests. Features and bug
 - Tests to reproduce the bug or test the feature
 - Documentation updates (if necessary)
 
-To contribute, fork and clone the repository. To run the tests, a MongoDB v4.0.0 server is required. If you do not have a MongoDB server running you can start one with:
+To contribute, fork and clone the repository. This project uses Docker for local development to ensure consistency across different environments.
 
+### Running Tests Locally
+
+**Option 1: Using Docker (Recommended)**
+
+The easiest way to run tests is using Docker Compose, which will set up MongoDB 7.0 with replica set configuration:
+
+```bash
+# Start MongoDB and run tests
+docker-compose up --build
+
+# Or run tests in watch mode
+docker-compose up mongo  # Start MongoDB in background
+npm test  # Run tests on host
 ```
-npm run mongodb
+
+**Testing with Different Node Versions**
+
+To test with Node 12 (minimum supported version), you can use the alternative Docker setup:
+
+```bash
+# Test with Node 12 (skips linting due to ESLint compatibility)
+docker-compose -f docker-compose.node12.yml up --build
 ```
 
-The command needs to stay open while running the tests with
+Note: Node 12 testing skips linting steps due to ESLint compatibility issues. A separate GitHub workflow handles Node 12 testing in CI.
 
+**Option 2: Local MongoDB Setup**
 
-```
+If you prefer to use a local MongoDB installation, you'll need:
+- MongoDB 7.0 or later
+- Replica set configuration (required for transaction tests)
+
+```bash
+# Start MongoDB with replica set
+mongod --replSet rs0
+
+# Initialize replica set (first time only)
+mongosh --eval "rs.initiate()"
+
+# Run tests
 npm test
 ```
 
