@@ -40,8 +40,13 @@ COPY package*.json ./
 # Install dependencies
 RUN npm install --no-optional
 
-# Copy the rest of the application
-COPY . .
+# Copy package files and source files (but not lib directory)
+COPY --chown=node:node package*.json ./
+COPY --chown=node:node src ./src
+COPY --chown=node:node test ./test
+COPY --chown=node:node types ./types
+COPY --chown=node:node tsconfig.json ./
+COPY --chown=node:node .eslintrc.js ./
 
 # Copy built files from builder stage
 COPY --from=builder /app/lib ./lib
