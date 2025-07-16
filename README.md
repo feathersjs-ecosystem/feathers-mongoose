@@ -463,16 +463,6 @@ mongosh --eval "rs.initiate()"
 npm test
 ```
 
-**Testing Against Different Mongoose Versions**
-
-You can test against different versions of Mongoose:
-
-```bash
-npm run test-mongoose-6  # Test with Mongoose 6.x
-npm run test-mongoose-7  # Test with Mongoose 7.x
-npm run test-mongoose-8  # Test with Mongoose 8.x
-```
-
 ## License
 
 [MIT](LICENSE)

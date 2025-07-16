@@ -63,11 +63,7 @@
     "mocha": "node node_modules/.bin/mocha --timeout 15000 --recursive test/ --exit",
     "coverage": "nyc npm run mocha",
     "test": "npm run lint && npm run lint:types && npm run build && npm run coverage",
-    "test-mongoose-6": "npm i mongoose@^6.0.0 --no-save && npm run mocha",
-    "test-mongoose-7": "npm i mongoose@^7.0.0 --no-save && npm run mocha",
-    "test-mongoose-8": "npm i mongoose@^8.0.0 --no-save && npm run mocha",
-    "install-clean": "npm install --no-optional --no-package-lock",
-    "test-all-mongoose": "npm run test-mongoose-6 && npm run test-mongoose-7 && npm run test-mongoose-8"
+    "install-clean": "npm install --no-optional --no-package-lock"
   },
   "directories": {
     "lib": "lib"
