@@ -1,0 +1,32 @@
+FROM --platform=linux/arm64 node:12-slim
+
+WORKDIR /app
+
+# Update sources to use archived repositories for older Debian versions
+RUN echo "deb http://archive.debian.org/debian stretch main" > /etc/apt/sources.list \
+    && echo "deb http://archive.debian.org/debian-security stretch/updates main" >> /etc/apt/sources.list \
+    && apt-get update -o Acquire::Check-Valid-Until=false \
+    && apt-get install -y \
+        build-essential \
+        python3 \
+        libkrb5-dev \
+        libgssapi-krb5-2 \
+    && rm -rf /var/lib/apt/lists/*
+
+# Copy package files first for better caching
+COPY package*.json ./
+
+# Install dependencies
+RUN npm install --no-optional
+
+# Copy the rest of the application
+COPY . .
+
+# Fix mocha permissions
+RUN chmod +x node_modules/.bin/mocha
+
+# Set environment variables
+ENV NODE_ENV=test
+
+# Command to run build and tests (skip linting for Node 12 compatibility)
+CMD ["sh", "-c", "npm run build && npm run mocha"]

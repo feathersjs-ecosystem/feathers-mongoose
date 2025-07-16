@@ -446,6 +446,17 @@ docker-compose up mongo  # Start MongoDB in background
 npm test  # Run tests on host
 ```
 
+**Testing with Different Node Versions**
+
+To test with Node 12 (minimum supported version), you can use the alternative Docker setup:
+
+```bash
+# Test with Node 12 (skips linting due to ESLint compatibility)
+docker-compose -f docker-compose.node12.yml up --build
+```
+
+Note: Node 12 testing skips linting steps due to ESLint compatibility issues. A separate GitHub workflow handles Node 12 testing in CI.
+
 **Option 2: Local MongoDB Setup**
 
 If you prefer to use a local MongoDB installation, you'll need:
