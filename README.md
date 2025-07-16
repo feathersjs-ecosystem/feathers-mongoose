@@ -429,17 +429,48 @@ This module is community maintained and open for pull requests. Features and bug
 - Tests to reproduce the bug or test the feature
 - Documentation updates (if necessary)
 
-To contribute, fork and clone the repository. To run the tests, a MongoDB v4.0.0 server is required. If you do not have a MongoDB server running you can start one with:
+To contribute, fork and clone the repository. This project uses Docker for local development to ensure consistency across different environments.
 
+### Running Tests Locally
+
+**Option 1: Using Docker (Recommended)**
+
+The easiest way to run tests is using Docker Compose, which will set up MongoDB 7.0 with replica set configuration:
+
+```bash
+# Start MongoDB and run tests
+docker-compose up --build
+
+# Or run tests in watch mode
+docker-compose up mongo  # Start MongoDB in background
+npm test  # Run tests on host
 ```
-npm run mongodb
-```
 
-The command needs to stay open while running the tests with
+**Option 2: Local MongoDB Setup**
 
+If you prefer to use a local MongoDB installation, you'll need:
+- MongoDB 7.0 or later
+- Replica set configuration (required for transaction tests)
 
-```
+```bash
+# Start MongoDB with replica set
+mongod --replSet rs0
+
+# Initialize replica set (first time only)
+mongosh --eval "rs.initiate()"
+
+# Run tests
 npm test
+```
+
+**Testing Against Different Mongoose Versions**
+
+You can test against different versions of Mongoose:
+
+```bash
+npm run test-mongoose-6  # Test with Mongoose 6.x
+npm run test-mongoose-7  # Test with Mongoose 7.x
+npm run test-mongoose-8  # Test with Mongoose 8.x
 ```
 
 ## License
