@@ -89,7 +89,7 @@
     "@typescript-eslint/eslint-plugin": "^6.0.0",
     "@typescript-eslint/parser": "^6.0.0",
     "chai": "^4.3.10",
-    "dtslint": "^4.2.1",
+    "dtslint": "^3.4.2",
     "eslint": "^8.0.0",
     "mocha": "^10.2.0",
     "mongoose": "^6.13.8",
