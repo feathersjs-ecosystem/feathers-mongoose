@@ -1,7 +1,7 @@
 # feathers-mongoose
 
-[![CI](https://github.com/feathersjs-ecosystem/feathers-mongoose/workflows/CI/badge.svg)](https://github.com/feathersjs-ecosystem/feathers-mongoose/actions?query=workflow%3ACI)
-[![Dependency Status](https://img.shields.io/david/feathersjs-ecosystem/feathers-mongoose.svg?style=flat-square)](https://david-dm.org/feathersjs-ecosystem/feathers-mongoose)
+[![CI](https://github.com/feathersjs-ecosystem/feathers-mongoose/actions/workflows/nodejs.yml/badge.svg)](https://github.com/feathersjs-ecosystem/feathers-mongoose/actions/workflows/nodejs.yml)
+[![npm version](https://img.shields.io/npm/v/feathers-mongoose.svg?style=flat-square)](https://www.npmjs.com/package/feathers-mongoose)
 [![Download Status](https://img.shields.io/npm/dm/feathers-mongoose.svg?style=flat-square)](https://www.npmjs.com/package/feathers-mongoose)
 
 A [Feathers](https://feathersjs.com) database adapter for [Mongoose](http://mongoosejs.com/), an object modeling tool for [MongoDB](https://www.mongodb.org/).
@@ -9,6 +9,8 @@ A [Feathers](https://feathersjs.com) database adapter for [Mongoose](http://mong
 ```bash
 $ npm install --save mongoose feathers-mongoose
 ```
+
+> **Note:** This adapter is currently tested against Mongoose 6. Mongoose 8 support is planned for a later date.
 
 > __Important:__ `feathers-mongoose` implements the [Feathers Common database adapter API](https://docs.feathersjs.com/api/databases/common.html) and [querying syntax](https://docs.feathersjs.com/api/databases/querying.html).
 
