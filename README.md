@@ -14,6 +14,27 @@ $ npm install --save mongoose feathers-mongoose
 
 > This adapter also requires a [running MongoDB](https://docs.mongodb.com/getting-started/shell/#) database server.
 
+### TypeScript Support
+
+This adapter includes TypeScript definitions. When using TypeScript, you can import and use it as follows:
+
+```typescript
+import mongoose from 'mongoose';
+import service from 'feathers-mongoose';
+
+interface Message {
+  text: string;
+  createdAt: Date;
+}
+
+const Model = mongoose.model<Message>('Message', new mongoose.Schema({
+  text: { type: String, required: true },
+  createdAt: { type: Date, default: Date.now }
+}));
+
+app.use('/messages', service({ Model }));
+```
+
 
 ## API
 
@@ -44,7 +65,7 @@ __Options:__
 - `lean` (*optional*, default: `true`) - Runs queries faster by returning plain objects instead of Mongoose models.
 - `id` (*optional*, default: `'_id'`) - The name of the id field property.
 - `events` (*optional*) - A list of [custom service events](https://docs.feathersjs.com/api/events.html#custom-events) sent by this service
-- `paginate` (*optional*) - A [pagination object](https://docs.feathersjs.com/api/databases/common.html#pagination) containing a `default` and `max` page size
+- `paginate` (*optional*) - A [pagination object](https://docs.feathersjs.com/api/databases/common.html#pagination) containing a `default` and `max` page size. When pagination is disabled (`paginate: false`), the adapter skips the total count query for better performance
 - `whitelist` (*optional*) - A list of additional query parameters to allow (e..g `[ '$regex', '$populate' ]`)
 - `multi` (*optional*) - Allow `create` with arrays and `update` and `remove` with `id` `null` to change multiple items. Can be `true` for all methods or an array of allowed methods (e.g. `[ 'remove', 'create' ]`)
 - `overwrite` (*optional*, default: `true`) - Overwrite the document when update, making mongoose detect is new document and trigger default value for unspecified properties in mongoose schema.
@@ -86,6 +107,8 @@ app.service('messages').hooks({
 The `mongoose` property is also useful for performing upserts on a `patch` request.  "Upserts" do an update if a matching record is found, or insert a record if there's no existing match.  The following example will create a document that matches the `data`, or if there's already a record that matches the `params.query`, that record will be updated.
 
 Using the `writeResult` mongoose option will return the write result of a `patch` operation, including the _ids of all upserted or modified documents. This can be helpful alongside the `upsert` flag, for detecting whether the outcome was a find or insert operation. More on write results is available in the [Mongo documentation](https://docs.mongodb.com/manual/reference/method/db.collection.update/#writeresult)
+
+> **Performance Note:** When using `writeResult` with multi-document patch operations, the adapter uses an optimized path that performs the update directly without pre-fetching document IDs, resulting in better performance for write-only operations
 
 ```js
 const data = { address: '123', identifier: 'my-identifier' }
@@ -201,6 +224,12 @@ app.service('posts').find({
   query: { $populate: 'user' }
 });
 ```
+
+The `$populate` parameter supports various formats:
+- String: `$populate: 'user'`
+- Array of strings: `$populate: ['user', 'comments']`
+- Object with options: `$populate: { path: 'user', select: 'name email' }`
+- Array of objects: `$populate: [{ path: 'user' }, { path: 'comments', options: { limit: 5 } }]`
 
 ## Error handling
 
