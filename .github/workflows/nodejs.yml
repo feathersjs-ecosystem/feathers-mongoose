@@ -17,7 +17,7 @@ jobs:
     - name: Install system dependencies
       run: |
         sudo apt-get update
-        sudo apt-get install -y libkrb5-dev libgssapi-krb5-2 build-essential
+        sudo apt-get install -y build-essential
     - name: Start MongoDB ${{ matrix.mongodb-version }}
       uses: supercharge/mongodb-github-action@1.10.0
       with:
@@ -28,10 +28,7 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
-    - run: npm ci --omit=optional
-      env:
-        SKIP_KERBEROS: 1
-        MONGODB_FORCE_NO_KERBEROS: 1
+    - run: npm ci
     - run: npm test
       env:
         CI: true
