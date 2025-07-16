@@ -1,24 +1,4 @@
-# Build stage with newer Node
-FROM node:18-slim AS builder
-
-WORKDIR /app
-
-# Copy package files first for better caching
-COPY package*.json ./
-
-# Install dependencies
-RUN npm install --no-optional
-
-# Copy the rest of the application
-COPY . .
-
-# Build the project
-RUN npm run build
-
-# Verify build output exists
-RUN ls -la lib/
-
-# Runtime stage with Node 12
+# Use Node 12 for testing
 FROM node:12-slim
 
 WORKDIR /app
@@ -40,17 +20,8 @@ COPY package*.json ./
 # Install dependencies
 RUN npm install --no-optional
 
-# Copy all files except lib directory first
-COPY --chown=node:node . .
-
-# Remove any existing lib directory to ensure clean copy
-RUN rm -rf lib
-
-# Copy built files from builder stage
-COPY --from=builder /app/lib ./lib
-
-# Debug: Check current working directory and paths
-RUN pwd && ls -la && echo "Contents of lib:" && ls -la lib/ && echo "Testing require path:" && node -e "console.log(require.resolve('./lib/error-handler'))"
+# Copy the rest of the application (including pre-built lib files)
+COPY . .
 
 # Fix mocha permissions
 RUN chmod +x node_modules/.bin/mocha
@@ -58,5 +29,5 @@ RUN chmod +x node_modules/.bin/mocha
 # Set environment variables
 ENV NODE_ENV=test
 
-# Command to run tests only (build already done in previous stage)
+# Command to run tests
 CMD ["npm", "run", "mocha"]
