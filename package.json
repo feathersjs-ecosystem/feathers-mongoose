@@ -60,7 +60,7 @@
     "changelog": "github_changelog_generator && git add CHANGELOG.md && git commit -am \"chore: update changelog\"",
     "lint": "eslint src/**/*.ts --fix",
     "lint:types": "tsc --noEmit",
-    "mocha": "node node_modules/.bin/mocha --timeout 15000 --recursive test/ --exit",
+    "mocha": "node --max-old-space-size=8192 node_modules/.bin/mocha --timeout 15000 --recursive test/ --exit",
     "coverage": "nyc npm run mocha",
     "test": "npm run lint && npm run lint:types && npm run build && npm run coverage",
     "install-clean": "npm install --no-optional --no-package-lock"
@@ -92,7 +92,7 @@
     "npm-check-updates": "^16.14.15",
     "nyc": "^15.1.0",
     "rimraf": "^3.0.2",
-    "sinon": "^15.2.0",
+    "sinon": "^9.2.4",
     "sinon-chai": "^3.7.0",
     "typescript": "^4.9.5"
   }
