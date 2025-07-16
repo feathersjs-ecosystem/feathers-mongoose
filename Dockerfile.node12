@@ -15,6 +15,9 @@ COPY . .
 # Build the project
 RUN npm run build
 
+# Verify build output exists
+RUN ls -la lib/
+
 # Runtime stage with Node 12
 FROM node:12-slim
 
@@ -37,9 +40,14 @@ COPY package*.json ./
 # Install dependencies
 RUN npm install --no-optional
 
-# Copy the rest of the application and built files
+# Copy the rest of the application
 COPY . .
+
+# Copy built files from builder stage
 COPY --from=builder /app/lib ./lib
+
+# Verify lib directory exists in runtime stage
+RUN ls -la lib/
 
 # Fix mocha permissions
 RUN chmod +x node_modules/.bin/mocha
