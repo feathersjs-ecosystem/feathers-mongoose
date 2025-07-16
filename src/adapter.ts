@@ -1,4 +1,4 @@
-// @ts-nocheck
+// @ts-nocheck - Complex generic types with Mongoose cause compilation issues but functionality works correctly
 import { AdapterBase, filterQuery, select, AdapterParams, AdapterServiceOptions, getLimit } from '@feathersjs/adapter-commons';
 import * as errors from '@feathersjs/errors';
 import { Model, Query, PopulateOptions, ClientSession, Document, Schema } from 'mongoose';
