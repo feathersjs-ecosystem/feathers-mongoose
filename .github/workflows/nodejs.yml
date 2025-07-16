@@ -29,7 +29,7 @@ jobs:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
     - run: npm ci
-    - run: npm run lint && npm run coverage
+    - run: npm run lint && npm run build && npm run coverage
       env:
         CI: true
         MONGODB_URI: mongodb://localhost:27017/feathers-mongoose-test?replicaSet=test-rs
