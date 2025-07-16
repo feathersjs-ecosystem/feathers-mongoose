@@ -6,36 +6,15 @@ jobs:
   test-node12:
     runs-on: ubuntu-latest
     
-    strategy:
-      matrix:
-        node-version: [12.x]
-        mongodb-version: [7.0]
-
     steps:
     - uses: actions/checkout@v4
     
-    - name: Install system dependencies
+    - name: Run Node 12 tests with Docker Compose
       run: |
-        sudo apt-get update
-        sudo apt-get install -y build-essential
+        # Build and run tests using docker-compose
+        docker-compose -f docker-compose.node12.yml up --build --abort-on-container-exit --exit-code-from app-node12
         
-    - name: Start MongoDB ${{ matrix.mongodb-version }}
-      uses: supercharge/mongodb-github-action@1.10.0
-      with:
-        mongodb-version: ${{ matrix.mongodb-version }}
-        mongodb-replica-set: test-rs
-        
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v4
-      with:
-        node-version: ${{ matrix.node-version }}
-        cache: 'npm'
-        
-    - run: npm ci
-    
-    # For Node 12, we skip linting due to ESLint compatibility issues
-    # and only run build and tests
-    - run: npm run build && npm run mocha
-      env:
-        CI: true
-        MONGODB_URI: mongodb://localhost:27017/feathers-mongoose-test?replicaSet=test-rs
+    - name: Clean up Docker containers
+      if: always()
+      run: |
+        docker-compose -f docker-compose.node12.yml down -v

@@ -17,7 +17,7 @@ services:
         condition: service_healthy
     networks:
       - test-network
-    command: sh -c "node test-node12-full.js"
+    command: npm run mocha
 
   mongo:
     platform: linux/arm64
