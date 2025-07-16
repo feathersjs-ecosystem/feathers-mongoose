@@ -53,21 +53,30 @@ export const beginTransaction = async (context: TransactionContext, skipPath: st
  * @param context           context with params, result and DB-session
  * @return context          context with params, result and DB-session
  */
+/**
+ * Helper function to check if context has an active session
+ */
+const hasActiveSession = (context: TransactionContext): boolean => {
+  return !!(context.enableTransaction &&
+    context.params &&
+    context.params.mongoose &&
+    context.params.mongoose.session);
+};
+
+/**
+ * Helper function to clean up transaction state
+ */
+const cleanupTransactionState = (context: TransactionContext): void => {
+  context.params.mongoose = { ...context.params.mongoose, session: undefined };
+  context.params.transactionOpen = false;
+  context.enableTransaction = false;
+};
+
 export const commitTransaction = async (context: TransactionContext): Promise<TransactionContext> => {
   try {
-    // if transaction is enabled during startSession
-    if (context.enableTransaction) {
-    // if context contains the mongoose session to be committed
-      if (
-        context.params &&
-        context.params.mongoose &&
-        context.params.mongoose.session
-      ) {
-        await context.params.mongoose.session.commitTransaction();
-        context.params.mongoose = { ...context.params.mongoose, session: undefined };
-        context.params.transactionOpen = false; // reset transaction-open
-        context.enableTransaction = false;
-      }
+    if (hasActiveSession(context) && context.params.mongoose && context.params.mongoose.session) {
+      await context.params.mongoose.session.commitTransaction();
+      cleanupTransactionState(context);
     }
     return context;
   } catch (err) {
@@ -83,19 +92,9 @@ export const commitTransaction = async (context: TransactionContext): Promise<Tr
  */
 export const rollbackTransaction = async (context: TransactionContext): Promise<TransactionContext> => {
   try {
-    // if transaction is enabled during startSession
-    if (context.enableTransaction) {
-    // if context contains the mongoose session to be committed
-      if (
-        context.params &&
-        context.params.mongoose &&
-        context.params.mongoose.session
-      ) {
-        await context.params.mongoose.session.abortTransaction();
-        context.params.mongoose = { ...context.params.mongoose, session: undefined };
-        context.params.transactionOpen = false; // reset transaction-open
-        context.enableTransaction = false;
-      }
+    if (hasActiveSession(context) && context.params.mongoose && context.params.mongoose.session) {
+      await context.params.mongoose.session.abortTransaction();
+      cleanupTransactionState(context);
     }
     return context;
   } catch (err) {

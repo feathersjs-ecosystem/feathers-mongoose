@@ -109,7 +109,7 @@ export class MongooseAdapter<
 
   allowsMulti(method: string, params: MongooseAdapterParams = {}): boolean {
     // Check params.adapter.multi first (dynamic allowance)
-    if (params.adapter?.multi !== undefined) {
+    if (params.adapter && params.adapter.multi !== undefined) {
       if (typeof params.adapter.multi === 'boolean') {
         return params.adapter.multi;
       }
@@ -186,7 +186,7 @@ export class MongooseAdapter<
       context: 'query'
     };
 
-    const modelQuery = model.findOneAndUpdate(query, data, findOneOptions).session(params.mongoose?.session || null);
+    const modelQuery = model.findOneAndUpdate(query, data, findOneOptions).session(params.mongoose && params.mongoose.session || null);
 
     this.applySelect(modelQuery, filters.$select);
     this.applyCollation(modelQuery, params);
@@ -195,7 +195,7 @@ export class MongooseAdapter<
     const updateResult = await modelQuery;
 
     // Handle writeResult format
-    if (params.mongoose?.writeResult) {
+    if (params.mongoose && params.mongoose.writeResult) {
       return {
         acknowledged: true,
         modifiedCount: updateResult ? 1 : 0,
@@ -204,7 +204,7 @@ export class MongooseAdapter<
       };
     }
 
-    if (!updateResult && !params.mongoose?.upsert) {
+    if (!updateResult && !(params.mongoose && params.mongoose.upsert)) {
       throw new errors.NotFound(`No record found for id '${query[this.id]}'`);
     }
 
@@ -219,18 +219,18 @@ export class MongooseAdapter<
     params: MongooseAdapterParams,
     collectedIds: Promise<any[]>
   ): Promise<any> {
-    const updateQuery = model.updateMany(query, data, options).session(params.mongoose?.session || null);
+    const updateQuery = model.updateMany(query, data, options).session(params.mongoose && params.mongoose.session || null);
     this.applyCollation(updateQuery, params);
     const updateResult = await updateQuery;
 
-    if (params.mongoose?.writeResult) {
+    if (params.mongoose && params.mongoose.writeResult) {
       return updateResult;
     }
 
     const idList = await collectedIds;
 
     // Handle upsert case where no documents existed before
-    if (idList.length === 0 && params.mongoose?.upsert && updateResult.upsertedCount > 0) {
+    if (idList.length === 0 && params.mongoose && params.mongoose.upsert && updateResult.upsertedCount > 0) {
       const result = await this._find({
         ...params,
         paginate: false,
@@ -312,12 +312,12 @@ export class MongooseAdapter<
       this.applyCollation(q, params);
       this._getQueryModifier(params)(q);
 
-      return q.session(params.mongoose?.session || null).exec();
+      return q.session(params.mongoose && params.mongoose.session || null).exec();
     };
 
     const countDocuments = async () => {
       const model = this.getModelForParams(params);
-      if (params.mongoose?.session) {
+      if (params.mongoose && params.mongoose.session) {
         // In transactions, use aggregation to count
         const aggregationPipeline = [
           { $match: query },
@@ -331,7 +331,7 @@ export class MongooseAdapter<
         }
 
         const result = await model.aggregate(aggregationPipeline, aggOptions).session(params.mongoose.session).exec();
-        const count = result[0]?.total || 0;
+        const count = result[0] && result[0].total || 0;
         return count;
       } else {
         // Outside transactions, use the normal count methods
@@ -393,7 +393,7 @@ export class MongooseAdapter<
 
     this._getQueryModifier(params)(modelQuery);
 
-    return modelQuery.session(params.mongoose?.session || null)
+    return modelQuery.session(params.mongoose && params.mongoose.session || null)
       .lean(this.lean).exec().then(data => {
         if (!data) {
           throw new errors.NotFound(`No record found for id '${id}'`);
@@ -414,7 +414,7 @@ export class MongooseAdapter<
       throw new errors.MethodNotAllowed('Can not create multiple entries. Set `multi: ["create"]` or `multi: true` in service options to allow multi-create. Alternatively, pass `params.adapter.multi` to allow multi-create for this request.');
     }
 
-    return model.create(dataArray, { session: params.mongoose?.session }).then(results => {
+    return model.create(dataArray, { session: params.mongoose && params.mongoose.session }).then(results => {
       const result = isMulti ? results : results[0];
 
       if ($populate) {
@@ -434,7 +434,7 @@ export class MongooseAdapter<
       runValidators: true,
       context: 'query',
       setDefaultsOnInsert: true,
-      session: params.mongoose?.session
+      session: params.mongoose && params.mongoose.session
     };
 
     if (id === null) {
@@ -482,8 +482,8 @@ export class MongooseAdapter<
       multi: id === null,
       runValidators: true,
       context: 'query',
-      session: params.mongoose?.session,
-      upsert: params.mongoose?.upsert || false
+      session: params.mongoose && params.mongoose.session,
+      upsert: params.mongoose && params.mongoose.upsert || false
     };
 
     try {
@@ -540,18 +540,10 @@ export class MongooseAdapter<
         query2[this.id] = id;
       }
 
-      return model.deleteMany(query2).session(params.mongoose?.session || null).then(() => {
+      return model.deleteMany(query2).session(params.mongoose && params.mongoose.session || null).then(() => {
         return id !== null ? result[0] || null : result;
       });
     }).catch(errorHandler);
-  }
-
-  private async _getOrFind(id: any, params: MongooseAdapterParams): Promise<any> {
-    if (id === null) {
-      return this._find(params);
-    }
-
-    return this._get(id, params);
   }
 
 }

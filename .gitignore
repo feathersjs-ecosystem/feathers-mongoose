@@ -30,3 +30,6 @@ node_modules
 .lock-wscript
 
 data/
+
+# Compiled TypeScript output
+lib/

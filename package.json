@@ -35,7 +35,7 @@
     "url": "https://github.com/feathersjs-ecosystem/feathers-mongoose/issues"
   },
   "engines": {
-    "node": ">= 20"
+    "node": ">= 12"
   },
   "files": [
     "CHANGELOG.md",
@@ -69,7 +69,6 @@
     "install-clean": "npm install --no-optional --no-package-lock",
     "test-all-mongoose": "npm run test-mongoose-6 && npm run test-mongoose-7 && npm run test-mongoose-8"
   },
-
   "directories": {
     "lib": "lib"
   },
@@ -93,7 +92,7 @@
     "dtslint": "^4.2.1",
     "eslint": "^8.0.0",
     "mocha": "^10.2.0",
-    "mongoose": "^6.12.0",
+    "mongoose": "^6.13.8",
     "npm-check-updates": "^16.14.15",
     "nyc": "^15.1.0",
     "rimraf": "^5.0.0",
