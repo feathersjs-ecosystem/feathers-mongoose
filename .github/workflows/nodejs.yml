@@ -9,7 +9,7 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [20.x, 22.x]
+        node-version: [18.x, 20.x]
         mongodb-version: [7.0]
 
     steps:
@@ -28,7 +28,10 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
-    - run: npm install
+    - run: npm ci --omit=optional
+      env:
+        SKIP_KERBEROS: 1
+        MONGODB_FORCE_NO_KERBEROS: 1
     - run: npm test
       env:
         CI: true
