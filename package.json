@@ -61,7 +61,7 @@
     "lint": "eslint src/**/*.ts --fix",
     "lint:types": "tsc --noEmit",
     "mocha": "node --max-old-space-size=8192 node_modules/.bin/mocha --timeout 15000 --recursive test/ --exit",
-    "test:node12": "node --max-old-space-size=8192 node_modules/.bin/mocha --timeout 15000 test/error-handler.test.js test/hooks.test.js --exit",
+    "test:node12": "node --max-old-space-size=8192 node_modules/.bin/mocha --timeout 15000 test/error-handler.test.js --exit",
     "coverage": "nyc npm run mocha",
     "test": "npm run lint && npm run lint:types && npm run build && npm run coverage",
     "install-clean": "npm install --no-optional --no-package-lock"

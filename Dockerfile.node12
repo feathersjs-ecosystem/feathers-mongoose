@@ -20,6 +20,9 @@ COPY package*.json ./
 # Install only runtime dependencies for Node 12 compatibility
 RUN npm install --production --no-optional
 
+# Install testing dependencies compatible with Node 12
+RUN npm install mocha@10.2.0 chai@4.3.10 --no-save --exact
+
 # Copy the rest of the application (including pre-built lib files)
 COPY . .
 

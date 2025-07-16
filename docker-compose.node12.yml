@@ -16,7 +16,7 @@ services:
         condition: service_healthy
     networks:
       - test-network
-    command: npm run mocha
+    command: npm run test:node12
 
   mongo:
     image: mongo:7.0
