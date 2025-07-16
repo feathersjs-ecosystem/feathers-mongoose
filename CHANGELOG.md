@@ -1,8 +1,23 @@
 # Changelog
 
-## [Unreleased](https://github.com/feathersjs-ecosystem/feathers-mongoose/tree/HEAD)
+## [v9.0.0](https://github.com/feathersjs-ecosystem/feathers-mongoose/tree/v9.0.0) (2025-07-10)
 
-[Full Changelog](https://github.com/feathersjs-ecosystem/feathers-mongoose/compare/v8.5.1...HEAD)
+[Full Changelog](https://github.com/feathersjs-ecosystem/feathers-mongoose/compare/v8.5.1...v9.0.0)
+
+**Breaking Changes:**
+
+- Updated Node.js requirement to >= 18 (from >= 14)
+- Updated to Feathers v5 dependencies (from v4)
+- Added support for MongoDB versions 6, 7, and 8
+
+**Enhancements:**
+
+- Added support for Mongoose versions 6, 7, and 8
+- Added support for both `rawResult` (Mongoose 7) and `includeResultMetadata` (Mongoose 8) options
+- Updated GitHub Actions workflow to test against Node.js 18, 20, 22 and MongoDB 6, 7, 8
+- Added Docker setup for testing with multiple versions of Node.js, MongoDB, and Mongoose
+- Added test scripts for Mongoose 6, 7, and 8
+- Improved compatibility with Apple Silicon (arm64) architecture
 
 **Merged pull requests:**
 

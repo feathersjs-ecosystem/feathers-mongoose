@@ -1,7 +1,7 @@
 {
   "name": "feathers-mongoose",
   "description": "A Feathers service adapter for the Mongoose ORM",
-  "version": "8.5.1",
+  "version": "9.0.0",
   "homepage": "https://github.com/feathersjs-ecosystem/feathers-mongoose",
   "main": "lib/",
   "types": "types",
@@ -35,7 +35,7 @@
     "url": "https://github.com/feathersjs-ecosystem/feathers-mongoose/issues"
   },
   "engines": {
-    "node": ">= 12"
+    "node": ">= 20"
   },
   "files": [
     "CHANGELOG.md",
@@ -47,50 +47,59 @@
     "*.js"
   ],
   "scripts": {
+    "build": "tsc",
+    "build:watch": "tsc --watch",
+    "clean": "rimraf lib",
+    "prebuild": "npm run clean",
+    "prepublishOnly": "npm run build",
     "publish": "git push origin --tags && npm run changelog && git push origin",
-    "changelog": "github_changelog_generator --user feathersjs-ecosystem --project feathers-mongoose && git add CHANGELOG.md && git commit -am \"Updating changelog\"",
+    "release:pre": "npm version prerelease && npm publish --tag pre",
     "release:patch": "npm version patch && npm publish",
     "release:minor": "npm version minor && npm publish",
     "release:major": "npm version major && npm publish",
-    "mongodb": "run-rs -v 4.0.0",
-    "lint": "semistandard --fix",
-    "dtslint": "dtslint types",
-    "mocha": "mocha --timeout 5000 --recursive test/ --exit",
-    "update-dependencies": "ncu -u",
+    "changelog": "github_changelog_generator && git add CHANGELOG.md && git commit -am \"chore: update changelog\"",
+    "lint": "eslint src/**/*.ts --fix",
+    "lint:types": "tsc --noEmit",
+    "mocha": "node node_modules/.bin/mocha --timeout 15000 --recursive test/ --exit",
     "coverage": "nyc npm run mocha",
-    "test": "npm run lint && npm run coverage"
+    "test": "npm run lint && npm run lint:types && npm run build && npm run coverage",
+    "test-mongoose-6": "npm i mongoose@^6.0.0 --no-save && npm run mocha",
+    "test-mongoose-7": "npm i mongoose@^7.0.0 --no-save && npm run mocha",
+    "test-mongoose-8": "npm i mongoose@^8.0.0 --no-save && npm run mocha",
+    "install-clean": "npm install --no-optional --no-package-lock",
+    "test-all-mongoose": "npm run test-mongoose-6 && npm run test-mongoose-7 && npm run test-mongoose-8"
   },
-  "semistandard": {
-    "env": [
-      "mocha"
-    ]
-  },
+
   "directories": {
     "lib": "lib"
   },
   "peerDependencies": {
-    "mongoose": ">=6.0.14"
+    "mongoose": ">=6.0.14 <9.0.0"
   },
   "dependencies": {
-    "@feathersjs/adapter-commons": "^4.5.15",
-    "@feathersjs/commons": "^4.5.15",
-    "@feathersjs/errors": "^4.5.15"
+    "@feathersjs/adapter-commons": "^5.0.34",
+    "@feathersjs/commons": "^5.0.0",
+    "@feathersjs/errors": "^5.0.0"
   },
   "devDependencies": {
-    "@feathersjs/adapter-tests": "^4.5.15",
-    "@feathersjs/express": "^4.5.15",
-    "@feathersjs/feathers": "^4.5.15",
-    "@feathersjs/socketio": "^4.5.15",
-    "chai": "^4.3.6",
+    "@feathersjs/adapter-tests": "^5.0.0",
+    "@feathersjs/express": "^5.0.0",
+    "@feathersjs/feathers": "^5.0.0",
+    "@feathersjs/socketio": "^5.0.0",
+    "@types/node": "^20.0.0",
+    "@typescript-eslint/eslint-plugin": "^6.0.0",
+    "@typescript-eslint/parser": "^6.0.0",
+    "chai": "^4.3.10",
     "dtslint": "^4.2.1",
-    "mocha": "^10.0.0",
-    "mongoose": "^6.5.4",
-    "npm-check-updates": "^16.0.6",
+    "eslint": "^8.0.0",
+    "mocha": "^10.2.0",
+    "mongoose": "^6.12.0",
+    "npm-check-updates": "^16.14.15",
     "nyc": "^15.1.0",
+    "rimraf": "^5.0.0",
     "run-rs": "^0.7.7",
-    "semistandard": "^16.0.1",
-    "sinon": "^14.0.0",
+    "sinon": "^17.0.1",
     "sinon-chai": "^3.7.0",
-    "typescript": "^4.8.2"
+    "typescript": "^5.3.3"
   }
 }
