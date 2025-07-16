@@ -13,16 +13,21 @@ jobs:
         mongodb-version: [7.0]
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v4
+    - name: Install system dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y libkrb5-dev libgssapi-krb5-2 build-essential
     - name: Start MongoDB ${{ matrix.mongodb-version }}
       uses: supercharge/mongodb-github-action@1.10.0
       with:
         mongodb-version: ${{ matrix.mongodb-version }}
         mongodb-replica-set: test-rs
     - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v3
+      uses: actions/setup-node@v4
       with:
         node-version: ${{ matrix.node-version }}
+        cache: 'npm'
     - run: npm install
     - run: npm test
       env:
